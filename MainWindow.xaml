@@ -1,0 +1,60 @@
+<Window x:Class="EtherEditorNative.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ether Editor Native (Pure C# WPF 100%)" Height="850" Width="1280" MinWidth="1000" MinHeight="700"
+        Background="#0f1115" WindowStartupLocation="CenterScreen">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="48" GlassFrameThickness="0" CornerRadius="0" ResizeBorderThickness="6"/>
+    </WindowChrome.WindowChrome>
+
+    <Grid x:Name="MainGrid" Background="#0f1115">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- DISCORD-STYLE COMPACT WPF TITLEBAR WITH INTEGRATED TABS (48PX) -->
+        <Grid Grid.Row="0" Background="#111214">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- APP LOGO & TITLE -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,24,0">
+                <Border Width="22" Height="22" CornerRadius="6" Background="#5865F2">
+                    <TextBlock Text="E" Foreground="White" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Ether Editor (Pure C# WPF 100%)" Foreground="#F2F3F5" FontSize="13" FontWeight="SemiBold" Margin="10,0,0,0" FontFamily="Segoe UI"/>
+            </StackPanel>
+
+            <!-- NATIVE TOP TAB BUTTONS (INTEGRATED ON TITLEBAR) -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button x:Name="BtnTabHome" Click="BtnTabHome_Click" Style="{StaticResource WinTabBtn}" Tag="Active" Margin="0,0,8,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🏠" FontSize="12" Margin="0,0,8,0"/>
+                        <TextBlock Text="Trang chủ" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnTabTranslate" Click="BtnTabTranslate_Click" Style="{StaticResource WinTabBtn}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🌐" FontSize="12" Margin="0,0,8,0"/>
+                        <TextBlock Text="Dịch thuật" FontSize="12" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <!-- WINDOW CONTROL BUTTONS -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button Click="BtnMinimize_Click" Style="{StaticResource WinControlBtn}" Content="─"/>
+                <Button Click="BtnMaximize_Click" Style="{StaticResource WinControlBtn}" Content="□"/>
+                <Button Click="BtnClose_Click" Style="{StaticResource WinCloseBtn}" Content="✕"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- MAIN NATIVE WPF CONTENT AREA (NO BROWSER / NO WEBVIEW2) -->
+        <ContentControl x:Name="MainContentArea" Grid.Row="1"/>
+    </Grid>
+</Window>

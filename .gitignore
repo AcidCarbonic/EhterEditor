@@ -1,0 +1,18 @@
+# Visual Studio & Build Outputs
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build logs
+*.log
+*.tmp
+*.cache
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
