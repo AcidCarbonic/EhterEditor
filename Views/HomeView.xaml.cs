@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using EtherEditorNative.Backend;
 
@@ -140,13 +141,23 @@ namespace EtherEditorNative.Views
             return AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        // --- 1. GAME POSTER CARD CLICK HANDLER ---
+        // --- 1. DIRECT GAME POSTER CARD CLICK HANDLER (FASTEST 1-CLICK PARITY) ---
+        private void GameCard_Click(object sender, RoutedEventArgs e)
+        {
+            HandleGameCardSelect(sender);
+        }
+
         private void GameCard_Click(object sender, MouseButtonEventArgs e)
         {
-            var border = sender as Border;
-            if (border == null || border.Tag == null) return;
+            HandleGameCardSelect(sender);
+        }
 
-            string gameId = border.Tag.ToString();
+        private void HandleGameCardSelect(object sender)
+        {
+            var element = sender as FrameworkElement;
+            if (element == null || element.Tag == null) return;
+
+            string gameId = element.Tag.ToString();
             
             if (gameId == "hsr" || _databaseService.IsDatabaseAvailable())
             {
@@ -183,9 +194,7 @@ namespace EtherEditorNative.Views
             TxtProgressStatus.Text = "KHỞI ĐỘNG TẢI...";
             BtnConfirmDownload.Content = "TẢI VỀ";
 
-            // Hide progress area when modal first opens
             ProgressArea.Visibility = Visibility.Collapsed;
-
             AddProjectModalOverlay.Visibility = Visibility.Visible;
         }
 
@@ -257,11 +266,8 @@ namespace EtherEditorNative.Views
 
             _isDownloading = true;
             BtnConfirmDownload.Content = "ĐANG TẢI...";
-
-            // Show progress area ON CLICKing TẢI VỀ
             ProgressArea.Visibility = Visibility.Visible;
 
-            // Run download pipeline with live progress
             await Task.Run(async () =>
             {
                 UpdateProgress(15, "15%", "KHỞI ĐỘNG TẢI...");
