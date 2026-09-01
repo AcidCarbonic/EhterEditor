@@ -29,6 +29,7 @@ namespace EtherEditorNative.Views
         private readonly HistoryService _historyService;
         private readonly ProjectService _projectService;
         private readonly DatabaseService _databaseService;
+        private readonly DownloadService _downloadService;
         private string _selectedDownloadGameId = "zzz";
         private bool _isDownloading = false;
 
@@ -39,6 +40,7 @@ namespace EtherEditorNative.Views
             _historyService = new HistoryService(projectRoot);
             _projectService = new ProjectService(projectRoot);
             _databaseService = new DatabaseService(projectRoot);
+            _downloadService = new DownloadService(projectRoot, _databaseService);
 
             LoadImages();
             LoadRealRecentFiles();
@@ -268,24 +270,29 @@ namespace EtherEditorNative.Views
             BtnConfirmDownload.Content = "ĐANG TẢI...";
             ProgressArea.Visibility = Visibility.Visible;
 
+            string gameIdToDownload = _selectedDownloadGameId;
+            bool success = false;
+
             await Task.Run(async () =>
             {
-                UpdateProgress(15, "15%", "KHỞI ĐỘNG TẢI...");
-                await Task.Delay(1000);
-
-                UpdateProgress(50, "50%", "ĐANG TẢI GÓI JSON...");
-                await Task.Delay(1200);
-
-                UpdateProgress(85, "85%", "NẠP VÀO DATABASE...");
-                await Task.Delay(1000);
-
-                UpdateProgress(100, "100%", "HOÀN TẤT!");
-                await Task.Delay(500);
+                success = await _downloadService.DownloadAndImportGameDataAsync(gameIdToDownload, (val, percentStr, statusText) =>
+                {
+                    UpdateProgress(val, percentStr, statusText);
+                });
             });
 
             _isDownloading = false;
+            BtnConfirmDownload.Content = "TẢI VỀ";
             AddProjectModalOverlay.Visibility = Visibility.Collapsed;
-            MessageBox.Show("Đã hoàn tất tải dữ liệu cho dự án " + _selectedDownloadGameId.ToUpper() + "!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            if (success)
+            {
+                MessageBox.Show("Đã hoàn tất tải dữ liệu Đa Tệp (Multi-File) từ Git cho dự án " + gameIdToDownload.ToUpper() + " và nạp thành công vào CSDL SQLite!", "Tải về hoàn tất", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi xảy ra trong quá trình tải dữ liệu cho dự án " + gameIdToDownload.ToUpper() + ". Vui lòng kiểm tra lại kết nối mạng!", "Thất bại", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void UpdateProgress(double val, string percent, string statusText)

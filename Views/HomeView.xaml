@@ -19,7 +19,7 @@
             <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
 
-        <!-- STEAM/HOYOLAB STYLE HERO BANNER GAME CARD (DYNAMICALLY STRETCHES IN 4/6 SPLIT) -->
+        <!-- STEAM/HOYOLAB STYLE HERO BANNER GAME CARD (75% BANNER IMAGE RATIO) -->
         <Style x:Key="HeroBannerGameCard" TargetType="Border">
             <Setter Property="Background" Value="#181b26"/>
             <Setter Property="CornerRadius" Value="8"/>
@@ -327,20 +327,20 @@
                             </Border>
                         </Grid>
 
-                        <!-- 3 STEAM/HOYOLAB HERO BANNER CARDS GRID (DYNAMICALLY STRETCHES IN 40% ROW HEIGHT) -->
+                        <!-- 3 STEAM/HOYOLAB HERO BANNER CARDS GRID (EXACT 75% BANNER IMAGE COVERAGE RATIO) -->
                         <UniformGrid Grid.Row="1" Columns="3">
                             <!-- CARD 1: HSR -->
                             <Border Style="{StaticResource HeroBannerGameCard}" BorderBrush="#3b82f6" BorderThickness="2" MouseLeftButtonDown="GameCard_Click" Tag="hsr" ToolTip="Nhấp để VÀO DỊCH THUẬT">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1.4*"/>
+                                        <RowDefinition Height="3*"/>
                                         <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (60% RATIO) -->
+                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
                                     <Grid Grid.Row="0">
                                         <Image x:Name="ImgCardHsr" Stretch="UniformToFill"/>
-                                        <Border Background="#20000000"/>
+                                        <Border Background="#10000000"/>
                                         <!-- BOTTOM FADE GRADIENT OVERLAY -->
                                         <Border VerticalAlignment="Bottom" Height="35">
                                             <Border.Background>
@@ -364,11 +364,11 @@
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (TEXT PULLED UP DIRECTLY UNDER IMAGE) -->
-                                    <Border Grid.Row="1" Padding="12,8" VerticalAlignment="Top">
-                                        <StackPanel VerticalAlignment="Top">
+                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
+                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
+                                        <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="Honkai: Star Rail" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="11" Margin="0,3,0,0"/>
+                                            <TextBlock Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="11" Margin="0,2,0,0"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -378,14 +378,14 @@
                             <Border Style="{StaticResource HeroBannerGameCard}" MouseLeftButtonDown="GameCard_Click" Tag="genshin" ToolTip="Nhấp để tải hoặc quản lý CSDL">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1.4*"/>
+                                        <RowDefinition Height="3*"/>
                                         <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (60% RATIO) -->
+                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
                                     <Grid Grid.Row="0">
                                         <Image x:Name="ImgCardGenshin" Stretch="UniformToFill"/>
-                                        <Border Background="#20000000"/>
+                                        <Border Background="#10000000"/>
                                         <!-- BOTTOM FADE GRADIENT OVERLAY -->
                                         <Border VerticalAlignment="Bottom" Height="35">
                                             <Border.Background>
@@ -409,11 +409,11 @@
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (TEXT PULLED UP DIRECTLY UNDER IMAGE) -->
-                                    <Border Grid.Row="1" Padding="12,8" VerticalAlignment="Top">
-                                        <StackPanel VerticalAlignment="Top">
+                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
+                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
+                                        <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="Genshin Impact" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,3,0,0"/>
+                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,2,0,0"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -423,14 +423,14 @@
                             <Border Style="{StaticResource HeroBannerGameCard}" MouseLeftButtonDown="GameCard_Click" Tag="zzz" ToolTip="Nhấp để tải hoặc quản lý CSDL">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1.4*"/>
+                                        <RowDefinition Height="3*"/>
                                         <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (60% RATIO) -->
+                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
                                     <Grid Grid.Row="0">
                                         <Image x:Name="ImgCardZzz" Stretch="UniformToFill"/>
-                                        <Border Background="#20000000"/>
+                                        <Border Background="#10000000"/>
                                         <!-- BOTTOM FADE GRADIENT OVERLAY -->
                                         <Border VerticalAlignment="Bottom" Height="35">
                                             <Border.Background>
@@ -454,11 +454,11 @@
                                         </StackPanel>
                                     </Grid>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (TEXT PULLED UP DIRECTLY UNDER IMAGE) -->
-                                    <Border Grid.Row="1" Padding="12,8" VerticalAlignment="Top">
-                                        <StackPanel VerticalAlignment="Top">
+                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
+                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
+                                        <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="Zenless Zone Zero" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,3,0,0"/>
+                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,2,0,0"/>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -467,81 +467,138 @@
                     </Grid>
                 </Border>
 
-                <!-- QUADRANT 2 (TOP-RIGHT): CSDL & MEMORY METERS (40% ROW HEIGHT SPLIT) -->
-                <Border Grid.Column="2" Style="{StaticResource DashCard}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                <!-- QUADRANT 2 (TOP-RIGHT): SPLIT INTO 2 DISTINCT CARDS WITH ELEGANT GAP -->
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                        <!-- HEADER WITH VIBRANT VECTOR DATABASE ICON -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
-                            <Path Data="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4zm0 2c3.87 0 7 1.34 7 2s-3.13 2-7 2-7-1.34-7-2 3.13-2 7-2zm0 14c-3.87 0-7-1.34-7-2v-2.23c1.61.78 4.16 1.23 7 1.23s5.39-.45 7-1.23V17c0 .66-3.13 2-7 2z" Fill="#10b981" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Trạng Thái Cơ Sở Dữ Liệu" Style="{StaticResource SectionTitle}"/>
-                        </StackPanel>
-
-                        <Grid Grid.Row="1" VerticalAlignment="Center">
+                    <!-- CARD 2A (TOP BOX): DUNG LƯỢNG & SẴN SÀNG (ALIGNED PIXEL-PERFECTLY WITH CARD 1) -->
+                    <Border Grid.Row="0" Style="{StaticResource DashCard}">
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <!-- CIRCULAR RING METER DISPLAY -->
-                            <Grid Grid.Row="0" Margin="0,0,0,10">
+                            <!-- HEADER WITH VIBRANT VECTOR STORAGE ICON (MATCHES CARD 1 HEADERS) -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                <Path Data="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4zm0 2c3.87 0 7 1.34 7 2s-3.13 2-7 2-7-1.34-7-2 3.13-2 7-2zm0 14c-3.87 0-7-1.34-7-2v-2.23c1.61.78 4.16 1.23 7 1.23s5.39-.45 7-1.23V17c0 .66-3.13 2-7 2z" Fill="#10b981" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Dung Lượng Cơ Sở Dữ Liệu" Style="{StaticResource SectionTitle}"/>
+                            </StackPanel>
+
+                            <!-- CONTENT: RING BADGE + TEXT (CENTERED & PUSHED DOWN 3PX) -->
+                            <Grid Grid.Row="1" VerticalAlignment="Center" Margin="0,3,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- RING ICON BADGE -->
-                                <Border Grid.Column="0" Width="52" Height="52" CornerRadius="26" Background="#1e293b" BorderBrush="#3b82f6" BorderThickness="4">
-                                    <TextBlock Text="85%" Foreground="#38bdf8" FontSize="13" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <!-- RING BADGE 1/3 -->
+                                <Border Grid.Column="0" Width="44" Height="44" CornerRadius="22" Background="#1e293b" BorderBrush="#3b82f6" BorderThickness="3" VerticalAlignment="Center">
+                                    <TextBlock x:Name="TxtDbReadyRatio" Text="1/3" Foreground="#38bdf8" FontSize="13" FontWeight="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
-                                    <TextBlock Text="CSDL Khả Dụng" Foreground="#94a3b8" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Text="169.6 MB / 500 MB" Foreground="#F1F5F9" FontSize="14" FontWeight="Bold" Margin="0,1,0,0"/>
+                                    <TextBlock Text="Dự Án Đã Sẵn Sàng" Foreground="#94a3b8" FontSize="10" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="TxtDbTotalSize" Text="169.6 MB Local Storage" Foreground="#F1F5F9" FontSize="13" FontWeight="Bold" Margin="0,1,0,0"/>
                                 </StackPanel>
                             </Grid>
-
-                            <StackPanel Grid.Row="1" VerticalAlignment="Center">
-                                <!-- PROGRESS BAR 1: HSR DATA -->
-                                <Grid Margin="0,2,0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="🚂 Star Rail Data" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Grid.Column="1" Text="169.6 MB" Foreground="#94a3b8" FontSize="10"/>
-                                </Grid>
-                                <ProgressBar Value="85" Height="5" Background="#181b26" Foreground="#c084fc" BorderThickness="0" Margin="0,0,0,6"/>
-
-                                <!-- PROGRESS BAR 2: GENSHIN DATA -->
-                                <Grid Margin="0,0,0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="⚔️ Genshin Data" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Grid.Column="1" Text="0 MB" Foreground="#64748b" FontSize="10"/>
-                                </Grid>
-                                <ProgressBar Value="0" Height="5" Background="#181b26" Foreground="#eab308" BorderThickness="0" Margin="0,0,0,6"/>
-
-                                <!-- PROGRESS BAR 3: ZZZ DATA -->
-                                <Grid Margin="0,0,0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="⚡ ZZZ Data" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                    <TextBlock Grid.Column="1" Text="0 MB" Foreground="#64748b" FontSize="10"/>
-                                </Grid>
-                                <ProgressBar Value="0" Height="5" Background="#181b26" Foreground="#38bdf8" BorderThickness="0"/>
-                            </StackPanel>
                         </Grid>
-                    </Grid>
-                </Border>
+                    </Border>
+
+                    <!-- CARD 2B (BOTTOM BOX): PHÂN BỔ DỮ LIỆU DONUT CHART -->
+                    <Border Grid.Row="2" Style="{StaticResource DashCard}" Padding="14,12">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- HEADER WITH VIBRANT VECTOR DATABASE ICON -->
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                <Path Data="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4zm0 2c3.87 0 7 1.34 7 2s-3.13 2-7 2-7-1.34-7-2 3.13-2 7-2zm0 14c-3.87 0-7-1.34-7-2v-2.23c1.61.78 4.16 1.23 7 1.23s5.39-.45 7-1.23V17c0 .66-3.13 2-7 2z" Fill="#10b981" Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Phân Bổ Cơ Sở Dữ Liệu" Style="{StaticResource SectionTitle}" FontSize="13"/>
+                            </StackPanel>
+
+                            <!-- DONUT CHART + LEGEND (BALANCED LAYOUT) -->
+                            <Grid Grid.Row="1" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- DONUT RING CHART WITH OUTSIDE NUMBERS & ROTATION TRANSFORMS -->
+                                <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28,8,20,8">
+                                    <!-- BASE TRACK RING -->
+                                    <Ellipse Width="72" Height="72" Stroke="#181b26" StrokeThickness="7"/>
+
+                                    <!-- SEGMENT 1: TEXTMAP 70% (PURPLE ARC: STARTS AT 12 O'CLOCK, 70% SPAN) -->
+                                    <Ellipse Width="72" Height="72" Stroke="#c084fc" StrokeThickness="7" StrokeDashArray="22.62, 9.69" RenderTransformOrigin="0.5,0.5" ToolTip="TextMap Văn Bản: 118.5 MB (70%)">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="-90"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+
+                                    <!-- SEGMENT 2: INDEX DB 22% (GREEN ARC: CONTINUES FROM 70%) -->
+                                    <Ellipse Width="72" Height="72" Stroke="#10b981" StrokeThickness="7" StrokeDashArray="7.11, 25.20" RenderTransformOrigin="0.5,0.5" ToolTip="Index DB: 38.2 MB (22%)">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="162"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+
+                                    <!-- SEGMENT 3: WIKI CACHE 8% (YELLOW ARC: CONTINUES FROM 92%) -->
+                                    <Ellipse Width="72" Height="72" Stroke="#eab308" StrokeThickness="7" StrokeDashArray="2.58, 29.73" RenderTransformOrigin="0.5,0.5" ToolTip="Wiki Cache: 12.9 MB (8%)">
+                                        <Ellipse.RenderTransform>
+                                            <RotateTransform Angle="241.2"/>
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+
+                                    <!-- OUTSIDE NUMBER 1: 70% (PURPLE - LEFT SIDE) -->
+                                    <TextBlock Text="70%" Foreground="#c084fc" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-26,0,0,0"/>
+
+                                    <!-- OUTSIDE NUMBER 2: 22% (GREEN - BOTTOM RIGHT SIDE) -->
+                                    <TextBlock Text="22%" Foreground="#10b981" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-24,6"/>
+
+                                    <!-- OUTSIDE NUMBER 3: 8% (YELLOW - TOP RIGHT SIDE) -->
+                                    <TextBlock Text="8%" Foreground="#eab308" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,-20,0"/>
+                                </Grid>
+
+                                <!-- LEGEND DETAILS (BALANCED & RIGHT ALIGNED) -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,16,0">
+                                    <!-- ITEM 1 -->
+                                    <Grid Margin="0,0,0,5">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Border Width="6" Height="6" CornerRadius="3" Background="#c084fc" Margin="0,0,6,0"/>
+                                            <TextBlock Text="TextMap" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="118.5 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
+                                    </Grid>
+
+                                    <!-- ITEM 2 -->
+                                    <Grid Margin="0,0,0,5">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Border Width="6" Height="6" CornerRadius="3" Background="#10b981" Margin="0,0,6,0"/>
+                                            <TextBlock Text="Index DB" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="38.2 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
+                                    </Grid>
+
+                                    <!-- ITEM 3 -->
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Border Width="6" Height="6" CornerRadius="3" Background="#eab308" Margin="0,0,6,0"/>
+                                            <TextBlock Text="Wiki Cache" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="12.9 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
 
             <!-- ================= BOTTOM ROW (ROW 2: 60% VIEWPORT HEIGHT) ================= -->

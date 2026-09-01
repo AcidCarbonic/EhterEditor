@@ -83,6 +83,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Backend\DatabaseService.cs" />
+    <Compile Include="Backend\DownloadService.cs" />
     <Compile Include="Backend\GlossaryService.cs" />
     <Compile Include="Backend\HistoryService.cs" />
     <Compile Include="Backend\ProjectService.cs" />
