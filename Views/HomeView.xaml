@@ -510,7 +510,7 @@
                     </Border>
 
                     <!-- CARD 2B (BOTTOM BOX): PHÂN BỔ DỮ LIỆU DONUT CHART -->
-                    <Border Grid.Row="2" Style="{StaticResource DashCard}" Padding="14,12">
+                    <Border Grid.Row="2" Style="{StaticResource DashCard}" Padding="14,8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -518,83 +518,206 @@
                             </Grid.RowDefinitions>
 
                             <!-- HEADER WITH VIBRANT VECTOR DATABASE ICON -->
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,6">
                                 <Path Data="M12 3c-4.97 0-9 1.79-9 4v10c0 2.21 4.03 4 9 4s9-1.79 9-4V7c0-2.21-4.03-4-9-4zm0 2c3.87 0 7 1.34 7 2s-3.13 2-7 2-7-1.34-7-2 3.13-2 7-2zm0 14c-3.87 0-7-1.34-7-2v-2.23c1.61.78 4.16 1.23 7 1.23s5.39-.45 7-1.23V17c0 .66-3.13 2-7 2z" Fill="#10b981" Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Phân Bổ Cơ Sở Dữ Liệu" Style="{StaticResource SectionTitle}" FontSize="13"/>
                             </StackPanel>
 
-                            <!-- DONUT CHART + LEGEND (BALANCED LAYOUT) -->
-                            <Grid Grid.Row="1" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                            <!-- DONUT CHART (CLEAN MINIMALIST INTERACTIVE HOVER) + BOTTOM LEGEND -->
+                            <Grid x:Name="Card2BGrid" Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                                <!-- DONUT RING CHART WITH OUTSIDE NUMBERS & ROTATION TRANSFORMS -->
-                                <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28,8,20,8">
-                                    <!-- BASE TRACK RING -->
-                                    <Ellipse Width="72" Height="72" Stroke="#181b26" StrokeThickness="7"/>
+                                <!-- AUTOSCALING DOUBLE-SIZED SOLID PIE CHART (260PX DIAMETER IN 280X280 VIEWPORT) -->
+                                <Viewbox Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,2">
+                                    <Grid x:Name="PieCanvas" Width="280" Height="280" HorizontalAlignment="Center" VerticalAlignment="Center" MouseMove="PieCanvas_MouseMove" MouseLeave="PieCanvas_MouseLeave">
+                                        <Grid.Resources>
+                                            <!-- BASE SOLID PIE SLICE STYLE WITH ANIMATED DIMMING -->
+                                            <Style x:Key="PieSlicePathStyle" TargetType="Path">
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                                                <Setter Property="Opacity" Value="1.0"/>
+                                                <Setter Property="RenderTransform">
+                                                    <Setter.Value>
+                                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
 
-                                    <!-- SEGMENT 1: TEXTMAP 70% (PURPLE ARC: STARTS AT 12 O'CLOCK, 70% SPAN) -->
-                                    <Ellipse Width="72" Height="72" Stroke="#c084fc" StrokeThickness="7" StrokeDashArray="22.62, 9.69" RenderTransformOrigin="0.5,0.5" ToolTip="TextMap Văn Bản: 118.5 MB (70%)">
-                                        <Ellipse.RenderTransform>
-                                            <RotateTransform Angle="-90"/>
-                                        </Ellipse.RenderTransform>
-                                    </Ellipse>
+                                            <!-- STYLE SLICE 1: PURPLE (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <Style x:Key="PurpleSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect Color="#c084fc" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
 
-                                    <!-- SEGMENT 2: INDEX DB 22% (GREEN ARC: CONTINUES FROM 70%) -->
-                                    <Ellipse Width="72" Height="72" Stroke="#10b981" StrokeThickness="7" StrokeDashArray="7.11, 25.20" RenderTransformOrigin="0.5,0.5" ToolTip="Index DB: 38.2 MB (22%)">
-                                        <Ellipse.RenderTransform>
-                                            <RotateTransform Angle="162"/>
-                                        </Ellipse.RenderTransform>
-                                    </Ellipse>
+                                            <!-- STYLE SLICE 2: GREEN (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <Style x:Key="GreenSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect Color="#10b981" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
 
-                                    <!-- SEGMENT 3: WIKI CACHE 8% (YELLOW ARC: CONTINUES FROM 92%) -->
-                                    <Ellipse Width="72" Height="72" Stroke="#eab308" StrokeThickness="7" StrokeDashArray="2.58, 29.73" RenderTransformOrigin="0.5,0.5" ToolTip="Wiki Cache: 12.9 MB (8%)">
-                                        <Ellipse.RenderTransform>
-                                            <RotateTransform Angle="241.2"/>
-                                        </Ellipse.RenderTransform>
-                                    </Ellipse>
+                                            <!-- STYLE SLICE 3: YELLOW (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <Style x:Key="YellowSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="MouseEnter">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <EventTrigger RoutedEvent="MouseLeave">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect Color="#eab308" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Resources>
 
-                                    <!-- OUTSIDE NUMBER 1: 70% (PURPLE - LEFT SIDE) -->
-                                    <TextBlock Text="70%" Foreground="#c084fc" FontSize="11" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-26,0,0,0"/>
+                                        <!-- BASE TRACK BACKGROUND CIRCLE (260X260 CENTERED AT 140,140) -->
+                                        <Ellipse Width="260" Height="260" Fill="#181b26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                                    <!-- OUTSIDE NUMBER 2: 22% (GREEN - BOTTOM RIGHT SIDE) -->
-                                    <TextBlock Text="22%" Foreground="#10b981" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-24,6"/>
+                                        <!-- SLICE 1: SOLID TEXTMAP 70% (PURPLE - 260PX DIAMETER) -->
+                                        <Path x:Name="Slice1" Style="{StaticResource PurpleSliceStyle}" Fill="#c084fc" Data="M 140,140 L 140,10 A 130,130 0 1 1 16.36,180.17 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="TextMap|70%|#c084fc" MouseEnter="PieSlice_MouseEnter"/>
 
-                                    <!-- OUTSIDE NUMBER 3: 8% (YELLOW - TOP RIGHT SIDE) -->
-                                    <TextBlock Text="8%" Foreground="#eab308" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,-20,0"/>
-                                </Grid>
+                                        <!-- SLICE 2: SOLID INDEX DB 22% (GREEN - 260PX DIAMETER) -->
+                                        <Path x:Name="Slice2" Style="{StaticResource GreenSliceStyle}" Fill="#10b981" Data="M 140,140 L 16.36,180.17 A 130,130 0 0 1 77.37,26.08 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Index DB|22%|#10b981" MouseEnter="PieSlice_MouseEnter"/>
 
-                                <!-- LEGEND DETAILS (BALANCED & RIGHT ALIGNED) -->
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,16,0">
-                                    <!-- ITEM 1 -->
-                                    <Grid Margin="0,0,0,5">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Border Width="6" Height="6" CornerRadius="3" Background="#c084fc" Margin="0,0,6,0"/>
-                                            <TextBlock Text="TextMap" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                        </StackPanel>
-                                        <TextBlock Text="118.5 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
+                                        <!-- SLICE 3: SOLID WIKI CACHE 8% (YELLOW - 260PX DIAMETER) -->
+                                        <Path x:Name="Slice3" Style="{StaticResource YellowSliceStyle}" Fill="#eab308" Data="M 140,140 L 77.37,26.08 A 130,130 0 0 1 140,10 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Wiki Cache|8%|#eab308" MouseEnter="PieSlice_MouseEnter"/>
+
+                                        <Grid.Triggers>
+                                            <!-- WHEN MOUSE ENTERS CHART CANVAS, IMMEDIATELY DIM ALL SLICES ON FIRST TOUCH -->
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.12"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.12"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+
+                                            <!-- WHEN MOUSE LEAVES CHART CANVAS, RESTORE ALL SLICES BACK TO 100% OPACITY & 1.0 SCALE -->
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Grid.Triggers>
                                     </Grid>
+                                </Viewbox>
+
+                                        <!-- HIGH-PERFORMANCE UNCLIPPED REALTIME MOUSE-FOLLOWING TOOLTIP OVERLAY CARD -->
+                                <Border x:Name="PieToolTipCard" Visibility="Collapsed" IsHitTestVisible="False" Background="#121318" BorderBrush="#3b82f6" BorderThickness="1.5" CornerRadius="5" Padding="9,5" Panel.ZIndex="9999" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="3" Opacity="0.8"/>
+                                    </Border.Effect>
+                                    <TextBlock x:Name="ToolTipPercent" Text="70%" Foreground="#ffffff" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- LEGEND DETAILS (RESTORED WITH MB SIZES AS USUAL) -->
+                                <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,6,0,6">
+                                    <!-- ITEM 1 -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
+                                        <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#c084fc" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="TextMap " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="118.5 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                    </StackPanel>
 
                                     <!-- ITEM 2 -->
-                                    <Grid Margin="0,0,0,5">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Border Width="6" Height="6" CornerRadius="3" Background="#10b981" Margin="0,0,6,0"/>
-                                            <TextBlock Text="Index DB" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                        </StackPanel>
-                                        <TextBlock Text="38.2 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
-                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
+                                        <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#10b981" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="Index DB " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="38.2 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                    </StackPanel>
 
                                     <!-- ITEM 3 -->
-                                    <Grid>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Border Width="6" Height="6" CornerRadius="3" Background="#eab308" Margin="0,0,6,0"/>
-                                            <TextBlock Text="Wiki Cache" Foreground="#cbd5e1" FontSize="11" FontWeight="SemiBold"/>
-                                        </StackPanel>
-                                        <TextBlock Text="12.9 MB" Foreground="#94a3b8" FontSize="11" HorizontalAlignment="Right"/>
-                                    </Grid>
-                                </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#eab308" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="Wiki Cache " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="12.9 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                    </StackPanel>
+                                </WrapPanel>
                             </Grid>
                         </Grid>
                     </Border>
@@ -686,77 +809,194 @@
                     </Grid>
                 </Border>
 
-                <!-- QUADRANT 4 (BOTTOM-RIGHT): TRANSLATION ACTIVITY CHART (60% ROW HEIGHT SPLIT) -->
+                <!-- QUADRANT 4 (BOTTOM-RIGHT): FANDOM WIKI ARTICLES & USERS STATISTICS (3 COLUMNS SIDE-BY-SIDE) -->
                 <Border Grid.Column="2" Style="{StaticResource DashCard}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- HEADER WITH VIBRANT VECTOR CHART ICON -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
-                            <Path Data="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" Fill="#8b5cf6" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Biểu Đồ Thống Kê Dịch" Style="{StaticResource SectionTitle}"/>
-                        </StackPanel>
-
-                        <!-- HISTOGRAM BAR CHART SIMULATION (60% ROW HEIGHT SPLIT) -->
-                        <Grid Grid.Row="1" Margin="10,10,10,6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- BAR 1 (MON) -->
-                            <StackPanel Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                <Border Width="22" Height="75" Background="#f97316" CornerRadius="4"/>
-                                <TextBlock Text="T2" Foreground="#64748b" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-
-                            <!-- BAR 2 (TUE) -->
-                            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                <Border Width="22" Height="130" Background="#38bdf8" CornerRadius="4"/>
-                                <TextBlock Text="T3" Foreground="#64748b" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-
-                            <!-- BAR 3 (WED) -->
-                            <StackPanel Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                <Border Width="22" Height="175" Background="#ef4444" CornerRadius="4"/>
-                                <TextBlock Text="T4" Foreground="#64748b" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-
-                            <!-- BAR 4 (THU) -->
-                            <StackPanel Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                <Border Width="22" Height="110" Background="#c084fc" CornerRadius="4"/>
-                                <TextBlock Text="T5" Foreground="#64748b" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-
-                            <!-- BAR 5 (FRI) -->
-                            <StackPanel Grid.Column="4" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                                <Border Width="22" Height="150" Background="#3b82f6" CornerRadius="4"/>
-                                <TextBlock Text="T6" Foreground="#64748b" FontSize="11" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        <!-- HEADER WITH VIBRANT VECTOR WIKI GLOBAL ICON -->
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Fill="#8b5cf6" Width="15" Height="15" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Thống Kê Fandom Wiki (ENG vs VI)" Style="{StaticResource SectionTitle}"/>
                             </StackPanel>
                         </Grid>
 
-                        <!-- LEGEND -->
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0">
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                                <Border Width="7" Height="7" CornerRadius="4" Background="#38bdf8" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                                <TextBlock Text="TextMap" Foreground="#94a3b8" FontSize="10"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
-                                <Border Width="7" Height="7" CornerRadius="4" Background="#ef4444" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                                <TextBlock Text="Wiki Entry" Foreground="#94a3b8" FontSize="10"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="7" Height="7" CornerRadius="4" Background="#c084fc" VerticalAlignment="Center" Margin="0,0,4,0"/>
-                                <TextBlock Text="CSDL DB" Foreground="#94a3b8" FontSize="10"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <!-- 3 COLUMNS SIDE-BY-SIDE (GI | HSR | ZZZ) -->
+                        <Grid Grid.Row="1" Margin="6,4,6,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- ==================== COL 1: GI ==================== -->
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- GAME TITLE (ABBREVIATED GI) -->
+                                <TextBlock Grid.Row="0" Text="GI" Foreground="#38bdf8" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+
+                                <!-- BÀI VIẾT: -->
+                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtGiEngArticles" Text="52.1K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtGiViArticles" Text="18.4K" Foreground="#38bdf8" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#38bdf8" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- ACTIVE USERS: -->
+                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtGiEngUsers" Text="340" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtGiViUsers" Text="45" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- CHỈNH SỬA (EDITS): -->
+                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtGiEngEdits" Text="890K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtGiViEdits" Text="120K" Foreground="#38bdf8" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#38bdf8" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- DIVIDER 1 -->
+                            <Border Grid.Column="1" Width="1" Background="#1e293b" Margin="8,2,8,4"/>
+
+                            <!-- ==================== COL 2: HSR ==================== -->
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- GAME TITLE (ABBREVIATED HSR) -->
+                                <TextBlock Grid.Row="0" Text="HSR" Foreground="#c084fc" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+
+                                <!-- BÀI VIẾT: -->
+                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtHsrEngArticles" Text="38.9K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtHsrViArticles" Text="12.2K" Foreground="#c084fc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#c084fc" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- ACTIVE USERS: -->
+                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtHsrEngUsers" Text="280" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtHsrViUsers" Text="32" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- CHỈNH SỬA (EDITS): -->
+                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtHsrEngEdits" Text="540K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtHsrViEdits" Text="68K" Foreground="#c084fc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#c084fc" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- DIVIDER 2 -->
+                            <Border Grid.Column="3" Width="1" Background="#1e293b" Margin="8,2,8,4"/>
+
+                            <!-- ==================== COL 3: ZZZ ==================== -->
+                            <Grid Grid.Column="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- GAME TITLE (ABBREVIATED ZZZ) -->
+                                <TextBlock Grid.Row="0" Text="ZZZ" Foreground="#eab308" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+
+                                <!-- BÀI VIẾT: -->
+                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtZzzEngArticles" Text="14.8K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtZzzViArticles" Text="4.15K" Foreground="#eab308" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#eab308" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- ACTIVE USERS: -->
+                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtZzzEngUsers" Text="190" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtZzzViUsers" Text="24" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- CHỈNH SỬA (EDITS): -->
+                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
+                                        <TextBlock x:Name="TxtZzzEngEdits" Text="210K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock x:Name="TxtZzzViEdits" Text="24K" Foreground="#eab308" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="VI" Foreground="#eab308" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>

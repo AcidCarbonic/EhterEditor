@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace EtherEditorNative.Backend
@@ -135,6 +136,242 @@ namespace EtherEditorNative.Backend
                 Console.WriteLine("FandomConverter ProcessAndMerge Error: " + ex.Message);
                 return false;
             }
+        }
+
+        private static string GetProxyDomain()
+        {
+            try
+            {
+                string current = AppDomain.CurrentDomain.BaseDirectory;
+                for (int i = 0; i < 4; i++)
+                {
+                    string envPath = Path.Combine(current, ".env");
+                    if (File.Exists(envPath))
+                    {
+                        foreach (string line in File.ReadAllLines(envPath))
+                        {
+                            string trimmed = line.Trim();
+                            if (trimmed.StartsWith("#") || !trimmed.Contains("=")) continue;
+                            string[] parts = trimmed.Split(new[] { '=' }, 2);
+                            if (parts.Length == 2 && parts[0].Trim() == "PROXY_SERVER_DOMAIN")
+                            {
+                                string val = parts[1].Trim().Trim('"', '\'');
+                                if (!string.IsNullOrEmpty(val)) return val;
+                            }
+                        }
+                        break;
+                    }
+                    DirectoryInfo parent = Directory.GetParent(current);
+                    if (parent == null) break;
+                    current = parent.FullName;
+                }
+            }
+            catch { }
+            return "fandom-proxy.vercel.app";
+        }
+
+        public static async Task<int> GetFandomArticleCountAsync(string domain, string wikiPath = "/")
+        {
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(8);
+                    string proxyDomain = GetProxyDomain();
+                    string proxyUrl = "https://" + proxyDomain + wikiPath + "api.php?action=query&meta=siteinfo&siprop=statistics&format=json";
+
+                    var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, proxyUrl);
+                    request.Headers.Add("x-target-host", domain);
+
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        var serializer = new JavaScriptSerializer();
+                        var dict = serializer.Deserialize<Dictionary<string, object>>(json);
+                        if (dict != null && dict.ContainsKey("query"))
+                        {
+                            var query = dict["query"] as Dictionary<string, object>;
+                            if (query != null && query.ContainsKey("statistics"))
+                            {
+                                var stats = query["statistics"] as Dictionary<string, object>;
+                                if (stats != null && stats.ContainsKey("articles"))
+                                {
+                                    return Convert.ToInt32(stats["articles"]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetFandomArticleCount Error: " + ex.Message);
+            }
+            return 0;
+        }
+
+        public static async Task<int> GetFandomArticleCountCachedAsync(string domain, string wikiPath = "/", bool forceRefresh = false)
+        {
+            string cacheKey = domain + wikiPath;
+            string todayStr = DateTime.Now.ToString("yyyy-MM-dd");
+
+            try
+            {
+                string projectRoot = GetProxyDomain(); // Get base path fallback
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string cacheFile = Path.Combine(baseDir, "gamedata", "fandom_stats_cache.json");
+
+                // Check directory
+                string cacheDir = Path.GetDirectoryName(cacheFile);
+                if (!Directory.Exists(cacheDir)) Directory.CreateDirectory(cacheDir);
+
+                var serializer = new JavaScriptSerializer();
+                Dictionary<string, object> cacheData = null;
+
+                // 1. Read existing cache file
+                if (!forceRefresh && File.Exists(cacheFile))
+                {
+                    try
+                    {
+                        string cacheJson = File.ReadAllText(cacheFile);
+                        cacheData = serializer.Deserialize<Dictionary<string, object>>(cacheJson);
+                        object lastUp = (cacheData != null && cacheData.ContainsKey("last_updated")) ? cacheData["last_updated"] : null;
+                        if (cacheData != null && lastUp != null && lastUp.ToString() == todayStr)
+                        {
+                            if (cacheData.ContainsKey("stats"))
+                            {
+                                var statsDict = cacheData["stats"] as Dictionary<string, object>;
+                                if (statsDict != null && statsDict.ContainsKey(cacheKey))
+                                {
+                                    int cachedCount = Convert.ToInt32(statsDict[cacheKey]);
+                                    if (cachedCount > 0) return cachedCount;
+                                }
+                            }
+                        }
+                    }
+                    catch { }
+                }
+
+                // 2. Fetch fresh stats from API
+                int freshCount = await GetFandomArticleCountAsync(domain, wikiPath);
+                if (freshCount <= 0) return 0;
+
+                // 3. Update cache JSON
+                if (cacheData == null) cacheData = new Dictionary<string, object>();
+                cacheData["last_updated"] = todayStr;
+
+                Dictionary<string, object> stats = null;
+                if (cacheData.ContainsKey("stats")) stats = cacheData["stats"] as Dictionary<string, object>;
+                if (stats == null) stats = new Dictionary<string, object>();
+
+                stats[cacheKey] = freshCount;
+                cacheData["stats"] = stats;
+
+                File.WriteAllText(cacheFile, serializer.Serialize(cacheData));
+                return freshCount;
+            }
+            catch { }
+
+            return await GetFandomArticleCountAsync(domain, wikiPath);
+        }
+
+        public static async Task<int> GetFandomEditsCountAsync(string domain, string wikiPath = "/")
+        {
+            try
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(8);
+                    string proxyDomain = GetProxyDomain();
+                    string proxyUrl = "https://" + proxyDomain + wikiPath + "api.php?action=query&meta=siteinfo&siprop=statistics&format=json";
+
+                    var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, proxyUrl);
+                    request.Headers.Add("x-target-host", domain);
+
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        var serializer = new JavaScriptSerializer();
+                        var dict = serializer.Deserialize<Dictionary<string, object>>(json);
+                        if (dict != null && dict.ContainsKey("query"))
+                        {
+                            var query = dict["query"] as Dictionary<string, object>;
+                            if (query != null && query.ContainsKey("statistics"))
+                            {
+                                var stats = query["statistics"] as Dictionary<string, object>;
+                                if (stats != null && stats.ContainsKey("edits"))
+                                {
+                                    return Convert.ToInt32(stats["edits"]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetFandomEditsCount Error: " + ex.Message);
+            }
+            return 0;
+        }
+
+        public static async Task<int> GetFandomEditsCountCachedAsync(string domain, string wikiPath = "/", bool forceRefresh = false)
+        {
+            string cacheKey = domain + wikiPath + "_edits";
+            string todayStr = DateTime.Now.ToString("yyyy-MM-dd");
+
+            try
+            {
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string cacheFile = Path.Combine(baseDir, "gamedata", "fandom_stats_cache.json");
+
+                var serializer = new JavaScriptSerializer();
+                Dictionary<string, object> cacheData = null;
+
+                if (!forceRefresh && File.Exists(cacheFile))
+                {
+                    try
+                    {
+                        string cacheJson = File.ReadAllText(cacheFile);
+                        cacheData = serializer.Deserialize<Dictionary<string, object>>(cacheJson);
+                        object lastUp = (cacheData != null && cacheData.ContainsKey("last_updated")) ? cacheData["last_updated"] : null;
+                        if (cacheData != null && lastUp != null && lastUp.ToString() == todayStr)
+                        {
+                            if (cacheData.ContainsKey("stats"))
+                            {
+                                var statsDict = cacheData["stats"] as Dictionary<string, object>;
+                                if (statsDict != null && statsDict.ContainsKey(cacheKey))
+                                {
+                                    int cachedCount = Convert.ToInt32(statsDict[cacheKey]);
+                                    if (cachedCount > 0) return cachedCount;
+                                }
+                            }
+                        }
+                    }
+                    catch { }
+                }
+
+                int freshCount = await GetFandomEditsCountAsync(domain, wikiPath);
+                if (freshCount <= 0) return 0;
+
+                if (cacheData == null) cacheData = new Dictionary<string, object>();
+                cacheData["last_updated"] = todayStr;
+
+                Dictionary<string, object> stats = null;
+                if (cacheData.ContainsKey("stats")) stats = cacheData["stats"] as Dictionary<string, object>;
+                if (stats == null) stats = new Dictionary<string, object>();
+
+                stats[cacheKey] = freshCount;
+                cacheData["stats"] = stats;
+
+                File.WriteAllText(cacheFile, serializer.Serialize(cacheData));
+                return freshCount;
+            }
+            catch { }
+
+            return await GetFandomEditsCountAsync(domain, wikiPath);
         }
     }
 }

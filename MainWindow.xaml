@@ -1,20 +1,20 @@
 <Window x:Class="EtherEditorNative.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Ether Editor Native (Pure C# WPF 100%)" Height="850" Width="1280" MinWidth="1000" MinHeight="700"
+        Title="Ether Editor" Height="850" Width="1280" MinWidth="1000" MinHeight="700"
         Background="#0f1115" WindowStartupLocation="CenterScreen">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="48" GlassFrameThickness="0" CornerRadius="0" ResizeBorderThickness="6"/>
+        <WindowChrome CaptionHeight="34" GlassFrameThickness="0" CornerRadius="0" ResizeBorderThickness="6"/>
     </WindowChrome.WindowChrome>
 
     <Grid x:Name="MainGrid" Background="#0f1115">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="34"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- DISCORD-STYLE COMPACT WPF TITLEBAR WITH INTEGRATED TABS (48PX) -->
+        <!-- DISCORD-STYLE SLIM WPF TITLEBAR WITH ICON-ONLY TABS (34PX) -->
         <Grid Grid.Row="0" Background="#111214">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -22,27 +22,21 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- APP LOGO & TITLE -->
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,24,0">
-                <Border Width="22" Height="22" CornerRadius="6" Background="#5865F2">
-                    <TextBlock Text="E" Foreground="White" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <!-- APP LOGO & TITLE ("Ether Editor") -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,16,0">
+                <Border Width="18" Height="18" CornerRadius="5" Background="#5865F2">
+                    <TextBlock Text="E" Foreground="White" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
-                <TextBlock Text="Ether Editor (Pure C# WPF 100%)" Foreground="#F2F3F5" FontSize="13" FontWeight="SemiBold" Margin="10,0,0,0" FontFamily="Segoe UI"/>
+                <TextBlock Text="Ether Editor" Foreground="#F2F3F5" FontSize="12" FontWeight="SemiBold" Margin="8,0,0,0" FontFamily="Segoe UI"/>
             </StackPanel>
 
-            <!-- NATIVE TOP TAB BUTTONS (INTEGRATED ON TITLEBAR) -->
+            <!-- NATIVE TOP TAB BUTTONS (ICON ONLY) -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button x:Name="BtnTabHome" Click="BtnTabHome_Click" Style="{StaticResource WinTabBtn}" Tag="Active" Margin="0,0,8,0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="🏠" FontSize="12" Margin="0,0,8,0"/>
-                        <TextBlock Text="Trang chủ" FontSize="12" FontWeight="SemiBold"/>
-                    </StackPanel>
+                <Button x:Name="BtnTabHome" Click="BtnTabHome_Click" Style="{StaticResource WinTabBtn}" Tag="Active" Margin="0,0,6,0" ToolTip="Trang chủ">
+                    <TextBlock Text="🏠" FontSize="12"/>
                 </Button>
-                <Button x:Name="BtnTabTranslate" Click="BtnTabTranslate_Click" Style="{StaticResource WinTabBtn}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="🌐" FontSize="12" Margin="0,0,8,0"/>
-                        <TextBlock Text="Dịch thuật" FontSize="12" FontWeight="SemiBold"/>
-                    </StackPanel>
+                <Button x:Name="BtnTabTranslate" Click="BtnTabTranslate_Click" Style="{StaticResource WinTabBtn}" ToolTip="Dịch thuật">
+                    <TextBlock Text="🌐" FontSize="12"/>
                 </Button>
             </StackPanel>
 

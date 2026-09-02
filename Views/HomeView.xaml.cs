@@ -44,6 +44,50 @@ namespace EtherEditorNative.Views
 
             LoadImages();
             LoadRealRecentFiles();
+            LoadFandomWikiStatsAsync();
+        }
+
+        private async void LoadFandomWikiStatsAsync(bool forceRefresh = false)
+        {
+            try
+            {
+                int giEng = await FandomConverterService.GetFandomArticleCountCachedAsync("genshin-impact.fandom.com", "/", forceRefresh);
+                int giVi  = await FandomConverterService.GetFandomArticleCountCachedAsync("genshin-impact.fandom.com", "/vi/", forceRefresh);
+                int giEngEdits = await FandomConverterService.GetFandomEditsCountCachedAsync("genshin-impact.fandom.com", "/", forceRefresh);
+                int giViEdits  = await FandomConverterService.GetFandomEditsCountCachedAsync("genshin-impact.fandom.com", "/vi/", forceRefresh);
+
+                int hsrEng = await FandomConverterService.GetFandomArticleCountCachedAsync("honkai-star-rail.fandom.com", "/", forceRefresh);
+                int hsrVi  = await FandomConverterService.GetFandomArticleCountCachedAsync("honkai-star-rail.fandom.com", "/vi/", forceRefresh);
+                int hsrEngEdits = await FandomConverterService.GetFandomEditsCountCachedAsync("honkai-star-rail.fandom.com", "/", forceRefresh);
+                int hsrViEdits  = await FandomConverterService.GetFandomEditsCountCachedAsync("honkai-star-rail.fandom.com", "/vi/", forceRefresh);
+
+                int zzzEng = await FandomConverterService.GetFandomArticleCountCachedAsync("zenless-zone-zero.fandom.com", "/", forceRefresh);
+                int zzzVi  = await FandomConverterService.GetFandomArticleCountCachedAsync("zenless-zone-zero.fandom.com", "/vi/", forceRefresh);
+                int zzzEngEdits = await FandomConverterService.GetFandomEditsCountCachedAsync("zenless-zone-zero.fandom.com", "/", forceRefresh);
+                int zzzViEdits  = await FandomConverterService.GetFandomEditsCountCachedAsync("zenless-zone-zero.fandom.com", "/vi/", forceRefresh);
+
+                Dispatcher.Invoke(() =>
+                {
+                    if (giEng > 0) TxtGiEngArticles.Text = giEng >= 1000 ? (giEng / 1000.0).ToString("0.0") + "K" : giEng.ToString();
+                    if (giVi > 0)  TxtGiViArticles.Text  = giVi >= 1000 ? (giVi / 1000.0).ToString("0.0") + "K" : giVi.ToString();
+                    if (giEngEdits > 0) TxtGiEngEdits.Text = giEngEdits >= 1000 ? (giEngEdits / 1000.0).ToString("0.0") + "K" : giEngEdits.ToString();
+                    if (giViEdits > 0)  TxtGiViEdits.Text  = giViEdits >= 1000 ? (giViEdits / 1000.0).ToString("0.0") + "K" : giViEdits.ToString();
+
+                    if (hsrEng > 0) TxtHsrEngArticles.Text = hsrEng >= 1000 ? (hsrEng / 1000.0).ToString("0.0") + "K" : hsrEng.ToString();
+                    if (hsrVi > 0)  TxtHsrViArticles.Text  = hsrVi >= 1000 ? (hsrVi / 1000.0).ToString("0.0") + "K" : hsrVi.ToString();
+                    if (hsrEngEdits > 0) TxtHsrEngEdits.Text = hsrEngEdits >= 1000 ? (hsrEngEdits / 1000.0).ToString("0.0") + "K" : hsrEngEdits.ToString();
+                    if (hsrViEdits > 0)  TxtHsrViEdits.Text  = hsrViEdits >= 1000 ? (hsrViEdits / 1000.0).ToString("0.0") + "K" : hsrViEdits.ToString();
+
+                    if (zzzEng > 0) TxtZzzEngArticles.Text = zzzEng >= 1000 ? (zzzEng / 1000.0).ToString("0.0") + "K" : zzzEng.ToString();
+                    if (zzzVi > 0)  TxtZzzViArticles.Text  = zzzVi >= 1000 ? (zzzVi / 1000.0).ToString("0.0") + "K" : zzzVi.ToString();
+                    if (zzzEngEdits > 0) TxtZzzEngEdits.Text = zzzEngEdits >= 1000 ? (zzzEngEdits / 1000.0).ToString("0.0") + "K" : zzzEngEdits.ToString();
+                    if (zzzViEdits > 0)  TxtZzzViEdits.Text  = zzzViEdits >= 1000 ? (zzzViEdits / 1000.0).ToString("0.0") + "K" : zzzViEdits.ToString();
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("LoadFandomWikiStats Error: " + ex.Message);
+            }
         }
 
         private void LoadImages()
@@ -303,6 +347,88 @@ namespace EtherEditorNative.Views
                 TxtProgressPercent.Text = percent;
                 TxtProgressStatus.Text = statusText;
             });
+        }
+
+        // --- 5. HIGH-PERFORMANCE REALTIME MOUSE-FOLLOWING PIE CHART TOOLTIP & FOCUS HANDLERS ---
+        private void PieSlice_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var hoveredPath = sender as System.Windows.Shapes.Path;
+            if (hoveredPath != null)
+            {
+                // 1. Update ToolTip percentage
+                if (hoveredPath.Tag != null)
+                {
+                    string[] parts = hoveredPath.Tag.ToString().Split('|');
+                    if (parts.Length >= 2)
+                    {
+                        ToolTipPercent.Text = parts[1];
+                        PieToolTipCard.Visibility = Visibility.Visible;
+                    }
+                }
+
+                // 2. Animate Hovered Slice to 100% Opacity & 1.05 Scale
+                AnimateSlice(hoveredPath, opacity: 1.0, scale: 1.05);
+
+                // 3. Animate all Other Slices to 30% Dimmed Opacity & 1.0 Scale
+                var allSlices = new[] { Slice1, Slice2, Slice3 };
+                foreach (var slice in allSlices)
+                {
+                    if (slice != null && slice != hoveredPath)
+                    {
+                        AnimateSlice(slice, opacity: 0.30, scale: 1.0);
+                    }
+                }
+            }
+        }
+
+        private void AnimateSlice(System.Windows.Shapes.Path slice, double opacity, double scale)
+        {
+            if (slice == null) return;
+            try
+            {
+                // 1. Safely animate Opacity
+                var animOpacity = new System.Windows.Media.Animation.DoubleAnimation(opacity, TimeSpan.FromSeconds(0.15));
+                slice.BeginAnimation(UIElement.OpacityProperty, animOpacity);
+
+                // 2. Ensure ScaleTransform is non-frozen and mutable
+                ScaleTransform st = slice.RenderTransform as ScaleTransform;
+                if (st == null || st.IsFrozen)
+                {
+                    st = new ScaleTransform(1.0, 1.0);
+                    slice.RenderTransformOrigin = new Point(0.5, 0.5);
+                    slice.RenderTransform = st;
+                }
+
+                var animScale = new System.Windows.Media.Animation.DoubleAnimation(scale, TimeSpan.FromSeconds(0.15));
+                st.BeginAnimation(ScaleTransform.ScaleXProperty, animScale);
+                st.BeginAnimation(ScaleTransform.ScaleYProperty, animScale);
+            }
+            catch { }
+        }
+
+        private void PieCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (PieToolTipCard.Visibility == Visibility.Visible)
+            {
+                Point pos = e.GetPosition(Card2BGrid);
+                // Position card so mouse cursor points directly at top-left corner (+8px, +8px)
+                PieToolTipCard.Margin = new Thickness(pos.X + 8, pos.Y + 8, 0, 0);
+            }
+        }
+
+        private void PieCanvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            PieToolTipCard.Visibility = Visibility.Collapsed;
+
+            // Restore all slices back to 100% Opacity & 1.0 Scale
+            var allSlices = new[] { Slice1, Slice2, Slice3 };
+            foreach (var slice in allSlices)
+            {
+                if (slice != null)
+                {
+                    AnimateSlice(slice, opacity: 1.0, scale: 1.0);
+                }
+            }
         }
     }
 }
