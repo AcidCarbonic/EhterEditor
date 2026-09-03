@@ -809,194 +809,333 @@
                     </Grid>
                 </Border>
 
-                <!-- QUADRANT 4 (BOTTOM-RIGHT): FANDOM WIKI ARTICLES & USERS STATISTICS (3 COLUMNS SIDE-BY-SIDE) -->
-                <Border Grid.Column="2" Style="{StaticResource DashCard}">
+                <!-- QUADRANT 4 (BOTTOM-RIGHT): HORIZONTAL CLUSTERED BAR CHART WITH IN-PLACE TAB SWITCHER -->
+                <Border Grid.Column="2" Style="{StaticResource DashCard}" Padding="16">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- HEADER WITH VIBRANT VECTOR WIKI GLOBAL ICON -->
+                        <!-- HEADER WITH IN-PLACE TAB SWITCHER -->
                         <Grid Grid.Row="0" Margin="0,0,0,8">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Fill="#8b5cf6" Width="15" Height="15" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Thống Kê Fandom Wiki (ENG vs VI)" Style="{StaticResource SectionTitle}"/>
+                                <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Fill="#8b5cf6" Width="14" Height="14" Stretch="Uniform" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Thống Kê Fandom Wiki" Style="{StaticResource SectionTitle}"/>
                             </StackPanel>
+
+                            <!-- TAB SWITCHER BUTTONS (SEAMLESS EQUAL-WIDTH SEGMENTED PILL SWITCHER) -->
+                            <Border HorizontalAlignment="Right" Background="#0f172a" BorderBrush="#1e293b" BorderThickness="1" CornerRadius="6" Padding="2">
+                                <UniformGrid Columns="2" Width="168">
+                                    <Button x:Name="BtnFandomTabArticles" Click="BtnFandomTabArticles_Click" Content="Bài viết" Cursor="Arrow" Height="25" FontSize="11" FontWeight="Bold" Foreground="#0f172a" Background="#38bdf8" BorderThickness="0">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button x:Name="BtnFandomTabUsers" Click="BtnFandomTabUsers_Click" Content="Người dùng" Cursor="Hand" Height="25" FontSize="11" FontWeight="SemiBold" Foreground="#94a3b8" Background="Transparent" BorderThickness="0">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </UniformGrid>
+                            </Border>
                         </Grid>
 
-                        <!-- 3 COLUMNS SIDE-BY-SIDE (GI | HSR | ZZZ) -->
-                        <Grid Grid.Row="1" Margin="6,4,6,6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                        <!-- CHART AREA: HORIZONTAL CLUSTERED BAR CHART (FILLS FULL CARD HEIGHT) -->
+                        <Grid Grid.Row="1" Margin="0,4,0,0">
+                            <!-- BACKGROUND VERTICAL GRIDLINES AT EACH X-AXIS TICK (STRETCHES FULL CHART HEIGHT) -->
+                            <Grid Margin="38,4,10,24" Panel.ZIndex="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <!-- ==================== COL 1: GI ==================== -->
-                            <Grid Grid.Column="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- GAME TITLE (ABBREVIATED GI) -->
-                                <TextBlock Grid.Row="0" Text="GI" Foreground="#38bdf8" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
-
-                                <!-- BÀI VIẾT: -->
-                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtGiEngArticles" Text="52.1K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtGiViArticles" Text="18.4K" Foreground="#38bdf8" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#38bdf8" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
-
-                                <!-- ACTIVE USERS: -->
-                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtGiEngUsers" Text="340" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtGiViUsers" Text="45" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
-
-                                <!-- CHỈNH SỬA (EDITS): -->
-                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtGiEngEdits" Text="890K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtGiViEdits" Text="120K" Foreground="#38bdf8" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#38bdf8" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
+                                <Border Grid.Column="0" Width="1" Background="#1e293b" HorizontalAlignment="Left" Opacity="0.7"/>
+                                <Border Grid.Column="0" Width="1" Background="#1e293b" HorizontalAlignment="Right" Opacity="0.7"/>
+                                <Border Grid.Column="1" Width="1" Background="#1e293b" HorizontalAlignment="Right" Opacity="0.7"/>
+                                <Border Grid.Column="2" Width="1" Background="#1e293b" HorizontalAlignment="Right" Opacity="0.7"/>
+                                <Border Grid.Column="3" Width="1" Background="#1e293b" HorizontalAlignment="Right" Opacity="0.7"/>
+                                <Border Grid.Column="4" Width="1" Background="#1e293b" HorizontalAlignment="Right" Opacity="0.7"/>
                             </Grid>
 
-                            <!-- DIVIDER 1 -->
-                            <Border Grid.Column="1" Width="1" Background="#1e293b" Margin="8,2,8,4"/>
-
-                            <!-- ==================== COL 2: HSR ==================== -->
-                            <Grid Grid.Column="2">
+                            <!-- ==================== TAB 1: BÀI VIẾT CHART ==================== -->
+                            <Grid x:Name="PanelFandomArticles" Visibility="Visible" Panel.ZIndex="1">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- GAME TITLE (ABBREVIATED HSR) -->
-                                <TextBlock Grid.Row="0" Text="HSR" Foreground="#c084fc" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                                <!-- CLUSTERED ROW 1: GENSHIN IMPACT -->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- BÀI VIẾT: -->
-                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtHsrEngArticles" Text="38.9K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtHsrViArticles" Text="12.2K" Foreground="#c084fc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#c084fc" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR GI (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
 
-                                <!-- ACTIVE USERS: -->
-                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtHsrEngUsers" Text="280" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowGiArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <!-- BAR EN (40.6K / 50K = 81.2%) -->
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColGiEngArticlesBar" Width="40.6*"/>
+                                                <ColumnDefinition x:Name="ColGiEngArticlesRest" Width="9.4*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtGiEngArticles" Text="40.6K" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <!-- BAR VI (17.6K / 50K = 35.2%) -->
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColGiViArticlesBar" Width="17.6*"/>
+                                                <ColumnDefinition x:Name="ColGiViArticlesRest" Width="32.4*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#38bdf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtGiViArticles" Text="17.6K" Foreground="#38bdf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtHsrViUsers" Text="32" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
+                                </Grid>
 
-                                <!-- CHỈNH SỬA (EDITS): -->
-                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtHsrEngEdits" Text="540K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <!-- CLUSTERED ROW 2: HONKAI STAR RAIL -->
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR HSR (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowHsrArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <!-- BAR EN (16.7K / 50K = 33.4%) -->
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColHsrEngArticlesBar" Width="16.7*"/>
+                                                <ColumnDefinition x:Name="ColHsrEngArticlesRest" Width="33.3*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtHsrEngArticles" Text="16.7K" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <!-- BAR VI (7.5K / 50K = 15.0%) -->
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColHsrViArticlesBar" Width="7.5*"/>
+                                                <ColumnDefinition x:Name="ColHsrViArticlesRest" Width="42.5*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#38bdf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtHsrViArticles" Text="7.5K" Foreground="#38bdf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtHsrViEdits" Text="68K" Foreground="#c084fc" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#c084fc" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                </Grid>
+
+                                <!-- CLUSTERED ROW 3: ZENLESS ZONE ZERO -->
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR ZZZ (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowZzzArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <!-- BAR EN (12.7K / 50K = 25.4%) -->
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColZzzEngArticlesBar" Width="12.7*"/>
+                                                <ColumnDefinition x:Name="ColZzzEngArticlesRest" Width="37.3*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtZzzEngArticles" Text="12.7K" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <!-- BAR VI (4.9K / 50K = 9.8%) -->
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition x:Name="ColZzzViArticlesBar" Width="4.9*"/>
+                                                <ColumnDefinition x:Name="ColZzzViArticlesRest" Width="45.1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#38bdf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtZzzViArticles" Text="4.9K" Foreground="#38bdf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                </StackPanel>
+                                </Grid>
+
+                                <!-- X-AXIS TICKS & SCALE (ARTICLES: 0, 10K, 20K, 30K, 40K, 50K) (STATIC) -->
+                                <Grid Grid.Row="3" Margin="38,4,10,0">
+                                    <Border Height="1" Background="#334155" VerticalAlignment="Top"/>
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="0" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Text="10K" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="1" Text="20K" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="2" Text="30K" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="3" Text="40K" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="4" Text="50K" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Grid>
                             </Grid>
 
-                            <!-- DIVIDER 2 -->
-                            <Border Grid.Column="3" Width="1" Background="#1e293b" Margin="8,2,8,4"/>
-
-                            <!-- ==================== COL 3: ZZZ ==================== -->
-                            <Grid Grid.Column="4">
+                            <!-- ==================== TAB 2: NGƯỜI DÙNG CHART ==================== -->
+                            <Grid x:Name="PanelFandomUsers" Visibility="Collapsed" Panel.ZIndex="1">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <!-- GAME TITLE (ABBREVIATED ZZZ) -->
-                                <TextBlock Grid.Row="0" Text="ZZZ" Foreground="#eab308" FontSize="19" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,2,0,8"/>
+                                <!-- CLUSTERED ROW 1: GENSHIN IMPACT USERS -->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- BÀI VIẾT: -->
-                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Bài viết:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtZzzEngArticles" Text="14.8K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtZzzViArticles" Text="4.15K" Foreground="#eab308" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#eab308" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR GI (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
 
-                                <!-- ACTIVE USERS: -->
-                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Active Users:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtZzzEngUsers" Text="190" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowGiUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="340*"/>
+                                                <ColumnDefinition Width="60*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtGiEngUsers" Text="340" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="45*"/>
+                                                <ColumnDefinition Width="355*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#10b981" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtGiViUsers" Text="45" Foreground="#10b981" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtZzzViUsers" Text="24" Foreground="#10b981" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#10b981" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
-                                    </StackPanel>
-                                </StackPanel>
+                                </Grid>
 
-                                <!-- CHỈNH SỬA (EDITS): -->
-                                <StackPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="Chỉnh sửa:" Foreground="#94a3b8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,4"/>
-                                    <StackPanel HorizontalAlignment="Center" Margin="0,0,0,2">
-                                        <TextBlock x:Name="TxtZzzEngEdits" Text="210K" Foreground="#f1f5f9" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="EN" Foreground="#64748b" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <!-- CLUSTERED ROW 2: HONKAI STAR RAIL USERS -->
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR HSR (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowHsrUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="280*"/>
+                                                <ColumnDefinition Width="120*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtHsrEngUsers" Text="280" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="32*"/>
+                                                <ColumnDefinition Width="368*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#10b981" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtHsrViUsers" Text="32" Foreground="#10b981" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock x:Name="TxtZzzViEdits" Text="24K" Foreground="#eab308" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="VI" Foreground="#eab308" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" Opacity="0.85"/>
+                                </Grid>
+
+                                <!-- CLUSTERED ROW 3: ZENLESS ZONE ZERO USERS -->
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR ZZZ (STATIC) -->
+                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+
+                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
+                                    <StackPanel x:Name="BarsRowZzzUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                        <Grid Height="22" Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="190*"/>
+                                                <ColumnDefinition Width="210*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#818cf8" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtZzzEngUsers" Text="190" Foreground="#818cf8" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <Grid Height="22">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="24*"/>
+                                                <ColumnDefinition Width="376*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" Background="#10b981" CornerRadius="3"/>
+                                            <TextBlock Grid.Column="1" x:Name="TxtZzzViUsers" Text="24" Foreground="#10b981" FontSize="11.5" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                        </Grid>
                                     </StackPanel>
-                                </StackPanel>
+                                </Grid>
+
+                                <!-- X-AXIS TICKS & SCALE (USERS: 0, 75, 150, 225, 300, 375) -->
+                                <Grid Grid.Row="3" Margin="38,4,10,0">
+                                    <Border Height="1" Background="#334155" VerticalAlignment="Top"/>
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="0" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Left"/>
+                                        <TextBlock Grid.Column="0" Text="75" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="1" Text="150" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="2" Text="225" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="3" Text="300" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right" Margin="0,0,-8,0"/>
+                                        <TextBlock Grid.Column="4" Text="375" Foreground="#64748b" FontSize="9.5" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
+
+                        <!-- CHART LEGEND (FOOTER COMPACTLY BELOW CHART) -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                                <Border Width="10" Height="10" CornerRadius="2" Background="#818cf8" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="EN" Foreground="#818cf8" FontSize="11" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Border x:Name="LegendViBox" Width="10" Height="10" CornerRadius="2" Background="#38bdf8" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="VI" Foreground="#38bdf8" FontSize="11" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>
