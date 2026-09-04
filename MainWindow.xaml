@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- DISCORD-STYLE SLIM WPF TITLEBAR WITH ICON-ONLY TABS (34PX) -->
+        <!-- DISCORD-STYLE SLIM WPF TITLEBAR WITH CENTERED NAVIGATION TABS (34PX) -->
         <Grid Grid.Row="0" Background="#111214">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- APP LOGO & TITLE ("Ether Editor") -->
+            <!-- APP LOGO & TITLE ("Ether Editor") ON FAR LEFT -->
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,16,0">
                 <Border Width="18" Height="18" CornerRadius="5" Background="#5865F2">
                     <TextBlock Text="E" Foreground="White" FontSize="10.5" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -30,8 +30,8 @@
                 <TextBlock Text="Ether Editor" Foreground="#F2F3F5" FontSize="12" FontWeight="SemiBold" Margin="8,0,0,0" FontFamily="Segoe UI"/>
             </StackPanel>
 
-            <!-- NATIVE TOP TAB BUTTONS (ICON ONLY) -->
-            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True">
+            <!-- CENTERED NAVIGATION TAB BUTTONS -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True">
                 <Button x:Name="BtnTabHome" Click="BtnTabHome_Click" Style="{StaticResource WinTabBtn}" Tag="Active" Margin="0,0,6,0" ToolTip="Trang chủ">
                     <TextBlock Text="🏠" FontSize="12"/>
                 </Button>
@@ -40,11 +40,11 @@
                 </Button>
             </StackPanel>
 
-            <!-- WINDOW CONTROL BUTTONS -->
+            <!-- WINDOW CONTROL BUTTONS ON FAR RIGHT -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button Click="BtnMinimize_Click" Style="{StaticResource WinControlBtn}" Content="─"/>
-                <Button Click="BtnMaximize_Click" Style="{StaticResource WinControlBtn}" Content="□"/>
-                <Button Click="BtnClose_Click" Style="{StaticResource WinCloseBtn}" Content="✕"/>
+                <Button Click="BtnMinimize_Click" Style="{StaticResource WinControlBtn}" Content="&#xE921;" ToolTip="Thu nhỏ"/>
+                <Button x:Name="BtnMaximize" Click="BtnMaximize_Click" Style="{StaticResource WinControlBtn}" Content="&#xE922;" ToolTip="Phóng to"/>
+                <Button Click="BtnClose_Click" Style="{StaticResource WinCloseBtn}" Content="&#xE8BB;" ToolTip="Đóng"/>
             </StackPanel>
         </Grid>
 

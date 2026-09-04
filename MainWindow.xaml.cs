@@ -27,10 +27,12 @@ namespace EtherEditorNative
             if (WindowState == WindowState.Maximized)
             {
                 MainGrid.Margin = new Thickness(6, 6, 6, 6);
+                if (BtnMaximize != null) BtnMaximize.Content = "\uE923";
             }
             else
             {
                 MainGrid.Margin = new Thickness(0);
+                if (BtnMaximize != null) BtnMaximize.Content = "\uE922";
             }
         }
 

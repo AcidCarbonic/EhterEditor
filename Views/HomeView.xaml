@@ -1,7 +1,11 @@
 <UserControl x:Class="EtherEditorNative.Views.HomeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#0b0c10">
+             Background="#0b0c10"
+             UseLayoutRounding="True"
+             SnapsToDevicePixels="True"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto">
     <UserControl.Resources>
         <!-- SOLID DARK DASHBOARD CARD STYLE (STRICT MATCH WITH USER UI SCREENSHOT) -->
         <Style x:Key="DashCard" TargetType="Border">
@@ -12,11 +16,19 @@
             <Setter Property="Padding" Value="16"/>
         </Style>
 
+        <!-- MATERIAL DESIGN 3 (M3) DISPLAY LARGE TYPOGRAPHY STYLES -->
+        <Style x:Key="M3DisplayLarge" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Google Sans Display, Google Sans, Inter, Plus Jakarta Sans, Segoe UI"/>
+            <Setter Property="FontSize" Value="57"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="#F1F5F9"/>
+        </Style>
+
         <Style x:Key="SectionTitle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#F1F5F9"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontFamily" Value="Google Sans Display, Google Sans, Inter, Plus Jakarta Sans, Segoe UI"/>
         </Style>
 
         <!-- STEAM/HOYOLAB STYLE HERO BANNER GAME CARD (75% BANNER IMAGE RATIO) -->
@@ -37,16 +49,16 @@
             </Style.Triggers>
         </Style>
 
-        <!-- FLOATING GLASS ACTION BUTTONS FOR HERO BANNER CARDS (28x28) -->
+        <!-- FLOATING GLASS ACTION BUTTONS FOR HERO BANNER CARDS (25x25) -->
         <Style x:Key="FloatingGlassBtn" TargetType="Button">
             <Setter Property="Background" Value="#a0141824"/>
             <Setter Property="Foreground" Value="#f1f5f9"/>
             <Setter Property="BorderBrush" Value="#40ffffff"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Width" Value="28"/>
-            <Setter Property="Height" Value="28"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Margin" Value="3,0,0,0"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="2,0,0,0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -71,10 +83,10 @@
             <Setter Property="Foreground" Value="#f87171"/>
             <Setter Property="BorderBrush" Value="#60ef4444"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Width" Value="28"/>
-            <Setter Property="Height" Value="28"/>
-            <Setter Property="FontSize" Value="11"/>
-            <Setter Property="Margin" Value="3,0,0,0"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Margin" Value="2,0,0,0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -124,19 +136,22 @@
 
         <!-- PURE DARK COMBOBOX TOGGLE BUTTON TEMPLATE -->
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
-            <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+            <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="28"/>
                     </Grid.ColumnDefinitions>
                     <Path x:Name="arrow" Grid.Column="1" Data="M 0 0 L 4 4 L 8 0 Z" Fill="#94a3b8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#3b82f6"/>
-                    <Setter TargetName="arrow" Property="Fill" Value="#3b82f6"/>
+                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#475569"/>
+                    <Setter TargetName="arrow" Property="Fill" Value="#f1f5f9"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#475569"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -147,9 +162,10 @@
             <Setter Property="Foreground" Value="#f1f5f9"/>
             <Setter Property="BorderBrush" Value="#2d3142"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
@@ -174,15 +190,15 @@
                                    AllowsTransparency="True" 
                                    IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
                                    Placement="Bottom" 
-                                   PopupAnimation="Slide">
+                                   PopupAnimation="Fade">
                                 <Border x:Name="dropDownBorder" 
                                         Background="#14161f" 
                                         BorderBrush="#2d3142" 
                                         BorderThickness="1" 
-                                        CornerRadius="4" 
+                                        CornerRadius="6" 
                                         Margin="0,4,0,0" 
-                                        MinWidth="{Binding ActualWidth, ElementName=mainGrid}">
-                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#14161f" Foreground="#f1f5f9">
+                                        Width="{Binding ActualWidth, ElementName=mainGrid}">
+                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#14161f" Foreground="#f1f5f9" MaxHeight="200">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
                                     </ScrollViewer>
                                 </Border>
@@ -190,7 +206,7 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="#3b82f6"/>
+                                <Setter Property="BorderBrush" Value="#475569"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -202,26 +218,28 @@
         <Style TargetType="ComboBoxItem">
             <Setter Property="Background" Value="#14161f"/>
             <Setter Property="Foreground" Value="#e2e8f0"/>
-            <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
-                        <Border x:Name="itemBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter/>
+                        <Border x:Name="itemBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="4" Margin="2,1">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="itemBorder" Property="Background" Value="#3b82f6"/>
+                                <Setter TargetName="itemBorder" Property="Background" Value="#252a3b"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="itemBorder" Property="Background" Value="#3b82f6"/>
+                                <Setter TargetName="itemBorder" Property="Background" Value="#252a3b"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="itemBorder" Property="Background" Value="#2563eb"/>
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="itemBorder" Property="Background" Value="#1e293b"/>
+                                <Setter Property="Foreground" Value="#38bdf8"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -283,6 +301,117 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- MODAL DANGER BUTTON WITH ANIMATED HOVER -->
+        <Style x:Key="ModalDangerBtn" TargetType="Button">
+            <Setter Property="Background" Value="#ef4444"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#f87171"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#dc2626"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#fca5a5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- MINIMALIST SQUARE FOOTER BUTTON (CANCEL) -->
+        <Style x:Key="ModalPillFooterBtn" TargetType="Button">
+            <Setter Property="Background" Value="#1e293b"/>
+            <Setter Property="Foreground" Value="#cbd5e1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#334155"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- MINIMALIST SQUARE DANGER BUTTON (REMOVE / CONFIRM) -->
+        <Style x:Key="ModalPillDangerBtn" TargetType="Button">
+            <Setter Property="Background" Value="#3b82f6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="22,10"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2563eb"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#1d4ed8"/>
+                                <Setter TargetName="border" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- SLEEK MODAL CLOSE (X) BUTTON STYLE -->
+        <Style x:Key="ModalCloseBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#64748b"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="28"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#252a3b"/>
+                                <Setter Property="Foreground" Value="#f1f5f9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid x:Name="MainRootGrid">
@@ -320,149 +449,203 @@
                         <Grid Grid.Row="0" Margin="0,0,0,10">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Path Data="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" Fill="#3b82f6" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Dự Án Game Dịch Thuật" Style="{StaticResource SectionTitle}"/>
+                                <TextBlock Text="Dự Án Game" Style="{StaticResource SectionTitle}"/>
                             </StackPanel>
-                            <Border HorizontalAlignment="Right" Background="#1c202d" CornerRadius="4" Padding="8,3">
-                                <TextBlock Text="3 Dự án khả dụng" Foreground="#94a3b8" FontSize="11" FontWeight="SemiBold"/>
-                            </Border>
                         </Grid>
 
                         <!-- 3 STEAM/HOYOLAB HERO BANNER CARDS GRID (EXACT 75% BANNER IMAGE COVERAGE RATIO) -->
                         <UniformGrid Grid.Row="1" Columns="3">
-                            <!-- CARD 1: HSR -->
-                            <Border Style="{StaticResource HeroBannerGameCard}" BorderBrush="#3b82f6" BorderThickness="2" MouseLeftButtonDown="GameCard_Click" Tag="hsr" ToolTip="Nhấp để VÀO DỊCH THUẬT">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"/>
-                                        <RowDefinition Height="1*"/>
-                                    </Grid.RowDefinitions>
+                            <!-- CARD 1: HSR (ACTIVE GAME CARD WITH SMOOTH HOVER IMAGE ZOOM) -->
+                            <Grid Margin="0,0,8,0" MouseLeftButtonDown="GameCard_Click" MouseEnter="GameCard_MouseEnter" MouseLeave="GameCard_MouseLeave" Tag="hsr" Cursor="Hand">
+                                <!-- MAIN CARD CONTAINER -->
+                                <Border CornerRadius="8" Background="#181b26" ClipToBounds="True">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
-                                    <Grid Grid.Row="0">
-                                        <Image x:Name="ImgCardHsr" Stretch="UniformToFill"/>
-                                        <Border Background="#10000000"/>
-                                        <!-- BOTTOM FADE GRADIENT OVERLAY -->
-                                        <Border VerticalAlignment="Bottom" Height="35">
+                                        <!-- HERO BANNER IMAGE CONTAINER (NATURALLY CLIPPED BY BORDER BACKGROUND TO 7PX CORNER RADIUS) -->
+                                        <Border Grid.Row="0" CornerRadius="7,7,0,0" ClipToBounds="True">
                                             <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Color="#00181b26" Offset="0"/>
-                                                    <GradientStop Color="#FF181b26" Offset="1"/>
-                                                </LinearGradientBrush>
+                                                <ImageBrush x:Name="ImgBrushHsr" Stretch="UniformToFill">
+                                                    <ImageBrush.RelativeTransform>
+                                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5"/>
+                                                    </ImageBrush.RelativeTransform>
+                                                </ImageBrush>
                                             </Border.Background>
+                                            <Grid>
+                                                <Border Background="#10000000"/>
+                                                <!-- BOTTOM FADE GRADIENT OVERLAY -->
+                                                <Border VerticalAlignment="Bottom" Height="40">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#00181b26" Offset="0"/>
+                                                            <GradientStop Color="#FF181b26" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+
+                                                <!-- TOP-LEFT VERSION BADGE -->
+                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c01e3a29" BorderBrush="#4ade80" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock Text="v4.4" Foreground="#4ade80" FontSize="10" FontWeight="Bold"/>
+                                                </Border>
+                                            </Grid>
                                         </Border>
 
-                                        <!-- TOP-LEFT VERSION BADGE -->
-                                        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c01e3a29" BorderBrush="#4ade80" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                            <TextBlock Text="v4.4" Foreground="#4ade80" FontSize="10" FontWeight="Bold"/>
-                                        </Border>
+                                        <!-- BOTTOM CARD INFO CONTAINER -->
+                                        <Border Grid.Row="1" Padding="8,4,8,6" VerticalAlignment="Center">
+                                            <Grid VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
 
-                                        <!-- TOP-RIGHT FLOATING GLASS ACTION BUTTONS -->
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8">
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="🚀" ToolTip="Vào dịch thuật" Click="GameCard_Click" Tag="hsr"/>
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="🔄" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="hsr"/>
-                                            <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa CSDL" Click="BtnDeleteAsset_Click" Tag="hsr"/>
-                                        </StackPanel>
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="Honkai: Star Rail" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="10" Margin="0,1,0,0"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="🔄" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="hsr"/>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa CSDL" Click="BtnDeleteAsset_Click" Tag="hsr"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
                                     </Grid>
+                                </Border>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
-                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="Honkai: Star Rail" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="11" Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </Border>
+                                <!-- SLEEK DARK OVERLAY BORDER FRAME -->
+                                <Border BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" IsHitTestVisible="False" Panel.ZIndex="10"/>
+                            </Grid>
 
-                            <!-- CARD 2: GENSHIN -->
-                            <Border Style="{StaticResource HeroBannerGameCard}" MouseLeftButtonDown="GameCard_Click" Tag="genshin" ToolTip="Nhấp để tải hoặc quản lý CSDL">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"/>
-                                        <RowDefinition Height="1*"/>
-                                    </Grid.RowDefinitions>
+                            <!-- CARD 2: GENSHIN (UNINSTALLED GAME CARD WITH SMOOTH HOVER IMAGE ZOOM) -->
+                            <Grid Margin="0,0,8,0" MouseLeftButtonDown="GameCard_Click" MouseEnter="GameCard_MouseEnter" MouseLeave="GameCard_MouseLeave" Tag="genshin" Cursor="Hand">
+                                <!-- MAIN CARD CONTAINER -->
+                                <Border CornerRadius="8" Background="#181b26" ClipToBounds="True">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
-                                    <Grid Grid.Row="0">
-                                        <Image x:Name="ImgCardGenshin" Stretch="UniformToFill"/>
-                                        <Border Background="#10000000"/>
-                                        <!-- BOTTOM FADE GRADIENT OVERLAY -->
-                                        <Border VerticalAlignment="Bottom" Height="35">
+                                        <!-- HERO BANNER IMAGE CONTAINER (NATURALLY CLIPPED BY BORDER BACKGROUND TO 7PX CORNER RADIUS) -->
+                                        <Border Grid.Row="0" CornerRadius="7,7,0,0" ClipToBounds="True">
                                             <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Color="#00181b26" Offset="0"/>
-                                                    <GradientStop Color="#FF181b26" Offset="1"/>
-                                                </LinearGradientBrush>
+                                                <ImageBrush x:Name="ImgBrushGenshin" Stretch="UniformToFill">
+                                                    <ImageBrush.RelativeTransform>
+                                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5"/>
+                                                    </ImageBrush.RelativeTransform>
+                                                </ImageBrush>
                                             </Border.Background>
+                                            <Grid>
+                                                <Border Background="#10000000"/>
+                                                <!-- BOTTOM FADE GRADIENT OVERLAY -->
+                                                <Border VerticalAlignment="Bottom" Height="40">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#00181b26" Offset="0"/>
+                                                            <GradientStop Color="#FF181b26" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+
+                                                <!-- TOP-LEFT VERSION BADGE -->
+                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
+                                                </Border>
+                                            </Grid>
                                         </Border>
 
-                                        <!-- TOP-LEFT VERSION BADGE -->
-                                        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                            <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
-                                        </Border>
+                                        <!-- BOTTOM CARD INFO CONTAINER -->
+                                        <Border Grid.Row="1" Padding="8,4,8,6" VerticalAlignment="Center">
+                                            <Grid VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
 
-                                        <!-- TOP-RIGHT FLOATING GLASS ACTION BUTTONS -->
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8">
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL Genshin" Click="BtnOpenAddProject_Click" Tag="genshin"/>
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="🔄" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="genshin"/>
-                                            <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="genshin"/>
-                                        </StackPanel>
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="Genshin Impact" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL Genshin" Click="BtnOpenAddProject_Click" Tag="genshin"/>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="genshin"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
                                     </Grid>
+                                </Border>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
-                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="Genshin Impact" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </Border>
+                                <!-- SLEEK DARK OVERLAY BORDER FRAME -->
+                                <Border BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" IsHitTestVisible="False" Panel.ZIndex="10"/>
+                            </Grid>
 
-                            <!-- CARD 3: ZZZ -->
-                            <Border Style="{StaticResource HeroBannerGameCard}" MouseLeftButtonDown="GameCard_Click" Tag="zzz" ToolTip="Nhấp để tải hoặc quản lý CSDL">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="3*"/>
-                                        <RowDefinition Height="1*"/>
-                                    </Grid.RowDefinitions>
+                            <!-- CARD 3: ZZZ (UNINSTALLED GAME CARD WITH SMOOTH HOVER IMAGE ZOOM - NO RIGHT MARGIN) -->
+                            <Grid Margin="0" MouseLeftButtonDown="GameCard_Click" MouseEnter="GameCard_MouseEnter" MouseLeave="GameCard_MouseLeave" Tag="zzz" Cursor="Hand">
+                                <!-- MAIN CARD CONTAINER -->
+                                <Border CornerRadius="8" Background="#181b26" ClipToBounds="True">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
 
-                                    <!-- HERO BANNER IMAGE CONTAINER (EXACT 75% BANNER RATIO) -->
-                                    <Grid Grid.Row="0">
-                                        <Image x:Name="ImgCardZzz" Stretch="UniformToFill"/>
-                                        <Border Background="#10000000"/>
-                                        <!-- BOTTOM FADE GRADIENT OVERLAY -->
-                                        <Border VerticalAlignment="Bottom" Height="35">
+                                        <!-- HERO BANNER IMAGE CONTAINER (NATURALLY CLIPPED BY BORDER BACKGROUND TO 7PX CORNER RADIUS) -->
+                                        <Border Grid.Row="0" CornerRadius="7,7,0,0" ClipToBounds="True">
                                             <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Color="#00181b26" Offset="0"/>
-                                                    <GradientStop Color="#FF181b26" Offset="1"/>
-                                                </LinearGradientBrush>
+                                                <ImageBrush x:Name="ImgBrushZzz" Stretch="UniformToFill">
+                                                    <ImageBrush.RelativeTransform>
+                                                        <ScaleTransform ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5"/>
+                                                    </ImageBrush.RelativeTransform>
+                                                </ImageBrush>
                                             </Border.Background>
+                                            <Grid>
+                                                <Border Background="#10000000"/>
+                                                <!-- BOTTOM FADE GRADIENT OVERLAY -->
+                                                <Border VerticalAlignment="Bottom" Height="40">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#00181b26" Offset="0"/>
+                                                            <GradientStop Color="#FF181b26" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+
+                                                <!-- TOP-LEFT VERSION BADGE -->
+                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
+                                                </Border>
+                                            </Grid>
                                         </Border>
 
-                                        <!-- TOP-LEFT VERSION BADGE -->
-                                        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                            <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
-                                        </Border>
+                                        <!-- BOTTOM CARD INFO CONTAINER -->
+                                        <Border Grid.Row="1" Padding="8,4,8,6" VerticalAlignment="Center">
+                                            <Grid VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
 
-                                        <!-- TOP-RIGHT FLOATING GLASS ACTION BUTTONS -->
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8">
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL ZZZ" Click="BtnOpenAddProject_Click" Tag="zzz"/>
-                                            <Button Style="{StaticResource FloatingGlassBtn}" Content="🔄" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="zzz"/>
-                                            <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="zzz"/>
-                                        </StackPanel>
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="Zenless Zone Zero" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL ZZZ" Click="BtnOpenAddProject_Click" Tag="zzz"/>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="zzz"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
                                     </Grid>
+                                </Border>
 
-                                    <!-- CARD BOTTOM INFO CONTAINER (EXACT 25% LOWER AREA - PADDED ELEGANTLY) -->
-                                    <Border Grid.Row="1" Padding="12,4,12,8" VerticalAlignment="Center">
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="Zenless Zone Zero" Foreground="#f1f5f9" FontWeight="Bold" FontSize="13"/>
-                                            <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="11" Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </Border>
+                                <!-- SLEEK DARK OVERLAY BORDER FRAME -->
+                                <Border BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" IsHitTestVisible="False" Panel.ZIndex="10"/>
+                            </Grid>
                         </UniformGrid>
                     </Grid>
                 </Border>
@@ -502,8 +685,8 @@
                                 </Border>
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
-                                    <TextBlock Text="Dự Án Đã Sẵn Sàng" Foreground="#94a3b8" FontSize="10" FontWeight="SemiBold"/>
-                                    <TextBlock x:Name="TxtDbTotalSize" Text="169.6 MB Local Storage" Foreground="#F1F5F9" FontSize="13" FontWeight="Bold" Margin="0,1,0,0"/>
+                                    <TextBlock Text="Dự án sẵn sàng" Foreground="#94a3b8" FontSize="10" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="TxtDbTotalSize" Text="169.6 MB" Foreground="#F1F5F9" FontSize="13" FontWeight="Bold" Margin="0,1,0,0"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -524,7 +707,7 @@
                             </StackPanel>
 
                             <!-- DONUT CHART (CLEAN MINIMALIST INTERACTIVE HOVER) + BOTTOM LEGEND -->
-                            <Grid x:Name="Card2BGrid" Grid.Row="1">
+                            <Grid x:Name="Card2BGrid" Grid.Row="1" ClipToBounds="False">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
@@ -546,29 +729,12 @@
                                                 </Setter>
                                             </Style>
 
-                                            <!-- STYLE SLICE 1: PURPLE (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <!-- STYLE SLICE 1: PURPLE (VIBRANT INTERACTIVE HOVER FOCUS) -->
                                             <Style x:Key="PurpleSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
                                                 <Style.Triggers>
-                                                    <EventTrigger RoutedEvent="MouseEnter">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                    <EventTrigger RoutedEvent="MouseLeave">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Opacity" Value="1.0"/>
                                                         <Setter Property="Effect">
                                                             <Setter.Value>
                                                                 <DropShadowEffect Color="#c084fc" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
@@ -578,29 +744,12 @@
                                                 </Style.Triggers>
                                             </Style>
 
-                                            <!-- STYLE SLICE 2: GREEN (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <!-- STYLE SLICE 2: GREEN (VIBRANT INTERACTIVE HOVER FOCUS) -->
                                             <Style x:Key="GreenSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
                                                 <Style.Triggers>
-                                                    <EventTrigger RoutedEvent="MouseEnter">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                    <EventTrigger RoutedEvent="MouseLeave">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Opacity" Value="1.0"/>
                                                         <Setter Property="Effect">
                                                             <Setter.Value>
                                                                 <DropShadowEffect Color="#10b981" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
@@ -610,29 +759,12 @@
                                                 </Style.Triggers>
                                             </Style>
 
-                                            <!-- STYLE SLICE 3: YELLOW (SMOOTH STORYBOARD FOCUS & DIMMING) -->
+                                            <!-- STYLE SLICE 3: YELLOW (VIBRANT INTERACTIVE HOVER FOCUS) -->
                                             <Style x:Key="YellowSliceStyle" TargetType="Path" BasedOn="{StaticResource PieSlicePathStyle}">
                                                 <Style.Triggers>
-                                                    <EventTrigger RoutedEvent="MouseEnter">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18" DecelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                    <EventTrigger RoutedEvent="MouseLeave">
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18" AccelerationRatio="0.3"/>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.18"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter Property="Panel.ZIndex" Value="99"/>
+                                                        <Setter Property="Opacity" Value="1.0"/>
                                                         <Setter Property="Effect">
                                                             <Setter.Value>
                                                                 <DropShadowEffect Color="#eab308" BlurRadius="28" ShadowDepth="0" Opacity="0.95"/>
@@ -647,74 +779,48 @@
                                         <Ellipse Width="260" Height="260" Fill="#181b26" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                                         <!-- SLICE 1: SOLID TEXTMAP 70% (PURPLE - 260PX DIAMETER) -->
-                                        <Path x:Name="Slice1" Style="{StaticResource PurpleSliceStyle}" Fill="#c084fc" Data="M 140,140 L 140,10 A 130,130 0 1 1 16.36,180.17 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="TextMap|70%|#c084fc" MouseEnter="PieSlice_MouseEnter"/>
+                                        <Path x:Name="Slice1" Style="{StaticResource PurpleSliceStyle}" Fill="#c084fc" Data="M 140,140 L 140,10 A 130,130 0 1 1 16.36,180.17 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Tệp Văn Bản|70%|#c084fc" MouseEnter="PieSlice_MouseEnter" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
 
                                         <!-- SLICE 2: SOLID INDEX DB 22% (GREEN - 260PX DIAMETER) -->
-                                        <Path x:Name="Slice2" Style="{StaticResource GreenSliceStyle}" Fill="#10b981" Data="M 140,140 L 16.36,180.17 A 130,130 0 0 1 77.37,26.08 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Index DB|22%|#10b981" MouseEnter="PieSlice_MouseEnter"/>
+                                        <Path x:Name="Slice2" Style="{StaticResource GreenSliceStyle}" Fill="#10b981" Data="M 140,140 L 16.36,180.17 A 130,130 0 0 1 77.37,26.08 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Chỉ Mục CSDL|22%|#10b981" MouseEnter="PieSlice_MouseEnter" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
 
                                         <!-- SLICE 3: SOLID WIKI CACHE 8% (YELLOW - 260PX DIAMETER) -->
-                                        <Path x:Name="Slice3" Style="{StaticResource YellowSliceStyle}" Fill="#eab308" Data="M 140,140 L 77.37,26.08 A 130,130 0 0 1 140,10 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Wiki Cache|8%|#eab308" MouseEnter="PieSlice_MouseEnter"/>
-
-                                        <Grid.Triggers>
-                                            <!-- WHEN MOUSE ENTERS CHART CANVAS, IMMEDIATELY DIM ALL SLICES ON FIRST TOUCH -->
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.12"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.12"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="Opacity" To="0.30" Duration="0:0:0.15"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-
-                                            <!-- WHEN MOUSE LEAVES CHART CANVAS, RESTORE ALL SLICES BACK TO 100% OPACITY & 1.0 SCALE -->
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice1" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice2" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.18"/>
-                                                        <DoubleAnimation Storyboard.TargetName="Slice3" Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.18"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Grid.Triggers>
+                                        <Path x:Name="Slice3" Style="{StaticResource YellowSliceStyle}" Fill="#eab308" Data="M 140,140 L 77.37,26.08 A 130,130 0 0 1 140,10 Z" Width="280" Height="280" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="Bộ Nhớ Wiki|8%|#eab308" MouseEnter="PieSlice_MouseEnter" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                            </Path.RenderTransform>
+                                        </Path>
                                     </Grid>
                                 </Viewbox>
-
-                                        <!-- HIGH-PERFORMANCE UNCLIPPED REALTIME MOUSE-FOLLOWING TOOLTIP OVERLAY CARD -->
-                                <Border x:Name="PieToolTipCard" Visibility="Collapsed" IsHitTestVisible="False" Background="#121318" BorderBrush="#3b82f6" BorderThickness="1.5" CornerRadius="5" Padding="9,5" Panel.ZIndex="9999" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Border.Effect>
-                                        <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="3" Opacity="0.8"/>
-                                    </Border.Effect>
-                                    <TextBlock x:Name="ToolTipPercent" Text="70%" Foreground="#ffffff" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center"/>
-                                </Border>
 
                                 <!-- LEGEND DETAILS (RESTORED WITH MB SIZES AS USUAL) -->
                                 <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,6,0,6">
                                     <!-- ITEM 1 -->
                                     <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#c084fc" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                        <TextBlock Text="TextMap " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Tệp Văn Bản " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
                                         <TextBlock Text="118.5 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
 
                                     <!-- ITEM 2 -->
                                     <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#10b981" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                        <TextBlock Text="Index DB " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Chỉ Mục CSDL " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
                                         <TextBlock Text="38.2 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
 
                                     <!-- ITEM 3 -->
                                     <StackPanel Orientation="Horizontal">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#eab308" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                        <TextBlock Text="Wiki Cache " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock Text="Bộ Nhớ Wiki " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
                                         <TextBlock Text="12.9 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
                                 </WrapPanel>
@@ -746,19 +852,19 @@
                                 <Path Data="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" Fill="#f59e0b" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0" VerticalAlignment="Center"/>
                                 <TextBlock Text="Hoạt Động Gần Đây" Style="{StaticResource SectionTitle}"/>
                             </StackPanel>
-                            <TextBlock Text="Xem tất cả" Foreground="#38bdf8" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Right" Cursor="Hand" VerticalAlignment="Center"/>
                         </Grid>
 
                         <!-- RECENT FILES LISTVIEW (60% ROW HEIGHT SPLIT) -->
-                        <ListView x:Name="LvRecentFiles" Grid.Row="1" Background="Transparent" BorderThickness="0" Foreground="#d1d5db" FontSize="12" Padding="0" MouseDoubleClick="LvRecentFiles_MouseDoubleClick">
+                        <ListView x:Name="LvRecentFiles" Grid.Row="1" Background="Transparent" BorderThickness="0" Foreground="#d1d5db" FontSize="12" Padding="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Background" Value="Transparent"/>
                                     <Setter Property="Margin" Value="0,0,0,6"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListViewItem">
-                                                <Border x:Name="rowBorder" Background="#181b26" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="6" Padding="10,8">
+                                                <Border x:Name="rowBorder" Background="#181b26" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="6" Padding="10,8" MouseLeftButtonUp="RecentRow_Click" Cursor="Hand">
                                                     <ContentPresenter/>
                                                 </Border>
                                                 <ControlTemplate.Triggers>
@@ -780,7 +886,7 @@
                                             <ColumnDefinition Width="2.5*"/>
                                             <ColumnDefinition Width="1.2*"/>
                                             <ColumnDefinition Width="110"/>
-                                            <ColumnDefinition Width="70"/>
+                                            <ColumnDefinition Width="65"/>
                                         </Grid.ColumnDefinitions>
 
                                         <!-- LOẠI PILL BADGE -->
@@ -799,8 +905,8 @@
 
                                         <!-- HÀNH ĐỘNG -->
                                         <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Style="{StaticResource IconBtn}" Content="✏️" ToolTip="Chỉnh sửa" Click="BtnEditRecent_Click" Tag="{Binding Path}"/>
-                                            <Button Style="{StaticResource IconBtn}" Content="🗑️" ToolTip="Xóa" Click="BtnDeleteAsset_Click" Tag="{Binding Path}"/>
+                                            <Button Style="{StaticResource IconBtn}" Content="📝" Click="BtnRenameRecent_Click" Tag="{Binding Path}"/>
+                                            <Button Style="{StaticResource IconBtn}" Content="🗑️" Click="BtnDeleteRecent_Click" Tag="{Binding Path}"/>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -822,36 +928,47 @@
                         <Grid Grid.Row="0" Margin="0,0,0,8">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Fill="#8b5cf6" Width="14" Height="14" Stretch="Uniform" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Thống Kê Fandom Wiki" Style="{StaticResource SectionTitle}"/>
+                                <TextBlock Text="Thống Kê Fandom Wiki" Style="{StaticResource SectionTitle}" FontFamily="Google Sans Display, Google Sans, Inter, Plus Jakarta Sans, Segoe UI"/>
                             </StackPanel>
 
-                            <!-- TAB SWITCHER BUTTONS (SEAMLESS EQUAL-WIDTH SEGMENTED PILL SWITCHER) -->
-                            <Border HorizontalAlignment="Right" Background="#0f172a" BorderBrush="#1e293b" BorderThickness="1" CornerRadius="6" Padding="2">
-                                <UniformGrid Columns="2" Width="168">
-                                    <Button x:Name="BtnFandomTabArticles" Click="BtnFandomTabArticles_Click" Content="Bài viết" Cursor="Arrow" Height="25" FontSize="11" FontWeight="Bold" Foreground="#0f172a" Background="#38bdf8" BorderThickness="0">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                    <Button x:Name="BtnFandomTabUsers" Click="BtnFandomTabUsers_Click" Content="Người dùng" Cursor="Hand" Height="25" FontSize="11" FontWeight="SemiBold" Foreground="#94a3b8" Background="Transparent" BorderThickness="0">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </UniformGrid>
-                            </Border>
+                            <!-- TAB SWITCHER BUTTONS (MINIMAL TRADING DASHBOARD UNDERLINE STYLE) -->
+                            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Width="170">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="2"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="BtnFandomTabArticles" Grid.Row="0" Grid.Column="0" Click="BtnFandomTabArticles_Click" Content="BÀI VIẾT" Cursor="Arrow" FontSize="11" FontWeight="Bold" Foreground="#38bdf8" Background="Transparent" BorderThickness="0" Padding="0,4,0,6" HorizontalAlignment="Stretch">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="Transparent" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button x:Name="BtnFandomTabUsers" Grid.Row="0" Grid.Column="1" Click="BtnFandomTabUsers_Click" Content="NGƯỜI DÙNG" Cursor="Hand" FontSize="11" FontWeight="SemiBold" Foreground="#64748b" Background="Transparent" BorderThickness="0" Padding="0,4,0,6" HorizontalAlignment="Stretch">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="Transparent" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Rectangle x:Name="LineTabArticles" Grid.Row="1" Grid.Column="0" Height="2" Fill="#38bdf8" VerticalAlignment="Bottom"/>
+                                <Rectangle x:Name="LineTabUsers" Grid.Row="1" Grid.Column="1" Height="2" Fill="#1e293b" VerticalAlignment="Bottom"/>
+                            </Grid>
                         </Grid>
 
-                        <!-- CHART AREA: HORIZONTAL CLUSTERED BAR CHART (FILLS FULL CARD HEIGHT) -->
-                        <Grid Grid.Row="1" Margin="0,4,0,0">
+                        <!-- CHART AREA: HORIZONTAL CLUSTERED BAR CHART (SMOOTH ULTRA-ANTIALIASED IDEAL RENDERING) -->
+                        <Grid Grid.Row="1" Margin="0,4,0,0" UseLayoutRounding="True" SnapsToDevicePixels="True" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto">
                             <!-- BACKGROUND VERTICAL GRIDLINES AT EACH X-AXIS TICK (STRETCHES FULL CHART HEIGHT) -->
                             <Grid Margin="38,4,10,24" Panel.ZIndex="0">
                                 <Grid.ColumnDefinitions>
@@ -882,15 +999,15 @@
                                 <!-- CLUSTERED ROW 1: GENSHIN IMPACT -->
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR GI (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR GI (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowGiArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowGiArticles" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <!-- BAR EN (40.6K / 50K = 81.2%) -->
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
@@ -915,15 +1032,15 @@
                                 <!-- CLUSTERED ROW 2: HONKAI STAR RAIL -->
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR HSR (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR HSR (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowHsrArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowHsrArticles" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <!-- BAR EN (16.7K / 50K = 33.4%) -->
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
@@ -948,15 +1065,15 @@
                                 <!-- CLUSTERED ROW 3: ZENLESS ZONE ZERO -->
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR ZZZ (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR ZZZ (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowZzzArticles" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowZzzArticles" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <!-- BAR EN (12.7K / 50K = 25.4%) -->
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
@@ -1012,15 +1129,15 @@
                                 <!-- CLUSTERED ROW 1: GENSHIN IMPACT USERS -->
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR GI (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR GI (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="GI" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowGiUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowGiUsers" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="340*"/>
@@ -1043,15 +1160,15 @@
                                 <!-- CLUSTERED ROW 2: HONKAI STAR RAIL USERS -->
                                 <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR HSR (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR HSR (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="HSR" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowHsrUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowHsrUsers" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="280*"/>
@@ -1074,15 +1191,15 @@
                                 <!-- CLUSTERED ROW 3: ZENLESS ZONE ZERO USERS -->
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="32"/>
+                                        <ColumnDefinition Width="38"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- ROBOTO SLATE GRAY STYLED Y-AXIS LABEL FOR ZZZ (STATIC) -->
-                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Roboto, Segoe UI" Foreground="#94a3b8" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                    <!-- INTER SEMIBOLD SOFT SLATE WHITE Y-AXIS LABEL FOR ZZZ (CLEARTYPE DISPLAY) -->
+                                    <TextBlock Grid.Column="0" Text="ZZZ" FontFamily="Inter, Google Sans, Segoe UI" Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
-                                    <!-- CLUSTERED BARS AREA (ANIMATED BARS ONLY) -->
-                                    <StackPanel x:Name="BarsRowZzzUsers" Grid.Column="1" VerticalAlignment="Center" Margin="6,0,10,0">
+                                    <!-- CLUSTERED BARS AREA (ALIGNED PIXEL-PERFECTLY WITH 0 GRIDLINE AT 38PX) -->
+                                    <StackPanel x:Name="BarsRowZzzUsers" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                                         <Grid Height="22" Margin="0,0,0,6">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="190*"/>
@@ -1142,66 +1259,135 @@
         </Grid>
 
         <!-- DOWNLOAD PROJECT MODAL (COMPACT SLEEK LAYOUT WITH PURE DARK COMBOBOX) -->
-        <Border x:Name="AddProjectModalOverlay" Visibility="Collapsed" Background="#c0000000">
-            <Border Style="{StaticResource DashCard}" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+        <!-- SLEEK DARK VERTICAL STACKED DOWNLOAD PROJECT MODAL OVERLAY -->
+        <Border x:Name="AddProjectModalOverlay" Visibility="Collapsed" Background="#c0090b10">
+            <Border Background="#14161f" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" Width="480" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="10" Opacity="0.75"/>
+                </Border.Effect>
+                <StackPanel>
+                    <!-- TITLE HEADER WITH CLOSE X BUTTON -->
+                    <Grid>
+                        <TextBlock x:Name="TxtModalGameTitle" Text="Chọn nguồn tải xuống" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseAddProjectModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                    </Grid>
+                    
+                    <!-- FIELD LABEL & COMBOBOX -->
+                    <TextBlock Text="Hãy chọn một trong danh sách:" Foreground="#94a3b8" FontSize="13" Margin="0,14,0,8"/>
+                    <ComboBox x:Name="CboDownloadSource" Style="{StaticResource DarkComboBoxStyle}" SelectedIndex="0" Margin="0,0,0,8">
+                        <ComboBoxItem Content="GitLab (AnimeGameData - Mặc định)"/>
+                        <ComboBoxItem Content="Saccharose Wiki (Dynamic API - Khuyên dùng)"/>
+                        <ComboBoxItem Content="Chạy thử (Mock Download - Không cần mạng)"/>
+                    </ComboBox>
 
-                    <!-- HEADER -->
-                    <Border Grid.Row="0" Background="#1a1d23" Padding="20,14" BorderBrush="#1e293b" BorderThickness="0,0,0,1">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="☁️ " FontSize="14"/>
-                                <TextBlock x:Name="TxtModalGameTitle" Text="TẢI DỰ ÁN ZENLESS ZONE ZERO" Foreground="White" FontWeight="Bold" FontSize="14" FontFamily="Segoe UI"/>
-                            </StackPanel>
-                            <Button Content="✕" Foreground="#9ca3af" Background="Transparent" BorderThickness="0" FontSize="16" HorizontalAlignment="Right" Cursor="Hand" Click="CloseAddProjectModal_Click"/>
+                    <!-- DYNAMIC PROGRESS AREA -->
+                    <StackPanel x:Name="ProgressArea" Visibility="Collapsed" Margin="0,10,0,4">
+                        <Grid Margin="0,0,0,8">
+                            <TextBlock x:Name="TxtProgressStatus" Text="Khởi động tải..." Foreground="#f1f5f9" FontSize="12" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtProgressPercent" Text="0%" Foreground="#38bdf8" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"/>
                         </Grid>
-                    </Border>
+                        <ProgressBar x:Name="PbOverall" Value="0" Height="6" Background="#0f172a" Foreground="#3b82f6" BorderThickness="0"/>
+                    </StackPanel>
 
-                    <!-- BODY -->
-                    <Border Grid.Row="1" Padding="20,16,20,12">
-                        <StackPanel>
-                            <TextBlock Text="CHỌN NGUỒN TẢI (DOWNLOAD SOURCE):" Foreground="#94a3b8" FontSize="10" FontWeight="Bold" Margin="0,0,0,8"/>
-                            
-                            <!-- PURE DARK COMBOBOX -->
-                            <ComboBox x:Name="CboDownloadSource" Style="{StaticResource DarkComboBoxStyle}" SelectedIndex="0" Margin="0,0,0,8">
-                                <ComboBoxItem Content="GitLab (AnimeGameData - Mặc định)"/>
-                                <ComboBoxItem Content="Saccharose Wiki (Dynamic API - Khuyên dùng)"/>
-                                <ComboBoxItem Content="Chạy thử (Mock Download - Không cần mạng)"/>
-                            </ComboBox>
-
-                            <!-- DYNAMIC PROGRESS AREA (HIDDEN UNTIL CLICKING TẢI VỀ) -->
-                            <StackPanel x:Name="ProgressArea" Visibility="Collapsed" Margin="0,8,0,4">
-                                <Grid Margin="0,0,0,8">
-                                    <TextBlock x:Name="TxtProgressStatus" Text="KHỞI ĐỘNG TẢI..." Foreground="White" FontSize="12" FontWeight="Bold"/>
-                                    <TextBlock x:Name="TxtProgressPercent" Text="0%" Foreground="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                </Grid>
-                                <ProgressBar x:Name="PbOverall" Value="0" Height="4" Background="#0f172a" Foreground="#3b82f6" BorderThickness="0"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- FOOTER WITH ANIMATED HOVER BUTTONS -->
-                    <Border Grid.Row="2" Background="#14161f" Padding="20,12" BorderBrush="#1e293b" BorderThickness="0,1,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <!-- LEFT: DỪNG LẠI (HEIGHT 42 & HOVER EFFECT) -->
-                            <Button Grid.Column="0" x:Name="BtnStopDownload" Style="{StaticResource ModalFooterBtn}" Content="DỪNG LẠI" Margin="0,0,8,0" Click="CloseAddProjectModal_Click"/>
-
-                            <!-- RIGHT: TẢI VỀ / ĐANG TẢI... (HEIGHT 42 & HOVER EFFECT) -->
-                            <Button Grid.Column="1" x:Name="BtnConfirmDownload" Style="{StaticResource ModalPrimaryBtn}" Content="TẢI VỀ" Margin="8,0,0,0" Click="StartDownloadFromModal_Click"/>
-                        </Grid>
-                    </Border>
-                </Grid>
+                    <!-- BOTTOM FOOTER BUTTONS -->
+                    <Grid Margin="0,22,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" x:Name="BtnStopDownload" Style="{StaticResource ModalPillFooterBtn}" Content="Hủy" Click="CloseAddProjectModal_Click" Margin="0,0,6,0" HorizontalAlignment="Stretch"/>
+                        <Button Grid.Column="1" x:Name="BtnConfirmDownload" Style="{StaticResource ModalPillDangerBtn}" Content="Tải về" Click="StartDownloadFromModal_Click" Margin="6,0,0,0" HorizontalAlignment="Stretch"/>
+                    </Grid>
+                </StackPanel>
             </Border>
+        </Border>
+
+        <!-- SLEEK DARK VERTICAL STACKED RENAME FILE MODAL OVERLAY -->
+        <Border x:Name="RenameModalOverlay" Visibility="Collapsed" Background="#c0090b10">
+            <Border Background="#14161f" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" Width="440" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="10" Opacity="0.75"/>
+                </Border.Effect>
+                <StackPanel>
+                    <!-- TITLE HEADER WITH CLOSE X BUTTON -->
+                    <Grid>
+                        <TextBlock Text="Đổi tên tệp bản thảo" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseRenameModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                    </Grid>
+                    
+                    <!-- FIELD LABEL & INPUT -->
+                    <TextBlock Text="Nhập tên tệp mới:" Foreground="#94a3b8" FontSize="13" Margin="0,14,0,8"/>
+                    <Border Background="#181a20" BorderBrush="#2d3142" BorderThickness="1" CornerRadius="6" Height="40" Padding="4,0">
+                        <TextBox x:Name="TxtRenameInput" Background="Transparent" Foreground="#e2e8f0" BorderThickness="0" Padding="8,0" FontSize="13" VerticalContentAlignment="Center"/>
+                    </Border>
+
+                    <!-- BOTTOM FOOTER BUTTONS -->
+                    <Grid Margin="0,22,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource ModalPillFooterBtn}" Content="Hủy" Click="CloseRenameModal_Click" Margin="0,0,6,0" HorizontalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Style="{StaticResource ModalPillDangerBtn}" Content="Lưu đổi tên" Click="ConfirmRenameModal_Click" Margin="6,0,0,0" HorizontalAlignment="Stretch"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- SLEEK DARK VERTICAL STACKED DELETE CONFIRMATION MODAL OVERLAY (SUBTLE CURVED CORNERS) -->
+        <Border x:Name="DeleteModalOverlay" Visibility="Collapsed" Background="#c0090b10">
+            <Border Background="#14161f" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" Width="440" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="10" Opacity="0.75"/>
+                </Border.Effect>
+                <StackPanel>
+                    <!-- TITLE HEADER WITH CLOSE X BUTTON -->
+                    <Grid>
+                        <TextBlock x:Name="TxtDeleteModalTitle" Text="Xóa tệp bản thảo?" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseDeleteModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                    </Grid>
+                    
+                    <!-- MESSAGE SUBTITLE -->
+                    <TextBlock x:Name="TxtDeleteModalMessage" Text="Bạn có chắc chắn muốn xóa tệp này không?" Foreground="#94a3b8" FontSize="13" TextWrapping="Wrap" Margin="0,8,0,0" LineHeight="19"/>
+                    
+                    <!-- BOTTOM FOOTER BUTTONS -->
+                    <Grid Margin="0,22,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource ModalPillFooterBtn}" Content="Hủy" Click="CloseDeleteModal_Click" Margin="0,0,6,0" HorizontalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Style="{StaticResource ModalPillDangerBtn}" Content="Xóa" Click="ConfirmDeleteModal_Click" Margin="6,0,0,0" HorizontalAlignment="Stretch"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- SLEEK DARK VERTICAL STACKED ALERT / NOTIFICATION MODAL OVERLAY -->
+        <Border x:Name="AlertModalOverlay" Visibility="Collapsed" Background="#c0090b10">
+            <Border Background="#14161f" BorderBrush="#252a3b" BorderThickness="1" CornerRadius="8" Width="440" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="10" Opacity="0.75"/>
+                </Border.Effect>
+                <StackPanel>
+                    <!-- TITLE -->
+                    <TextBlock x:Name="TxtAlertModalTitle" Text="Thông báo" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI"/>
+                    
+                    <!-- MESSAGE CONTENT -->
+                    <TextBlock x:Name="TxtAlertModalMessage" Text="Nội dung thông báo..." Foreground="#94a3b8" FontSize="13" TextWrapping="Wrap" Margin="0,10,0,0" LineHeight="19"/>
+                    
+                    <!-- BOTTOM SINGLE FULL-WIDTH OK BUTTON -->
+                    <Button Style="{StaticResource ModalPillDangerBtn}" Content="Đồng ý" Click="CloseAlertModal_Click" Margin="0,22,0,0" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- TOPMOST REALTIME MOUSE-FOLLOWING TOOLTIP OVERLAY CARD (ABOVE ALL LAYERS) -->
+        <Border x:Name="PieToolTipCard" Visibility="Collapsed" IsHitTestVisible="False" Background="#121318" BorderBrush="#3b82f6" BorderThickness="1.5" CornerRadius="6" Padding="10,4" Panel.ZIndex="99999" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="12" ShadowDepth="3" Opacity="0.8"/>
+            </Border.Effect>
+            <TextBlock x:Name="ToolTipPercent" Text="70%" Foreground="#ffffff" FontSize="12.5" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Border>
     </Grid>
 </UserControl>
