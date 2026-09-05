@@ -1,6 +1,7 @@
 <UserControl x:Class="EtherEditorNative.Views.TranslateView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EtherEditorNative.Views"
              Background="#1e1e1e"
              FontFamily="Segoe UI, Inter, Roboto, Arial, sans-serif"
              UseLayoutRounding="True"
@@ -10,6 +11,12 @@
              Loaded="UserControl_Loaded">
 
     <UserControl.Resources>
+        <!-- GLOBAL TEXTBOX STYLE (BRIGHT WHITE CARET ON DARK BACKGROUND) -->
+        <Style TargetType="TextBox">
+            <Setter Property="CaretBrush" Value="#ffffff"/>
+            <Setter Property="SelectionBrush" Value="#264f78"/>
+        </Style>
+
         <!-- VS CODE SUB-MENU BUTTON STYLE -->
         <Style x:Key="VsMenuBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -39,22 +46,22 @@
         <!-- VS CODE RIBBON VERTICAL BUTTON STYLE -->
         <Style x:Key="VsRibbonBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#cccccc"/>
+            <Setter Property="Foreground" Value="#858585"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="60"/>
-            <Setter Property="Padding" Value="0,6"/>
-            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="72"/>
+            <Setter Property="Height" Value="63"/>
+            <Setter Property="Padding" Value="0,4,0,2"/>
+            <Setter Property="Margin" Value="8,0"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#3c3c3c"/>
+                                <Setter TargetName="border" Property="Background" Value="Transparent"/>
                                 <Setter Property="Foreground" Value="#ffffff"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -65,23 +72,24 @@
 
         <!-- VS CODE AI ASSISTANT BLUE BUTTON STYLE -->
         <Style x:Key="VsRibbonAiBtn" TargetType="Button">
-            <Setter Property="Background" Value="#007acc"/>
-            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#007acc"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="80"/>
-            <Setter Property="Padding" Value="0,6"/>
-            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="96"/>
+            <Setter Property="Height" Value="63"/>
+            <Setter Property="Padding" Value="0,4,0,2"/>
+            <Setter Property="Margin" Value="8,0"/>
             <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#0062a3"/>
+                                <Setter TargetName="border" Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="#3399ff"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -115,6 +123,37 @@
             </Setter>
         </Style>
 
+        <!-- VS CODE TAB ADD BUTTON STYLE (FLUSH VERTICALLY BETWEEN TOOLBAR BOTTOM & EDITOR CEILING) -->
+        <Style x:Key="VsTabAddBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2a2d2e"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#007acc"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- INTEGRATED INPUT ACTION BUTTON (FILLS RIGHT SECTION OF INPUT BOX FLUSH - MATCHING USER SPECIFICATION) -->
         <Style x:Key="VsInputIntegratedBtn" TargetType="Button">
             <Setter Property="Background" Value="#484d57"/>
@@ -139,6 +178,23 @@
             </Setter>
         </Style>
 
+        <!-- INTEGRATED INPUT CONTAINER BORDER STYLE WITH BLUE FOCUS HIGHLIGHT -->
+        <Style x:Key="VsInputContainerBorder" TargetType="Border">
+            <Setter Property="Background" Value="#2d3036"/>
+            <Setter Property="BorderBrush" Value="#3c3f47"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="BorderBrush" Value="#007acc"/>
+                    <Setter Property="Background" Value="#252830"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <!-- VS CODE DARK COMBOBOX TOGGLE BUTTON -->
         <ControlTemplate x:Key="VsComboToggleButton" TargetType="ToggleButton">
             <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
@@ -155,18 +211,50 @@
                     <Setter TargetName="templateRoot" Property="BorderBrush" Value="#007acc"/>
                     <Setter TargetName="arrow" Property="Fill" Value="#ffffff"/>
                 </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="templateRoot" Property="BorderBrush" Value="#007acc"/>
+                    <Setter TargetName="arrow" Property="Fill" Value="#ffffff"/>
+                </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+        <!-- VS CODE DARK COMBOBOX ITEM STYLE -->
+        <Style x:Key="VsDarkComboItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#37373d"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#04395e"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!-- VS CODE DARK COMBOBOX STYLE -->
         <Style x:Key="VsDarkComboStyle" TargetType="ComboBox">
             <Setter Property="Background" Value="#3c3c3c"/>
-            <Setter Property="Foreground" Value="#cccccc"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="BorderBrush" Value="#3c3c3c"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource VsDarkComboItemStyle}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -200,7 +288,73 @@
                                         CornerRadius="4" 
                                         Margin="0,2,0,0" 
                                         Width="{Binding ActualWidth, ElementName=mainGrid}">
-                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#252526" Foreground="#cccccc" MaxHeight="220">
+                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#252526" Foreground="#ffffff" MaxHeight="220">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VS CODE STATUS BAR TRANSPARENT COMBOBOX STYLE (NO DARK BOX FRAME) -->
+        <Style x:Key="VsStatusComboStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="2,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource VsDarkComboItemStyle}"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid x:Name="mainGrid" VerticalAlignment="Center">
+                            <ToggleButton x:Name="toggleButton" 
+                                          Focusable="False" 
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent" BorderThickness="0" Padding="0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="14"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Path Grid.Column="1" Data="M 0 0 L 3.5 3.5 L 7 0 Z" Fill="#ffffff" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              Content="{TemplateBinding SelectionBoxItem}" 
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                              HorizontalAlignment="Left" 
+                                              VerticalAlignment="Center" 
+                                              Margin="2,0,14,0" 
+                                              IsHitTestVisible="False"/>
+
+                            <Popup x:Name="PART_Popup" 
+                                   AllowsTransparency="True" 
+                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                                   Placement="Custom" 
+                                   PlacementTarget="{Binding ElementName=mainGrid}"
+                                   PopupAnimation="Fade">
+                                <Border x:Name="dropDownBorder" 
+                                        Background="#252526" 
+                                        BorderBrush="#3c3c3c" 
+                                        BorderThickness="1" 
+                                        CornerRadius="4" 
+                                        Margin="0" 
+                                        HorizontalAlignment="Left"
+                                        MinWidth="170">
+                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#252526" Foreground="#ffffff" MaxHeight="220">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
                                     </ScrollViewer>
                                 </Border>
@@ -250,7 +404,7 @@
         <!-- 2. VS CODE MAIN EDITOR LAYOUT (SPLIT INTO SIDEBAR & MAIN AREA) -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280"/>
+                <ColumnDefinition x:Name="SidebarColumn" Width="280"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -262,31 +416,52 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- SECTION 1: QUY TRÌNH XUẤT BẢN -->
-                    <Border Grid.Row="0" Padding="14">
-                        <StackPanel>
-                            <Grid Margin="0,0,0,12">
-                                <TextBlock Text="QUY TRÌNH XUẤT BẢN" Foreground="#bbbbbb" FontSize="11.5" FontWeight="Bold" FontFamily="Segoe UI"/>
-                                <Button Style="{StaticResource VsMenuBtn}" Content="«" HorizontalAlignment="Right" Padding="6,2" FontSize="12" ToolTip="Thu gọn sidebar"/>
-                            </Grid>
+                    <!-- TOP SIDEBAR HEADER BAR (ALWAYS VISIBLE) -->
+                    <Border Grid.Row="0" Padding="14,12,12,12">
+                        <Grid>
+                            <TextBlock x:Name="TxtSidebarTitle" Text="QUY TRÌNH XUẤT BẢN" Foreground="#cccccc" FontSize="11.5" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                            <Button x:Name="BtnToggleSidebar" Style="{StaticResource VsSidebarBtn}" Width="28" Height="28" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnToggleSidebar_Click" ToolTip="Thu gọn quy trình xuất bản">
+                                <Viewbox Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Canvas Width="24" Height="24">
+                                        <Path x:Name="PathToggleSidebar" Data="M 12 5 L 6 12 L 12 19 M 18 5 L 12 12 L 18 19" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </Border>
 
+                    <!-- SCROLLABLE SIDEBAR CONTENT (COLLAPSED WHEN SIDEBAR IS COLLAPSED) -->
+                    <ScrollViewer x:Name="SidebarScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="14,0,14,14">
                             <!-- BƯỚC 1: CHỌN GAME -->
-                            <TextBlock Text="1. CHỌN GAME:" Foreground="#858585" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                            <ComboBox x:Name="CmbGameSelect" Style="{StaticResource VsDarkComboStyle}" SelectedIndex="0" Margin="0,0,0,12" SelectionChanged="CmbGameSelect_SelectionChanged">
+                            <TextBlock Text="1. CHỌN GAME:" Foreground="#858585" FontSize="11" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <ComboBox x:Name="CmbGameSelect" Style="{StaticResource VsDarkComboStyle}" SelectedIndex="0" Margin="0,0,0,14" SelectionChanged="CmbGameSelect_SelectionChanged">
                                 <ComboBoxItem Content="Honkai: Star Rail" IsSelected="True" Tag="hsr"/>
                                 <ComboBoxItem Content="Genshin Impact" Tag="genshin"/>
                                 <ComboBoxItem Content="Zenless Zone Zero" Tag="zzz"/>
                             </ComboBox>
 
                             <!-- BƯỚC 2: TIÊU ĐỀ ANH -->
-                            <TextBlock Text="2. TIÊU ĐỀ ANH (SOURCE):" Foreground="#858585" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                            <Border Background="#2d3036" BorderBrush="#3c3f47" BorderThickness="1" CornerRadius="6" Height="36" Padding="0" ClipToBounds="True" Margin="0,0,0,12">
+                            <TextBlock Text="2. TIÊU ĐỀ ANH (SOURCE):" Foreground="#858585" FontSize="11" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="38"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TxtTitleEn" Background="Transparent" Foreground="#d0d4dc" BorderThickness="0" FontSize="12.5" Padding="10,0,6,0" VerticalContentAlignment="Center" Text="Tên bài Anh..."/>
+                                    <TextBox x:Name="TxtTitleEn" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="12,0,6,0" VerticalContentAlignment="Center"/>
+                                    <TextBlock x:Name="TxtTitleEnPlaceholder" Text="Tên bài Anh..." Foreground="#777777" FontSize="13" Margin="14,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=TxtTitleEn}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                     <Button x:Name="BtnFetchEn" Grid.Column="1" Click="BtnFetchEn_Click" Style="{StaticResource VsInputIntegratedBtn}" ToolTip="Tải từ Wiki EN">
                                         <Canvas Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Path Data="M 8 2 L 8 10 M 5 7 L 8 10 L 11 7 M 3 13 L 13 13 L 13 15 L 3 15 Z" Stroke="#ffffff" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
@@ -296,14 +471,26 @@
                             </Border>
 
                             <!-- BƯỚC 3: TIÊU ĐỀ VIỆT -->
-                            <TextBlock Text="3. TIÊU ĐỀ VIỆT (TARGET):" Foreground="#858585" FontSize="11" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                            <Border Background="#2d3036" BorderBrush="#3c3f47" BorderThickness="1" CornerRadius="6" Height="36" Padding="0" ClipToBounds="True" Margin="0,0,0,6">
+                            <TextBlock Text="3. TIÊU ĐỀ VIỆT (TARGET):" Foreground="#858585" FontSize="11" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,16">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="38"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox x:Name="TxtTitleVi" Background="Transparent" Foreground="#d0d4dc" BorderThickness="0" FontSize="12.5" Padding="10,0,6,0" VerticalContentAlignment="Center" Text="Tên bài Việt..."/>
+                                    <TextBox x:Name="TxtTitleVi" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="12,0,6,0" VerticalContentAlignment="Center"/>
+                                    <TextBlock x:Name="TxtTitleViPlaceholder" Text="Tên bài Việt..." Foreground="#777777" FontSize="13" Margin="14,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=TxtTitleVi}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                     <Button x:Name="BtnPublishVi" Grid.Column="1" Click="BtnPublishVi_Click" Style="{StaticResource VsInputIntegratedBtn}" ToolTip="Đăng bài lên Wiki VI / Lưu tệp">
                                         <Canvas Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Path Data="M 8 11 L 8 3 M 5 6 L 8 3 L 11 6 M 3 13 L 13 13 L 13 15 L 3 15 Z" Stroke="#ffffff" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
@@ -311,52 +498,49 @@
                                     </Button>
                                 </Grid>
                             </Border>
+
+                            <!-- SECTION 2: THAY ĐỔI GẦN ĐÂY ON WIKI -->
+                            <Border BorderBrush="#2d2d2d" BorderThickness="0,1,0,0" Padding="0,14,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="🕒 " FontSize="11" Foreground="#858585"/>
+                                            <TextBlock Text="THAY ĐỔI GẦN ĐÂY" Foreground="#858585" FontSize="11" FontWeight="Bold"/>
+                                        </StackPanel>
+                                        <TextBlock x:Name="TxtSyncTime" Text="FS: 5m 52s" Foreground="#858585" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+
+                                    <StackPanel>
+                                        <TextBlock Text="Lỗi tải hoạt động Wiki" Foreground="#f14c4c" FontSize="12" Margin="0,4,0,12"/>
+
+                                        <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8" Margin="0,0,0,8">
+                                            <StackPanel>
+                                                <TextBlock Text="March 7th" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
+                                                <TextBlock Text="Cập nhật bản dịch 4.4 • 2 phút trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8" Margin="0,0,0,8">
+                                            <StackPanel>
+                                                <TextBlock Text="Kafka/Dialogue" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
+                                                <TextBlock Text="Sửa thuật ngữ • 15 phút trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8">
+                                            <StackPanel>
+                                                <TextBlock Text="Dan Heng/Story" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
+                                                <TextBlock Text="Thêm dòng thoại mới • 1 giờ trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
                         </StackPanel>
-                    </Border>
-
-                    <!-- SECTION 2: THAY ĐỔI GẦN ĐÂY ON WIKI -->
-                    <Border Grid.Row="1" BorderBrush="#2d2d2d" BorderThickness="0,1,0,0" Padding="14">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0" Margin="0,0,0,10">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <TextBlock Text="🕒 " FontSize="11" Foreground="#858585"/>
-                                    <TextBlock Text="THAY ĐỔI GẦN ĐÂY" Foreground="#bbbbbb" FontSize="11.5" FontWeight="Bold"/>
-                                </StackPanel>
-                                <TextBlock x:Name="TxtSyncTime" Text="FS: 5m 52s" Foreground="#858585" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            </Grid>
-
-                            <!-- RECENT WIKI CHANGES TIMELINE ITEMS -->
-                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                                <StackPanel>
-                                    <TextBlock Text="Lỗi tải hoạt động Wiki" Foreground="#f14c4c" FontSize="12" Margin="0,4,0,12"/>
-
-                                    <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8" Margin="0,0,0,8">
-                                        <StackPanel>
-                                            <TextBlock Text="March 7th" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
-                                            <TextBlock Text="Cập nhật bản dịch 4.4 • 2 phút trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                    <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8" Margin="0,0,0,8">
-                                        <StackPanel>
-                                            <TextBlock Text="Kafka/Dialogue" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
-                                            <TextBlock Text="Sửa thuật ngữ • 15 phút trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                    <Border Background="#1e1e1e" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="5" Padding="10,8">
-                                        <StackPanel>
-                                            <TextBlock Text="Dan Heng/Story" Foreground="#cccccc" FontSize="12.5" FontWeight="SemiBold"/>
-                                            <TextBlock Text="Thêm dòng thoại mới • 1 giờ trước" Foreground="#858585" FontSize="11" Margin="0,3,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
-                            </ScrollViewer>
-                        </Grid>
-                    </Border>
+                    </ScrollViewer>
                 </Grid>
             </Border>
 
@@ -381,116 +565,253 @@
                         <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Stretch">
                             <!-- GROUP 1: BẢNG TẠM -->
                             <Grid Margin="0,0,4,0" VerticalAlignment="Stretch">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,6,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="11"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
                                     <Button x:Name="BtnUndo" Click="BtnUndo_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="↺" FontSize="22" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Hoàn tác" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M10 8H5V3m.291 13.357a8 8 0 1 0 .188-8.991" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Hoàn tác" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnCut" Click="BtnCut_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="✂" FontSize="21" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Cắt" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M6 9a3 3 0 1 0 0-6a3 3 0 0 0 0 6zm0 12a3 3 0 1 0 0-6a3 3 0 0 0 0 6zm2.5-13.5L20 19M8.5 16.5L20 5" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Cắt" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnCopy" Click="BtnCopy_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="📋" FontSize="21" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Sao chép" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M9 9V6.2c0-1.12 0-1.68.218-2.108c.192-.377.497-.682.874-.874C10.52 3 11.08 3 12.2 3h5.6c1.12 0 1.68 0 2.108.218a2 2 0 0 1 .874.874C21 4.52 21 5.08 21 6.2v5.6c0 1.12 0 1.68-.218 2.108a2 2 0 0 1-.874.874C19.48 15 18.92 15 17.803 15H15M9 9H6.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C3 10.52 3 11.08 3 12.2v5.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.427.218.987.218 2.105.218h5.607c1.117 0 1.676 0 2.104-.218a2 2 0 0 0 .874-.874c.218-.428.218-.987.218-2.105V15M9 9h2.8c1.12 0 1.68 0 2.108.218a2 2 0 0 1 .874.874c.218.427.218.987.218 2.105V15" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Sao chép" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnPaste" Click="BtnPaste_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="📄" FontSize="21" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Dán" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M9 17h6m-6-3h6M13 3H8.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C5 4.52 5 5.08 5 6.2v11.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.427.218.987.218 2.105.218h7.606c1.118 0 1.677 0 2.104-.218c.377-.192.683-.498.875-.874c.218-.428.218-.986.218-2.104V9.326L18.999 9M13 3c.286.003.466.014.638.055c.204.05.4.13.579.24c.202.124.375.297.72.643l3.126 3.125c.346.346.518.518.642.72q.165.271.24.578c.04.173.051.354.054.639M13 3v2.8c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.427.218.987.218 2.105.218h2.802" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="1.8" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Dán" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                 </StackPanel>
-                                <TextBlock Text="BẢNG TẠM" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                                <TextBlock Grid.Row="2" Text="BẢNG TẠM" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                             </Grid>
 
                             <!-- DIVIDER LINE | -->
-                            <Border Width="1" Background="#3f3f46" Margin="12,10,12,10" VerticalAlignment="Stretch"/>
+                            <Border Width="1" Background="#3f3f46" Margin="20,10,20,10" VerticalAlignment="Stretch"/>
 
                             <!-- GROUP 2: CÔNG CỤ WIKI -->
                             <Grid Margin="0,0,4,0" VerticalAlignment="Stretch">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="0,6,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="11"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
                                     <Button x:Name="BtnToolLink" Click="BtnToolLink_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="🔗" FontSize="21" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Tạo Link" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="m9.172 14.829l5.657-5.657M7.05 11.293l-1.414 1.414a4 4 0 1 0 5.657 5.657l1.412-1.414m-1.413-9.9l1.414-1.414a4 4 0 1 1 5.657 5.657l-1.414 1.414" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Tạo Link" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnToolPipe" Click="BtnToolPipe_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="[[|]]" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="Tạo Pipe" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="m15 7l5 5l-5 5m-6 0l-5-5l5-5" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Tạo Pipe" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnToolBold" Click="BtnToolBold_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="B" FontSize="21" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="In đậm" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M8 12h4.5M8 12V5h4.5a3.5 3.5 0 1 1 0 7M8 12v7h5.5a3.5 3.5 0 1 0 0-7h-1" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="In đậm" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                     <Button x:Name="BtnToolItalic" Click="BtnToolItalic_Click" Style="{StaticResource VsRibbonBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="I" FontSize="21" FontStyle="Italic" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#cccccc"/>
-                                            <TextBlock Text="In nghiêng" FontSize="11" HorizontalAlignment="Center" TextAlignment="Center" Foreground="#aaaaaa" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M8 19h2m0 0h2m-2 0l4-14m-2 0h2m0 0h2" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="In nghiêng" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                 </StackPanel>
-                                <TextBlock Text="CÔNG CỤ WIKI" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                                <TextBlock Grid.Row="2" Text="CÔNG CỤ WIKI" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                             </Grid>
 
                             <!-- DIVIDER LINE | -->
-                            <Border Width="1" Background="#3f3f46" Margin="12,10,12,10" VerticalAlignment="Stretch"/>
+                            <Border Width="1" Background="#3f3f46" Margin="20,10,20,10" VerticalAlignment="Stretch"/>
 
                             <!-- GROUP 3: THAY THẾ / TRỢ LÝ AI -->
                             <Grid VerticalAlignment="Stretch">
-                                <StackPanel VerticalAlignment="Top" Margin="0,6,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="11"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" VerticalAlignment="Top" Margin="0,10,0,0">
                                     <Button x:Name="BtnAssistant" Click="BtnAssistant_Click" Style="{StaticResource VsRibbonAiBtn}">
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="🎛️" FontSize="21" HorizontalAlignment="Center" TextAlignment="Center"/>
-                                            <TextBlock Text="Trợ lý Dịch" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,4,0,0"/>
-                                        </StackPanel>
+                                        <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <Viewbox Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Canvas Width="24" Height="24">
+                                                    <Path Data="M12 3v3m0 12v3M3 12h3m12 0h3m-3.5-6.5l-2 2m-7 7l-2 2m0-11l2 2m7 7l2 2" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                                </Canvas>
+                                            </Viewbox>
+                                            <TextBlock Grid.Row="2" Text="Trợ lý Dịch" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}"/>
+                                        </Grid>
                                     </Button>
                                 </StackPanel>
-                                <TextBlock Text="THAY THẾ" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                                <TextBlock Grid.Row="2" Text="THAY THẾ" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                            </Grid>
+
+                            <!-- DIVIDER LINE | -->
+                            <Border Width="1" Background="#3f3f46" Margin="20,10,20,10" VerticalAlignment="Stretch"/>
+
+                            <!-- GROUP 4: HIỆU SUẤT -->
+                            <Grid VerticalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="11"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,10,0,0">
+                                    <!-- ITEM 1: RAM -->
+                                    <Border Padding="0,4,0,2" Height="63" VerticalAlignment="Top">
+                                        <Grid Width="72" Margin="4,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" x:Name="TxtRamVal" Text="0 MB" Foreground="#007acc" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Text="RAM" Foreground="#aaaaaa" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- ITEM 2: CPU -->
+                                    <Border Padding="0,4,0,2" Height="63" VerticalAlignment="Top">
+                                        <Grid Width="64" Margin="4,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" x:Name="TxtCpuVal" Text="0 %" Foreground="#e2c08d" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Text="CPU" Foreground="#aaaaaa" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- ITEM 3: TAB -->
+                                    <Border Padding="0,4,0,2" Height="63" VerticalAlignment="Top">
+                                        <Grid Width="68" Margin="4,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24"/>
+                                                <RowDefinition Height="17"/>
+                                                <RowDefinition Height="16"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" x:Name="TxtTabVal" Text="1 Tab" Foreground="#4ec9b0" FontSize="12" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Text="Đang mở" Foreground="#aaaaaa" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                                <TextBlock Grid.Row="2" Text="HIỆU SUẤT" Foreground="#707070" FontSize="9.5" FontWeight="Bold" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                             </Grid>
                         </StackPanel>
-
-                        <!-- RIGHT: PERFORMANCE & SYSTEM HEALTH BADGE -->
-                        <Border Grid.Column="2" Background="#1e1e1e" BorderBrush="#333333" BorderThickness="1" CornerRadius="6" Padding="16,8" VerticalAlignment="Center" Height="68">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <StackPanel Margin="0,0,18,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <TextBlock x:Name="TxtRamVal" Text="153.5 MB" Foreground="#007acc" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="RAM" Foreground="#858585" FontSize="9.5" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,2,0,0"/>
-                                </StackPanel>
-                                <Border Width="1" Height="28" Background="#333333" Margin="0,0,18,0"/>
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <TextBlock x:Name="TxtCpuVal" Text="0 %" Foreground="#e2c08d" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="CPU" Foreground="#858585" FontSize="9.5" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,2,0,0"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
                     </Grid>
                 </Border>
 
-                <!-- VS CODE TAB BAR -->
-                <Border Grid.Row="1" Background="#252526" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="10,6">
-                    <Grid>
-                        <!-- VS CODE ACTIVE TAB PILL WITH BLUE TOP HIGHLIGHT (#007ACC) -->
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="0,3,0,0" Padding="10,6,8,6" Margin="0,0,6,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="📄 " Foreground="#007acc" FontSize="12"/>
-                                    <TextBlock Text="Chưa tiêu đề-1 *" Foreground="#ffffff" FontSize="13" FontWeight="Bold"/>
-                                    <TextBlock Text="  ✕" Foreground="#858585" FontSize="12" Cursor="Hand"/>
+                <!-- VS CODE TAB BAR SEAMLESSLY FLUSH WITH TOOLBAR & EDITOR CEILING -->
+                <Border Grid.Row="1" Height="35" Background="#252526" BorderBrush="#252526" BorderThickness="0" Padding="0">
+                    <Grid Height="35">
+                        <StackPanel x:Name="TabContainer" Orientation="Horizontal" VerticalAlignment="Stretch">
+                            <Border x:Name="FirstTabBorder" Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="0,2,0,0" Padding="14,0,12,0" VerticalAlignment="Stretch" Cursor="Hand">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="📄 " Foreground="#007acc" FontSize="12" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="FirstTabText" Text="Chưa tiêu đề-1 *" Foreground="#ffffff" FontSize="12" FontWeight="Normal" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="FirstTabClose" Text="  ✕" Foreground="#999999" FontSize="11" Cursor="Hand" VerticalAlignment="Center" Margin="8,0,0,0" MouseLeftButtonDown="BtnCloseFirstTab_Click"/>
                                 </StackPanel>
                             </Border>
-                            <Button Style="{StaticResource VsRibbonBtn}" Content="+" Padding="8,4"/>
+                            <Button x:Name="BtnAddTab" Style="{StaticResource VsTabAddBtn}" Content="+" Click="BtnAddTab_Click"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -513,13 +834,13 @@
                             </ScrollViewer>
                         </Border>
 
-                        <!-- MULTI-LINE VS CODE TEXTAREA EDITOR -->
-                        <TextBox x:Name="TxtEditorContent" Grid.Column="1" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" 
-                                 HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                                 Background="#1e1e1e" Foreground="#d4d4d4" SelectionBrush="#264f78" CaretBrush="#ffffff"
-                                 FontFamily="Consolas, Cascadia Code, Courier New" FontSize="15" Block.LineHeight="24" Block.LineStackingStrategy="BlockLineHeight"
-                                 Padding="16,10,16,10" BorderThickness="0"
-                                 SelectionChanged="TxtEditorContent_SelectionChanged" TextChanged="TxtEditorContent_TextChanged"/>
+                        <!-- MULTI-LINE VS CODE TEXTAREA EDITOR WITH WIKITEXT / WIKILINK SYNTAX HIGHLIGHTING -->
+                        <local:WikitextRichTextBox x:Name="TxtEditorContent" Grid.Column="1" AcceptsReturn="True" AcceptsTab="True" 
+                                                   HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
+                                                   Background="#1e1e1e" Foreground="#d4d4d4" SelectionBrush="#264f78" CaretBrush="#ffffff"
+                                                   FontFamily="Consolas, Cascadia Code, Courier New" FontSize="15" Block.LineHeight="24" Block.LineStackingStrategy="BlockLineHeight"
+                                                   Padding="16,10,16,10" BorderThickness="0"
+                                                   SelectionChanged="TxtEditorContent_SelectionChanged" TextChanged="TxtEditorContent_TextChanged"/>
                     </Grid>
 
                     <!-- 2. SPLIT COMPARE MODE PANE (SOURCE EN VS TARGET VI - MATCHING INDEX.JS COMPARISON MODE) -->
@@ -666,8 +987,8 @@
             </Grid>
 
         <!-- 3. VS CODE STATUS BAR AT BOTTOM (#007ACC) -->
-        <Border Grid.Row="2" Background="#007acc" BorderBrush="#007acc" BorderThickness="0">
-            <Grid Margin="12,0">
+        <Border Grid.Row="2" Background="#007acc" BorderBrush="#007acc" BorderThickness="0" Padding="12,0">
+            <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -675,41 +996,229 @@
 
                 <!-- VS CODE LEFT STATUS ITEMS -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
-                        <TextBlock Text="💡 " FontSize="11"/>
-                        <TextBlock Text="BotPass" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold"/>
+                    <!-- BOTPASS STATUS BADGE (GREEN CHECKMARK CIRCLE BADGE) -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,16,0">
+                        <Grid Width="14" Height="14" Margin="0,0,6,0" VerticalAlignment="Center">
+                            <Ellipse Fill="#2ecc71" Width="14" Height="14"/>
+                            <Viewbox Width="14" Height="14">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M 6.5 12.5 L 10 16 L 17.5 8.5" Stroke="#ffffff" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                        <TextBlock Text="BotPass" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     </StackPanel>
                     
-                    <!-- MODE SWITCHER DROPDOWN (EDIT, COMPARE, DATAGRID) -->
-                    <ComboBox x:Name="CmbViewMode" Style="{StaticResource VsDarkComboStyle}" Width="135" Height="22" FontSize="11" Margin="0,0,16,0" VerticalAlignment="Center" SelectionChanged="CmbViewMode_SelectionChanged">
+                    <!-- MODE SWITCHER DROPDOWN (TRANSPARENT - NO DARK BOX FRAME) -->
+                    <ComboBox x:Name="CmbViewMode" Style="{StaticResource VsStatusComboStyle}" FontSize="12" Margin="0,0,16,0" VerticalAlignment="Center" Loaded="CmbViewMode_Loaded" SelectionChanged="CmbViewMode_SelectionChanged">
                         <ComboBoxItem Content="🔀 Soạn thảo" IsSelected="True" Tag="edit"/>
                         <ComboBoxItem Content="📊 So sánh (Compare)" Tag="compare"/>
                         <ComboBoxItem Content="📊 CSDL TextMap" Tag="datagrid"/>
                     </ComboBox>
 
                     <!-- TOGGLE PREVIEW BUTTON -->
-                    <Border x:Name="BtnPreviewToggle" MouseLeftButtonDown="BtnPreviewToggle_MouseLeftButtonDown" Cursor="Hand" Margin="0,0,16,0">
+                    <Border x:Name="BtnPreviewToggle" MouseLeftButtonDown="BtnPreviewToggle_MouseLeftButtonDown" Cursor="Hand" Margin="0,0,16,0" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="👁️ " FontSize="11"/>
-                            <TextBlock x:Name="TxtPreviewBtnLabel" Text="Xem trước" Foreground="#ffffff" FontSize="12"/>
+                            <TextBlock Text="👁️ " FontSize="11" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtPreviewBtnLabel" Text="Xem trước" Foreground="#ffffff" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Border>
 
                     <!-- STATUS TEXT -->
-                    <TextBlock x:Name="TxtStatus" Text="Sẵn sàng" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="TxtStatus" Text="" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- VS CODE RIGHT STATUS ITEMS -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="UTF-8" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0"/>
-                    <TextBlock x:Name="TxtCharCount" Text="0 ký tự" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0"/>
-                    <TextBlock x:Name="TxtCursorPos" Text="Ln 1, Col 1" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="🔗 " FontSize="11"/>
-                        <TextBlock x:Name="TxtSyntaxMode" Text="Liên kết" Foreground="#ffffff" FontSize="12"/>
-                    </StackPanel>
+                    <TextBlock Text="UTF-8" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtCharCount" Text="0 ký tự" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtCursorPos" Text="Ln 1, Col 1" Foreground="#ffffff" FontSize="12" Margin="0,0,16,0" VerticalAlignment="Center"/>
+                    <Border x:Name="BtnSyntaxModeToggle" 
+                            MouseLeftButtonDown="BtnSyntaxModeToggle_MouseLeftButtonDown" 
+                            Cursor="Hand" 
+                            Background="Transparent" 
+                            CornerRadius="3" 
+                            Padding="8,2" 
+                            VerticalAlignment="Center" 
+                            ToolTip="Chuyển đổi chế độ cú pháp (WikiLink / WikiText)">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock x:Name="TxtSyntaxIcon" Text="🔗 " FontSize="11" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtSyntaxMode" Text="WikiLink" Foreground="#ffffff" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Grid>
         </Border>
+        <!-- OVERLAY MODAL CONTAINER LAYER (Z-INDEX TOP - SPANS ENTIRE VIEW) -->
+        <Grid x:Name="GridModalOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Background="#aa000000" Panel.ZIndex="9999">
+            <!-- 1. MODAL CÀI ĐẶT (SETTINGS MODAL) -->
+            <Border x:Name="BorderModalSettings" Visibility="Collapsed" 
+                    Width="520" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- HEADER -->
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="⚙️ " FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="CÀI ĐẶT HỆ THỐNG &amp; FANDOM WIKI API" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
+                    </Grid>
+
+                    <!-- BODY -->
+                    <StackPanel Grid.Row="1" Margin="0,0,0,20">
+                        <TextBlock Text="1. URL Endpoint Fandom MediaWiki API:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
+                            <TextBox x:Name="TxtSettingWikiApiUrl" Text="https://honkai-star-rail.fandom.com/vi/api.php" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
+                        </Border>
+
+                        <TextBlock Text="2. Fandom Botpass Username / Email:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
+                            <TextBox x:Name="TxtSettingBotUser" Text="EtherEditorBot@fandom" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
+                        </Border>
+
+                        <TextBlock Text="3. API Token / User Password:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
+                            <PasswordBox x:Name="TxtSettingBotPass" Password="••••••••••••••••" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
+                        </Border>
+
+                        <CheckBox x:Name="ChkSettingAutoTranslate" Content="Tự động chuẩn hóa Thuật ngữ khi mở bài viết" Foreground="#cccccc" FontSize="12.5" IsChecked="True" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- FOOTER -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="BtnCloseModal_Click" Content="Hủy" Style="{StaticResource VsMenuBtn}" Width="80" Margin="0,0,10,0"/>
+                        <Button Click="BtnSaveSettings_Click" Content="Lưu Cài Đặt" Style="{StaticResource VsInputIntegratedBtn}" Width="110" Height="32"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 2. MODAL TỪ ĐIỂN ƯU TIÊN (PRIORITY GLOSSARY MODAL) -->
+            <Border x:Name="BorderModalGlossary" Visibility="Collapsed" 
+                    Width="680" Height="480" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- HEADER -->
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="📚 " FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="QUẢN LÝ TỪ ĐIỂN THUẬT NGỮ ƯU TIÊN (PRIORITY GLOSSARY)" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
+                    </Grid>
+
+                    <!-- ADD TERM BAR -->
+                    <Grid Grid.Row="1" Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,6,0">
+                            <TextBox x:Name="TxtNewTermEn" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="8,6" ToolTip="Thuật ngữ tiếng Anh"/>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,6,0">
+                            <TextBox x:Name="TxtNewTermVi" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="8,6" ToolTip="Thuật ngữ tiếng Việt"/>
+                        </Border>
+                        <Button Grid.Column="2" Click="BtnAddGlossaryTerm_Click" Content="+ Thêm" Style="{StaticResource VsInputIntegratedBtn}" Height="32"/>
+                    </Grid>
+
+                    <!-- GLOSSARY LIST -->
+                    <DataGrid x:Name="DgGlossaryList" Grid.Row="2" AutoGenerateColumns="False" 
+                              Background="#252526" RowBackground="#1e1e1e" 
+                              BorderThickness="1" BorderBrush="#3c3c3c" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#2d2d2d" Foreground="#cccccc" FontSize="13" RowHeight="32">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="THUẬT NGỮ ANH (SOURCE)" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="BẢN DỊCH VIỆT (TARGET)" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="THAO TÁC" Width="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Xóa" Click="BtnDeleteGlossaryTerm_Click" Foreground="#f14c4c" Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- FOOTER -->
+                    <StackPanel Grid.Row="3" Margin="0,14,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="BtnCloseModal_Click" Content="Đóng" Style="{StaticResource VsMenuBtn}" Width="80"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 3. MODAL TRA CỨU THUẬT NGỮ & WIKI (LOOKUP MODAL) -->
+            <Border x:Name="BorderModalLookup" Visibility="Collapsed" 
+                    Width="720" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- HEADER -->
+                    <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="🔍 " FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="TRA CỨU THUẬT NGỮ &amp; BÀI VIẾT FANDOM WIKI" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
+                    </Grid>
+
+                    <!-- SEARCH BAR -->
+                    <Grid Grid.Row="1" Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="110"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,8,0">
+                            <TextBox x:Name="TxtLookupQuery" KeyDown="TxtLookupQuery_KeyDown" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6" ToolTip="Nhập từ khóa tra cứu..."/>
+                        </Border>
+                        <Button Grid.Column="1" Click="BtnPerformLookup_Click" Content="🔍 Tra Cứu" Style="{StaticResource VsInputIntegratedBtn}" Height="32"/>
+                    </Grid>
+
+                    <!-- LOOKUP RESULTS -->
+                    <DataGrid x:Name="DgLookupResults" Grid.Row="2" AutoGenerateColumns="False" 
+                              Background="#252526" RowBackground="#1e1e1e" 
+                              BorderThickness="1" BorderBrush="#3c3c3c" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#2d2d2d" Foreground="#cccccc" FontSize="13" RowHeight="34">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="GAME" Binding="{Binding GameId}" Width="70" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="TÊN TIẾNG ANH" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="TÊN TIẾNG VIỆT" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="CHÈN" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Chèn [[...]]" Click="BtnInsertLookupResult_Click" Foreground="#4ec9b0" Background="#2d2d2d" BorderThickness="0" Padding="6,2" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- FOOTER -->
+                    <StackPanel Grid.Row="3" Margin="0,14,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="BtnCloseModal_Click" Content="Đóng" Style="{StaticResource VsMenuBtn}" Width="80"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

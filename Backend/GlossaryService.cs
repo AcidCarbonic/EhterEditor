@@ -8,6 +8,20 @@ namespace EtherEditorNative.Backend
 {
     public class GlossaryService
     {
+        private static GlossaryService _instance;
+        public static GlossaryService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    string root = AppDomain.CurrentDomain.BaseDirectory;
+                    _instance = new GlossaryService(root);
+                }
+                return _instance;
+            }
+        }
+
         private readonly string _glossaryPath;
         private Dictionary<string, string> _glossary;
 
@@ -47,6 +61,53 @@ namespace EtherEditorNative.Backend
             return _glossary;
         }
 
+        public Dictionary<string, string> GetGlossary()
+        {
+            if (_glossary == null) LoadGlossary();
+            return _glossary;
+        }
+
+        public void AddTerm(string source, string target)
+        {
+            if (string.IsNullOrEmpty(source)) return;
+            if (_glossary == null) _glossary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            _glossary[source] = target;
+            SaveGlossary(_glossary);
+        }
+
+        public void RemoveTerm(string source)
+        {
+            if (_glossary == null || string.IsNullOrEmpty(source)) return;
+            if (_glossary.ContainsKey(source))
+            {
+                _glossary.Remove(source);
+                SaveGlossary(_glossary);
+            }
+        }
+
+        public Dictionary<string, string> SearchTerms(string query)
+        {
+            var res = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            if (_glossary == null) LoadGlossary();
+
+            if (string.IsNullOrEmpty(query))
+            {
+                foreach (var kvp in _glossary) res[kvp.Key] = kvp.Value;
+                return res;
+            }
+
+            foreach (var kvp in _glossary)
+            {
+                if (kvp.Key.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    kvp.Value.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    res[kvp.Key] = kvp.Value;
+                }
+            }
+
+            return res;
+        }
+
         public bool SaveGlossary(Dictionary<string, string> glossaryDict)
         {
             try
@@ -79,7 +140,6 @@ namespace EtherEditorNative.Backend
             {
                 if (string.IsNullOrEmpty(entry.Key)) continue;
 
-                // Word boundary regex replacement
                 string pattern = @"\b" + Regex.Escape(entry.Key) + @"\b";
                 result = Regex.Replace(result, pattern, entry.Value, RegexOptions.IgnoreCase);
             }

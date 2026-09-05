@@ -82,6 +82,7 @@
       <DependentUpon>TranslateView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\WikitextRichTextBox.cs" />
     <Compile Include="Backend\DatabaseService.cs" />
     <Compile Include="Backend\DownloadService.cs" />
     <Compile Include="Backend\GlossaryService.cs" />
