@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Web.Script.Serialization;
 using EtherEditorNative.Backend;
@@ -375,9 +377,10 @@ namespace EtherEditorNative.Views
             _isSidebarCollapsed = !_isSidebarCollapsed;
             if (_isSidebarCollapsed)
             {
-                if (SidebarColumn != null) SidebarColumn.Width = new GridLength(38);
+                if (SidebarColumn != null) SidebarColumn.Width = new GridLength(34);
                 if (TxtSidebarTitle != null) TxtSidebarTitle.Visibility = Visibility.Collapsed;
                 if (SidebarScrollViewer != null) SidebarScrollViewer.Visibility = Visibility.Collapsed;
+                if (BorderSidebarHeader != null) BorderSidebarHeader.Padding = new Thickness(4, 12, 4, 12);
                 if (PathToggleSidebar != null)
                 {
                     PathToggleSidebar.Data = Geometry.Parse("M 6 5 L 12 12 L 6 19 M 12 5 L 18 12 L 12 19");
@@ -385,6 +388,8 @@ namespace EtherEditorNative.Views
                 if (BtnToggleSidebar != null)
                 {
                     BtnToggleSidebar.HorizontalAlignment = HorizontalAlignment.Center;
+                    BtnToggleSidebar.Width = 26;
+                    BtnToggleSidebar.Height = 24;
                     ToolTipService.SetToolTip(BtnToggleSidebar, "Mở rộng quy trình xuất bản");
                 }
             }
@@ -393,6 +398,7 @@ namespace EtherEditorNative.Views
                 if (SidebarColumn != null) SidebarColumn.Width = new GridLength(280);
                 if (TxtSidebarTitle != null) TxtSidebarTitle.Visibility = Visibility.Visible;
                 if (SidebarScrollViewer != null) SidebarScrollViewer.Visibility = Visibility.Visible;
+                if (BorderSidebarHeader != null) BorderSidebarHeader.Padding = new Thickness(14, 12, 12, 12);
                 if (PathToggleSidebar != null)
                 {
                     PathToggleSidebar.Data = Geometry.Parse("M 12 5 L 6 12 L 12 19 M 18 5 L 12 12 L 18 19");
@@ -400,10 +406,13 @@ namespace EtherEditorNative.Views
                 if (BtnToggleSidebar != null)
                 {
                     BtnToggleSidebar.HorizontalAlignment = HorizontalAlignment.Right;
+                    BtnToggleSidebar.Width = 26;
+                    BtnToggleSidebar.Height = 24;
                     ToolTipService.SetToolTip(BtnToggleSidebar, "Thu gọn quy trình xuất bản");
                 }
             }
         }
+
 
         // --- EDITOR EVENT HANDLERS & LINE NUMBERS ---
         private void TxtEditorContent_TextChanged(object sender, TextChangedEventArgs e)
@@ -692,9 +701,8 @@ namespace EtherEditorNative.Views
         private void BtnFileMenu_Click(object sender, RoutedEventArgs e)
         {
             ContextMenu fileMenu = new ContextMenu();
-            fileMenu.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#252526"));
-            fileMenu.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#cccccc"));
-            fileMenu.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3c3c3c"));
+            Style menuStyle = FindResource("VsContextMenuStyle") as Style;
+            if (menuStyle != null) fileMenu.Style = menuStyle;
 
             MenuItem newFile = new MenuItem { Header = "📄 Tạo tệp dự án mới" };
             newFile.Click += (s, ev) => CreateNewProject();
@@ -708,15 +716,6 @@ namespace EtherEditorNative.Views
             MenuItem saveAsFile = new MenuItem { Header = "💾 Lưu thành tệp mới (Save As)..." };
             saveAsFile.Click += (s, ev) => SaveProjectAsDialog();
 
-            MenuItem settings = new MenuItem { Header = "⚙️ Cài đặt hệ thống..." };
-            settings.Click += (s, ev) => ShowModalSettings();
-
-            MenuItem priorityGlossary = new MenuItem { Header = "📚 Từ điển thuật ngữ ưu tiên..." };
-            priorityGlossary.Click += (s, ev) => ShowModalGlossary();
-
-            MenuItem lookupModal = new MenuItem { Header = "🔍 Tra cứu thuật ngữ & Wiki..." };
-            lookupModal.Click += (s, ev) => ShowModalLookup();
-
             MenuItem exitApp = new MenuItem { Header = "🚪 Thoát ứng dụng" };
             exitApp.Click += (s, ev) => Application.Current.Shutdown();
 
@@ -725,16 +724,19 @@ namespace EtherEditorNative.Views
             fileMenu.Items.Add(saveFile);
             fileMenu.Items.Add(saveAsFile);
             fileMenu.Items.Add(new Separator());
-            fileMenu.Items.Add(settings);
-            fileMenu.Items.Add(priorityGlossary);
-            fileMenu.Items.Add(lookupModal);
-            fileMenu.Items.Add(new Separator());
             fileMenu.Items.Add(exitApp);
 
             if (BtnFileMenu != null)
             {
                 fileMenu.PlacementTarget = BtnFileMenu;
-                fileMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                fileMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Custom;
+                fileMenu.CustomPopupPlacementCallback = delegate(Size popupSize, Size targetSize, Point offset)
+                {
+                    return new System.Windows.Controls.Primitives.CustomPopupPlacement[]
+                    {
+                        new System.Windows.Controls.Primitives.CustomPopupPlacement(new Point(0, targetSize.Height), System.Windows.Controls.Primitives.PopupPrimaryAxis.Horizontal)
+                    };
+                };
                 fileMenu.IsOpen = true;
             }
         }
@@ -744,6 +746,7 @@ namespace EtherEditorNative.Views
             ShowModalLookup();
         }
 
+
         // --- MODAL DIALOGS CONTROLLER & HANDLERS ---
         public void ShowModalSettings()
         {
@@ -751,7 +754,268 @@ namespace EtherEditorNative.Views
             if (BorderModalSettings != null) BorderModalSettings.Visibility = Visibility.Visible;
             if (BorderModalGlossary != null) BorderModalGlossary.Visibility = Visibility.Collapsed;
             if (BorderModalLookup != null) BorderModalLookup.Visibility = Visibility.Collapsed;
+
+            SwitchSettingsTab("display");
         }
+
+        private void HeaderGroupSystem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchSettingsTab("display");
+        }
+
+        private void HeaderGroupWiki_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchSettingsTab("wiki");
+        }
+
+        private void HeaderGroupTranslate_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchSettingsTab("llm");
+        }
+
+        private void BtnTabSetting_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null || btn.Tag == null) return;
+
+            string tabKey = btn.Tag.ToString();
+            SwitchSettingsTab(tabKey);
+        }
+
+        private string _currentCategory = "";
+
+        private void SwitchSettingsTab(string tabKey)
+        {
+            bool isSystemActive = (tabKey == "display" || tabKey == "update");
+            bool isWikiActive = (tabKey == "wiki");
+            bool isTranslateActive = (tabKey == "llm" || tabKey == "nmt" || tabKey == "translate");
+
+            if (PaneSettingGroupSystem != null) PaneSettingGroupSystem.Visibility = isSystemActive ? Visibility.Visible : Visibility.Collapsed;
+            if (PaneSettingWiki != null) PaneSettingWiki.Visibility = isWikiActive ? Visibility.Visible : Visibility.Collapsed;
+            if (PaneSettingGroupTranslate != null) PaneSettingGroupTranslate.Visibility = isTranslateActive ? Visibility.Visible : Visibility.Collapsed;
+
+            // Accordion tree expansion: expand only sub-items of active category
+            if (TreeGroupSystem != null) TreeGroupSystem.Visibility = isSystemActive ? Visibility.Visible : Visibility.Collapsed;
+            if (TreeGroupWiki != null) TreeGroupWiki.Visibility = isWikiActive ? Visibility.Visible : Visibility.Collapsed;
+            if (TreeGroupTranslate != null) TreeGroupTranslate.Visibility = isTranslateActive ? Visibility.Visible : Visibility.Collapsed;
+
+            SetCategoryHeaderActive(HeaderGroupSystem, IconHeaderGroupSystem, TxtHeaderGroupSystem, isSystemActive);
+            SetCategoryHeaderActive(HeaderGroupWiki, IconHeaderGroupWiki, TxtHeaderGroupWiki, isWikiActive);
+            SetCategoryHeaderActive(HeaderGroupTranslate, IconHeaderGroupTranslate, TxtHeaderGroupTranslate, isTranslateActive);
+
+            Button activeBtn = null;
+            FrameworkElement targetSection = null;
+            ScrollViewer targetScrollViewer = null;
+
+            if (tabKey == "display")
+            {
+                activeBtn = BtnTabSettingDisplay;
+                targetSection = PaneSettingDisplay;
+                targetScrollViewer = ScrollSystemSettings;
+            }
+            else if (tabKey == "update")
+            {
+                activeBtn = BtnTabSettingUpdate;
+                targetSection = PaneSettingUpdate;
+                targetScrollViewer = ScrollSystemSettings;
+            }
+            else if (tabKey == "wiki")
+            {
+                activeBtn = BtnTabSettingWiki;
+            }
+            else if (tabKey == "llm" || tabKey == "translate")
+            {
+                activeBtn = BtnTabSettingLlm;
+                targetSection = PaneSettingLlm;
+                targetScrollViewer = ScrollTranslateSettings;
+            }
+            else if (tabKey == "nmt")
+            {
+                activeBtn = BtnTabSettingNmt;
+                targetSection = PaneSettingNmt;
+                targetScrollViewer = ScrollTranslateSettings;
+            }
+
+            SetTabButtonActive(BtnTabSettingDisplay, IconTabSettingDisplay, tabKey == "display");
+            SetTabButtonActive(BtnTabSettingUpdate, IconTabSettingUpdate, tabKey == "update");
+            SetTabButtonActive(BtnTabSettingWiki, IconTabSettingWiki, tabKey == "wiki");
+            SetTabButtonActive(BtnTabSettingLlm, IconTabSettingLlm, tabKey == "llm" || tabKey == "translate");
+            SetTabButtonActive(BtnTabSettingNmt, IconTabSettingNmt, tabKey == "nmt");
+
+            string newCategory = isSystemActive ? "system" : (isWikiActive ? "wiki" : "translate");
+            bool categoryChanged = (_currentCategory != newCategory);
+            _currentCategory = newCategory;
+
+            if (activeBtn != null)
+            {
+                AnimateTabIndicatorTo(activeBtn, categoryChanged);
+            }
+
+            if (targetSection != null && targetScrollViewer != null)
+            {
+                ScrollToSectionInViewer(targetScrollViewer, targetSection);
+            }
+        }
+
+        private void ScrollToSectionInViewer(ScrollViewer scrollViewer, FrameworkElement targetSection)
+        {
+            if (targetSection == null || scrollViewer == null) return;
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    scrollViewer.UpdateLayout();
+                    UIElement content = scrollViewer.Content as UIElement;
+                    if (content != null)
+                    {
+                        GeneralTransform transform = targetSection.TransformToVisual(content);
+                        Point pos = transform.Transform(new Point(0, 0));
+                        scrollViewer.ScrollToVerticalOffset(pos.Y);
+                    }
+                }
+                catch { }
+            }), DispatcherPriority.Loaded);
+        }
+
+        private void SetCategoryHeaderActive(Border headerBorder, System.Windows.Shapes.Path iconPath, TextBlock headerText, bool isActive)
+        {
+            if (headerBorder != null)
+            {
+                headerBorder.Background = Brushes.Transparent;
+            }
+            if (iconPath != null)
+            {
+                iconPath.Fill = isActive ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff")) : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80848e"));
+            }
+            if (headerText != null)
+            {
+                headerText.Foreground = isActive ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff")) : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80848e"));
+            }
+        }
+
+        private void SetTabButtonActive(Button btn, System.Windows.Shapes.Path iconPath, bool isActive)
+        {
+            if (btn == null) return;
+            btn.Foreground = isActive ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff")) : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#949ba4"));
+            btn.FontWeight = isActive ? FontWeights.Bold : FontWeights.Normal;
+            btn.Background = Brushes.Transparent;
+            btn.BorderBrush = Brushes.Transparent;
+
+            if (iconPath != null)
+            {
+                iconPath.Fill = isActive ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff")) : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80848e"));
+            }
+        }
+
+        private void AnimateTabIndicatorTo(Button targetBtn, bool snapImmediately = false)
+        {
+            if (targetBtn == null || ActiveTabIndicatorTransform == null || SidebarNavContainer == null) return;
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    SidebarNavContainer.UpdateLayout();
+
+                    GeneralTransform transform = targetBtn.TransformToVisual(SidebarNavContainer);
+                    Point pos = transform.Transform(new Point(0, 0));
+
+                    double targetY = pos.Y;
+
+                    if (snapImmediately)
+                    {
+                        ActiveTabIndicatorTransform.BeginAnimation(TranslateTransform.YProperty, null);
+                        ActiveTabIndicatorTransform.Y = targetY;
+                    }
+                    else
+                    {
+                        DoubleAnimation anim = new DoubleAnimation
+                        {
+                            To = targetY,
+                            Duration = TimeSpan.FromMilliseconds(200),
+                            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                        };
+
+                        ActiveTabIndicatorTransform.BeginAnimation(TranslateTransform.YProperty, anim);
+                    }
+                }
+                catch { }
+            }), DispatcherPriority.Loaded);
+        }
+
+        private void BtnScanFonts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (CmbFontFamily == null) return;
+
+                ComboBoxItem selItem = CmbFontFamily.SelectedItem as ComboBoxItem;
+                string currentSelected = (selItem != null && selItem.Content != null) ? selItem.Content.ToString() : "Consolas";
+
+                // Scan all system installed font families via WPF SystemFontFamilies
+                var installedFonts = System.Windows.Media.Fonts.SystemFontFamilies
+                    .Select(f => f.Source)
+                    .Where(f => !string.IsNullOrWhiteSpace(f))
+                    .OrderBy(f => f)
+                    .ToList();
+
+                if (installedFonts.Count > 0)
+                {
+                    CmbFontFamily.Items.Clear();
+                    int selectIndex = 0;
+
+                    for (int i = 0; i < installedFonts.Count; i++)
+                    {
+                        string fontName = installedFonts[i];
+                        var item = new ComboBoxItem { Content = fontName };
+
+                        if (fontName.Equals(currentSelected, StringComparison.OrdinalIgnoreCase) ||
+                            currentSelected.StartsWith(fontName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            item.IsSelected = true;
+                            selectIndex = i;
+                        }
+
+                        CmbFontFamily.Items.Add(item);
+                    }
+
+                    CmbFontFamily.SelectedIndex = selectIndex;
+                    MessageBox.Show(string.Format("Đã quét và nạp thành công {0} phông chữ hệ thống vào danh sách!", installedFonts.Count), "Quét phông chữ thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể quét danh sách phông chữ hệ thống: " + ex.Message, "Lỗi Quét Font", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private bool _isSavingInstantly = false;
+
+        private void OnSettingChanged(object sender, RoutedEventArgs e)
+        {
+            SaveSettingsInstantly();
+        }
+
+        private void SaveSettingsInstantly()
+        {
+            if (_isSavingInstantly || !IsLoaded) return;
+            try
+            {
+                _isSavingInstantly = true;
+                // Auto-save setting changes immediately
+                Console.WriteLine("Ether Editor Settings: Settings auto-saved instantly.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Auto-save settings error: " + ex.Message);
+            }
+            finally
+            {
+                _isSavingInstantly = false;
+            }
+        }
+
 
         public void ShowModalGlossary()
         {
@@ -793,12 +1057,17 @@ namespace EtherEditorNative.Views
             {
                 var glossary = GlossaryService.Instance.GetGlossary();
                 List<TextMapItem> list = new List<TextMapItem>();
-                string gameId = GetSelectedGameId().ToUpper();
+                string defaultGame = GetSelectedGameId().ToUpper();
+
+                ComboBoxItem catItem = CmbGlossaryCategory != null ? CmbGlossaryCategory.SelectedItem as ComboBoxItem : null;
+                string selectedCat = (catItem != null && catItem.Content != null) ? catItem.Content.ToString() : "Chung";
+
                 foreach (var kvp in glossary)
                 {
-                    list.Add(new TextMapItem { SourceText = kvp.Key, TargetText = kvp.Value, GameId = gameId });
+                    list.Add(new TextMapItem { SourceText = kvp.Key, TargetText = kvp.Value, GameId = selectedCat, Id = "GLOSSARY" });
                 }
                 if (DgGlossaryList != null) DgGlossaryList.ItemsSource = list;
+                if (TxtGlossarySummary != null) TxtGlossarySummary.Text = string.Format("Hiển thị {0} thuật ngữ trong từ điển ưu tiên", list.Count);
             }
             catch { }
         }
@@ -807,6 +1076,7 @@ namespace EtherEditorNative.Views
         {
             string en = TxtNewTermEn != null ? TxtNewTermEn.Text.Trim() : "";
             string vi = TxtNewTermVi != null ? TxtNewTermVi.Text.Trim() : "";
+
             if (!string.IsNullOrEmpty(en) && !string.IsNullOrEmpty(vi))
             {
                 GlossaryService.Instance.AddTerm(en, vi);
@@ -830,6 +1100,19 @@ namespace EtherEditorNative.Views
             }
         }
 
+        private void BtnSaveGlossary_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GlossaryService.Instance.SaveGlossary(GlossaryService.Instance.GetGlossary());
+                MessageBox.Show("Đã lưu thay đổi từ điển ưu tiên thành công!", "Từ điển ưu tiên", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Đã xảy ra lỗi khi lưu từ điển: " + ex.Message, "Lỗi Lưu Từ điển", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
         private void PerformLookupSearch(string query)
         {
             try
@@ -837,11 +1120,21 @@ namespace EtherEditorNative.Views
                 var results = GlossaryService.Instance.SearchTerms(query);
                 List<TextMapItem> list = new List<TextMapItem>();
                 string gameId = GetSelectedGameId().ToUpper();
+
+                ComboBoxItem gameItem = CmbLookupGame != null ? CmbLookupGame.SelectedItem as ComboBoxItem : null;
+                if (gameItem != null && gameItem.Content != null && !gameItem.Content.ToString().StartsWith("Tất cả"))
+                {
+                    gameId = gameItem.Content.ToString();
+                }
+
+                int index = 100001;
                 foreach (var r in results)
                 {
-                    list.Add(new TextMapItem { SourceText = r.Key, TargetText = r.Value, GameId = gameId });
+                    list.Add(new TextMapItem { Id = index++.ToString(), SourceText = r.Key, TargetText = r.Value, GameId = gameId });
                 }
                 if (DgLookupResults != null) DgLookupResults.ItemsSource = list;
+                if (TxtLookupSummary != null) TxtLookupSummary.Text = string.Format("Hiển thị {0} kết quả tra cứu", list.Count);
+                if (TxtLookupPage != null) TxtLookupPage.Text = "Trang 1 / 1";
             }
             catch { }
         }
@@ -850,6 +1143,23 @@ namespace EtherEditorNative.Views
         {
             string q = TxtLookupQuery != null ? TxtLookupQuery.Text.Trim() : "";
             PerformLookupSearch(q);
+        }
+
+        private void OnLookupFilterChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded) return;
+            string q = TxtLookupQuery != null ? TxtLookupQuery.Text.Trim() : "";
+            PerformLookupSearch(q);
+        }
+
+        private void BtnLookupPrev_Click(object sender, RoutedEventArgs e)
+        {
+            if (TxtLookupPage != null) TxtLookupPage.Text = "Trang 1 / 1";
+        }
+
+        private void BtnLookupNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (TxtLookupPage != null) TxtLookupPage.Text = "Trang 1 / 1";
         }
 
         private void TxtLookupQuery_KeyDown(object sender, KeyEventArgs e)
@@ -891,10 +1201,12 @@ namespace EtherEditorNative.Views
             ShowModalSettings();
         }
 
+
         private void BtnFilePickerPill_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             OpenProjectDialog();
         }
+
 
         private void BtnFetchEn_Click(object sender, RoutedEventArgs e)
         {

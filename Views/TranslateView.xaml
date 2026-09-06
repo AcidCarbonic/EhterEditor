@@ -17,6 +17,446 @@
             <Setter Property="SelectionBrush" Value="#264f78"/>
         </Style>
 
+        <!-- VS CODE DARK CONTEXT MENU STYLE -->
+        <Style x:Key="VsContextMenuStyle" TargetType="ContextMenu">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="Foreground" Value="#cccccc"/>
+            <Setter Property="BorderBrush" Value="#3c3c3c"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="4" Opacity="0.5" Color="#000000"/>
+                            </Border.Effect>
+                            <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VS CODE DARK MENUITEM STYLE -->
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#cccccc"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="3" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#04395e"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#666666"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VS CODE DARK SEPARATOR STYLE -->
+        <Style TargetType="Separator">
+            <Setter Property="Background" Value="#3c3c3c"/>
+            <Setter Property="Margin" Value="-4,4,-4,4"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Separator">
+                        <Border Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Margin="{TemplateBinding Margin}" HorizontalAlignment="Stretch"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DISCORD SIDEBAR SUB-ITEM BUTTON STYLE -->
+        <Style x:Key="VsTopTabBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#949ba4"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="16,0,0,0"/>
+            <Setter Property="Margin" Value="0,1,0,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" 
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- SLEEK DARK DISCORD-STYLE SCROLLBAR REPEAT BUTTON -->
+        <Style x:Key="ScrollTransparentRepeatBtn" TargetType="RepeatButton">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Rectangle Fill="Transparent"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VERTICAL SCROLLBAR TEMPLATE -->
+        <ControlTemplate x:Key="VerticalScrollBarTemplate" TargetType="ScrollBar">
+            <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="True">
+                <Track x:Name="PART_Track" IsDirectionReversed="True" HorizontalAlignment="Right">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource ScrollTransparentRepeatBtn}"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Width="8" MinHeight="36">
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="Thumb">
+                                    <Border x:Name="thumbBorder" Background="#3a3c42" CornerRadius="4" HorizontalAlignment="Right" Width="8"/>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="thumbBorder" Property="Background" Value="#4e5058"/>
+                                        </Trigger>
+                                        <Trigger Property="IsDragging" Value="True">
+                                            <Setter TargetName="thumbBorder" Property="Background" Value="#5d6069"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource ScrollTransparentRepeatBtn}"/>
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <!-- HORIZONTAL SCROLLBAR TEMPLATE -->
+        <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="ScrollBar">
+            <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="True">
+                <Track x:Name="PART_Track" IsDirectionReversed="False" VerticalAlignment="Bottom">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageLeftCommand}" Style="{StaticResource ScrollTransparentRepeatBtn}"/>
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Height="8" MinWidth="36">
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="Thumb">
+                                    <Border x:Name="thumbBorder" Background="#3a3c42" CornerRadius="4" VerticalAlignment="Bottom" Height="8"/>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="thumbBorder" Property="Background" Value="#4e5058"/>
+                                        </Trigger>
+                                        <Trigger Property="IsDragging" Value="True">
+                                            <Setter TargetName="thumbBorder" Property="Background" Value="#5d6069"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageRightCommand}" Style="{StaticResource ScrollTransparentRepeatBtn}"/>
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template" Value="{StaticResource VerticalScrollBarTemplate}"/>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Template" Value="{StaticResource HorizontalScrollBarTemplate}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- DARK COMBOBOX ITEM STYLE -->
+        <Style x:Key="VsDarkComboItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="#d4d4d4"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="bd" 
+                                Background="{TemplateBinding Background}" 
+                                Padding="{TemplateBinding Padding}" 
+                                CornerRadius="4" 
+                                Margin="2,1">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#37373d"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#04395e"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DARK COMBOBOX TOGGLE BUTTON STYLE -->
+        <Style x:Key="VsComboToggleBtnStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="templateRoot" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="6" 
+                                SnapsToDevicePixels="true">
+                            <Grid HorizontalAlignment="Right" Width="30">
+                                <Path x:Name="arrow" 
+                                      Data="M 0 0 L 4 4 L 8 0 Z" 
+                                      Fill="#aaaaaa" 
+                                      HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center" 
+                                      Stretch="Uniform" 
+                                      Width="8" Height="5"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="templateRoot" Property="Background" Value="#2d2d30"/>
+                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="#007acc"/>
+                                <Setter TargetName="arrow" Property="Fill" Value="#ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="templateRoot" Property="Background" Value="#2d2d30"/>
+                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="#007acc"/>
+                                <Setter TargetName="arrow" Property="Fill" Value="#007acc"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DARK COMBOBOX MAIN STYLE -->
+        <Style x:Key="VsLightComboStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="BorderBrush" Value="#3c3c3c"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="Padding" Value="12,0,30,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource VsDarkComboItemStyle}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid x:Name="mainGrid" SnapsToDevicePixels="true">
+                            <ToggleButton x:Name="toggleButton" 
+                                          Background="{TemplateBinding Background}" 
+                                          BorderBrush="{TemplateBinding BorderBrush}" 
+                                          BorderThickness="{TemplateBinding BorderThickness}" 
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          Style="{StaticResource VsComboToggleBtnStyle}"/>
+
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              IsHitTestVisible="false" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                              Content="{TemplateBinding SelectionBoxItem}" 
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+
+                            <Popup x:Name="PART_Popup" 
+                                   AllowsTransparency="true" 
+                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                                   Margin="0,2,0,0" 
+                                   Placement="Bottom" 
+                                   PopupAnimation="Slide" 
+                                   VerticalOffset="2"
+                                   MinWidth="{Binding ElementName=mainGrid, Path=ActualWidth}">
+                                <Border x:Name="dropDownBorder" 
+                                        Background="#1e1e24" 
+                                        BorderBrush="#3c3c3c" 
+                                        BorderThickness="1" 
+                                        CornerRadius="6" 
+                                        Padding="2"
+                                        MinWidth="{Binding ElementName=mainGrid, Path=ActualWidth}">
+                                    <ScrollViewer x:Name="DropDownScrollViewer" MaxHeight="240" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="dropDownBorder" Property="Height" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="VsLightInputStyle" TargetType="Border">
+            <Setter Property="Background" Value="#252526"/>
+            <Setter Property="BorderBrush" Value="#3c3c3c"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Height" Value="34"/>
+        </Style>
+
+        <Style x:Key="VsToggleSwitchStyle" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border x:Name="switchBorder" Width="38" Height="20" CornerRadius="10" Background="#3c3c3c" Margin="0,0,8,0" Padding="2">
+                                <Ellipse x:Name="switchThumb" Width="16" Height="16" Fill="#ffffff" HorizontalAlignment="Left"/>
+                            </Border>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="switchBorder" Property="Background" Value="#007acc"/>
+                                <Setter TargetName="switchThumb" Property="HorizontalAlignment" Value="Right"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="VsLightPrimaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="#007acc"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#1177bb"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="VsLightSecondaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="Foreground" Value="#cccccc"/>
+            <Setter Property="BorderBrush" Value="#3c3c3c"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#3c3c3c"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- SQUARE CLOSE BUTTON STYLE (BOLD SVG CROSS + 1:1 SQUARE CONTAINER) -->
+        <Style x:Key="VsSquareCloseBtn" TargetType="Button">
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="ToolTip" Value="Đóng"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="6" Width="32" Height="32">
+                            <Path x:Name="icon" 
+                                  Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" 
+                                  Fill="#999999" 
+                                  Width="14" Height="14" 
+                                  Stretch="Uniform" 
+                                  HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#2d2f36"/>
+                                <Setter TargetName="icon" Property="Fill" Value="#ffffff"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#3a3c45"/>
+                                <Setter TargetName="icon" Property="Fill" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
         <!-- VS CODE SUB-MENU BUTTON STYLE -->
         <Style x:Key="VsMenuBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -218,85 +658,10 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-        <!-- VS CODE DARK COMBOBOX ITEM STYLE -->
-        <Style x:Key="VsDarkComboItemStyle" TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="#252526"/>
-            <Setter Property="Foreground" Value="#ffffff"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Padding" Value="12,8"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBoxItem">
-                        <Border x:Name="Bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#37373d"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#04395e"/>
-                                <Setter Property="Foreground" Value="#ffffff"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- VS CODE DARK COMBOBOX STYLE -->
-        <Style x:Key="VsDarkComboStyle" TargetType="ComboBox">
-            <Setter Property="Background" Value="#3c3c3c"/>
-            <Setter Property="Foreground" Value="#ffffff"/>
-            <Setter Property="BorderBrush" Value="#3c3c3c"/>
-            <Setter Property="BorderThickness" Value="1"/>
+        <!-- VS CODE DARK COMBOBOX STYLE ALIAS -->
+        <Style x:Key="VsDarkComboStyle" TargetType="ComboBox" BasedOn="{StaticResource VsLightComboStyle}">
             <Setter Property="Height" Value="38"/>
             <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Padding" Value="12,0"/>
-            <Setter Property="ItemContainerStyle" Value="{StaticResource VsDarkComboItemStyle}"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Grid x:Name="mainGrid">
-                            <ToggleButton x:Name="toggleButton" 
-                                          Template="{StaticResource VsComboToggleButton}" 
-                                          Background="{TemplateBinding Background}" 
-                                          BorderBrush="{TemplateBinding BorderBrush}" 
-                                          BorderThickness="{TemplateBinding BorderThickness}" 
-                                          Focusable="False" 
-                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
-                            
-                            <ContentPresenter x:Name="contentPresenter" 
-                                              Content="{TemplateBinding SelectionBoxItem}" 
-                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
-                                              HorizontalAlignment="Left" 
-                                              VerticalAlignment="Center" 
-                                              Margin="{TemplateBinding Padding}" 
-                                              IsHitTestVisible="False"/>
-
-                            <Popup x:Name="PART_Popup" 
-                                   AllowsTransparency="True" 
-                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" 
-                                   Placement="Bottom" 
-                                   PopupAnimation="Fade">
-                                <Border x:Name="dropDownBorder" 
-                                        Background="#252526" 
-                                        BorderBrush="#3c3c3c" 
-                                        BorderThickness="1" 
-                                        CornerRadius="4" 
-                                        Margin="0,2,0,0" 
-                                        Width="{Binding ActualWidth, ElementName=mainGrid}">
-                                    <ScrollViewer x:Name="DropDownScrollViewer" Background="#252526" Foreground="#ffffff" MaxHeight="220">
-                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
-                                    </ScrollViewer>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <!-- VS CODE STATUS BAR TRANSPARENT COMBOBOX STYLE (NO DARK BOX FRAME) -->
@@ -417,18 +782,19 @@
                     </Grid.RowDefinitions>
 
                     <!-- TOP SIDEBAR HEADER BAR (ALWAYS VISIBLE) -->
-                    <Border Grid.Row="0" Padding="14,12,12,12">
+                    <Border x:Name="BorderSidebarHeader" Grid.Row="0" Padding="14,12,12,12">
                         <Grid>
                             <TextBlock x:Name="TxtSidebarTitle" Text="QUY TRÌNH XUẤT BẢN" Foreground="#cccccc" FontSize="11.5" FontWeight="Bold" FontFamily="Segoe UI" VerticalAlignment="Center"/>
-                            <Button x:Name="BtnToggleSidebar" Style="{StaticResource VsSidebarBtn}" Width="28" Height="28" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnToggleSidebar_Click" ToolTip="Thu gọn quy trình xuất bản">
-                                <Viewbox Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Name="BtnToggleSidebar" Style="{StaticResource VsSidebarBtn}" Width="26" Height="24" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Center" Click="BtnToggleSidebar_Click" ToolTip="Thu gọn quy trình xuất bản">
+                                <Viewbox Width="12" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
-                                        <Path x:Name="PathToggleSidebar" Data="M 12 5 L 6 12 L 12 19 M 18 5 L 12 12 L 18 19" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                                        <Path x:Name="PathToggleSidebar" Data="M 12 5 L 6 12 L 12 19 M 18 5 L 12 12 L 18 19" Stroke="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" StrokeThickness="2.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
                                     </Canvas>
                                 </Viewbox>
                             </Button>
                         </Grid>
                     </Border>
+
 
                     <!-- SCROLLABLE SIDEBAR CONTENT (COLLAPSED WHEN SIDEBAR IS COLLAPSED) -->
                     <ScrollViewer x:Name="SidebarScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -1049,60 +1415,379 @@
                 </StackPanel>
             </Grid>
         </Border>
+
         <!-- OVERLAY MODAL CONTAINER LAYER (Z-INDEX TOP - SPANS ENTIRE VIEW) -->
         <Grid x:Name="GridModalOverlay" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed" Background="#aa000000" Panel.ZIndex="9999">
-            <!-- 1. MODAL CÀI ĐẶT (SETTINGS MODAL) -->
+            <!-- 1. MODAL CÀI ĐẶT (VS CODE LEFT SIDEBAR VERTICAL TAB LAYOUT - 1180x744) -->
             <Border x:Name="BorderModalSettings" Visibility="Collapsed" 
-                    Width="520" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                    Width="1180" Height="744" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e24" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="8" Padding="0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- HEADER -->
-                    <Grid Grid.Row="0" Margin="0,0,0,16">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="⚙️ " FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Text="CÀI ĐẶT HỆ THỐNG &amp; FANDOM WIKI API" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
+                    <!-- ROW 0: TOP HEADER BAR (Title + Close) -->
+                    <Border Grid.Row="0" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="24,10,8,10" Background="#18181c">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Title & Subtitle -->
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock Text="Cài đặt hệ thống" Foreground="#ffffff" FontSize="18.5" FontWeight="Bold"/>
+                                <TextBlock Text="Thiết lập tham số ứng dụng &amp; hệ thống dịch thuật Ether-Editor" Foreground="#aaaaaa" FontSize="12.5" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <!-- Close Button (Shifted flush to the right edge) -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,4,0">
+                                <Button Click="BtnCloseModal_Click" Style="{StaticResource VsSquareCloseBtn}" ToolTip="Đóng cài đặt" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- ROW 1: MAIN BODY (LEFT SIDEBAR NAVIGATION MENU + RIGHT CONTENT PANES) -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- LEFT SIDEBAR NAVIGATION MENU (DISCORD STYLE ACCORDION TREES) -->
+                        <Border Grid.Column="0" Background="#111214" BorderBrush="#232428" BorderThickness="0,0,1,0" Padding="16,14,14,14">
+                            <Grid x:Name="SidebarNavContainer">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <StackPanel Margin="0,2,0,0">
+                                        <!-- CATEGORY 1: HỆ THỐNG -->
+                                        <Border x:Name="HeaderGroupSystem" Cursor="Hand" MouseLeftButtonDown="HeaderGroupSystem_MouseLeftButtonDown" Background="Transparent" Padding="2,4" Margin="0,0,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path x:Name="IconHeaderGroupSystem" Data="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" Fill="#80848e" Width="13" Height="13" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock x:Name="TxtHeaderGroupSystem" Text="HỆ THỐNG" Foreground="#80848e" FontSize="11.5" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- Tree Line Connector -->
+                                        <Border x:Name="TreeGroupSystem" BorderThickness="2,0,0,0" BorderBrush="#35373c" Margin="7,0,0,18" Padding="0" Visibility="Visible">
+                                            <StackPanel>
+                                                <Button x:Name="BtnTabSettingDisplay" Style="{StaticResource VsTopTabBtn}" Click="BtnTabSetting_Click" Tag="display">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path x:Name="IconTabSettingDisplay" Data="M20 3H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h6l-2 3v1h8v-1l-2-3h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12H4V5h16v10z" Fill="#80848e" Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                        <TextBlock Text="Hiển thị" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="BtnTabSettingUpdate" Style="{StaticResource VsTopTabBtn}" Click="BtnTabSetting_Click" Tag="update">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path x:Name="IconTabSettingUpdate" Data="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z" Fill="#80848e" Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                        <TextBlock Text="Cập nhật" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <!-- CATEGORY 2: FANDOM WIKI -->
+                                        <Border x:Name="HeaderGroupWiki" Cursor="Hand" MouseLeftButtonDown="HeaderGroupWiki_MouseLeftButtonDown" Background="Transparent" Padding="2,4" Margin="0,4,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path x:Name="IconHeaderGroupWiki" Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" Fill="#80848e" Width="13" Height="13" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock x:Name="TxtHeaderGroupWiki" Text="FANDOM WIKI" Foreground="#80848e" FontSize="11.5" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- Tree Line Connector -->
+                                        <Border x:Name="TreeGroupWiki" BorderThickness="2,0,0,0" BorderBrush="#35373c" Margin="7,0,0,18" Padding="0" Visibility="Collapsed">
+                                            <StackPanel>
+                                                <Button x:Name="BtnTabSettingWiki" Style="{StaticResource VsTopTabBtn}" Click="BtnTabSetting_Click" Tag="wiki">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path x:Name="IconTabSettingWiki" Data="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" Fill="#80848e" Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                        <TextBlock Text="Botpassword" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <!-- CATEGORY 3: DỊCH MÁY -->
+                                        <Border x:Name="HeaderGroupTranslate" Cursor="Hand" MouseLeftButtonDown="HeaderGroupTranslate_MouseLeftButtonDown" Background="Transparent" Padding="2,4" Margin="0,4,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path x:Name="IconHeaderGroupTranslate" Data="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" Fill="#80848e" Width="13" Height="13" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                <TextBlock x:Name="TxtHeaderGroupTranslate" Text="DỊCH MÁY" Foreground="#80848e" FontSize="11.5" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <!-- Tree Line Connector -->
+                                        <Border x:Name="TreeGroupTranslate" BorderThickness="2,0,0,0" BorderBrush="#35373c" Margin="7,0,0,18" Padding="0" Visibility="Collapsed">
+                                            <StackPanel>
+                                                <Button x:Name="BtnTabSettingLlm" Style="{StaticResource VsTopTabBtn}" Click="BtnTabSetting_Click" Tag="llm">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path x:Name="IconTabSettingLlm" Data="M15 9H9v6h6V9zm-2 4h-2v-2h2v2zm8-2V9h-2V7c0-1.1-.9-2-2-2h-2V3h-2v2h-2V3H9v2H7c-1.1 0-2 .9-2 2v2H3v2h2v2H3v2h2v2c0 1.1.9 2 2 2h2v2h2v-2h2v2h2v-2h2c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2zm-4 6H7V7h10v10z" Fill="#80848e" Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                        <TextBlock Text="LLM" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button x:Name="BtnTabSettingNmt" Style="{StaticResource VsTopTabBtn}" Click="BtnTabSetting_Click" Tag="nmt">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Path x:Name="IconTabSettingNmt" Data="M7 2v11h3v9l7-12h-4l4-8z" Fill="#80848e" Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                        <TextBlock Text="NMT" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </ScrollViewer>
+
+                                <!-- SMOOTH SLIDING ACTIVE TAB INDICATOR BAR | -->
+                                <Canvas IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                    <Border x:Name="ActiveTabIndicator" 
+                                            Width="3" Height="32" 
+                                            Background="#ffffff" 
+                                            CornerRadius="1" 
+                                            Canvas.Left="6.5" Canvas.Top="0">
+                                        <Border.RenderTransform>
+                                            <TranslateTransform x:Name="ActiveTabIndicatorTransform" X="0" Y="0"/>
+                                        </Border.RenderTransform>
+                                    </Border>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+
+                        <!-- RIGHT CONTENT PANES CONTAINER -->
+                        <Border Grid.Column="1" Padding="0">
+                            <Grid>
+                                <!-- CATEGORY 1: HỆ THỐNG (MERGES DISPLAY & UPDATE) -->
+                                <Grid x:Name="PaneSettingGroupSystem" Visibility="Visible">
+                                    <ScrollViewer x:Name="ScrollSystemSettings" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                        <StackPanel Margin="32,16,28,18">
+                                            <!-- SUB-SECTION 1: DISPLAY -->
+                                            <StackPanel x:Name="PaneSettingDisplay" Margin="0,0,0,20">
+                                                <TextBlock Text="Hiển thị" Foreground="#ffffff" FontSize="18" FontWeight="Bold" Margin="0,0,0,16"/>
+
+                                                <!-- 1. PHÔNG CHỮ HỆ THỐNG & NÚT QUÉT FONT -->
+                                                <TextBlock Text="Phông chữ hệ thống" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <Grid Margin="0,0,0,14">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox x:Name="CmbFontFamily" Grid.Column="0" Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" SelectionChanged="OnSettingChanged">
+                                                        <ComboBoxItem Content="Consolas (Mặc định)" IsSelected="True"/>
+                                                        <ComboBoxItem Content="Lucida Console"/>
+                                                        <ComboBoxItem Content="Courier New"/>
+                                                        <ComboBoxItem Content="Segoe UI"/>
+                                                        <ComboBoxItem Content="Arial"/>
+                                                        <ComboBoxItem Content="Times New Roman"/>
+                                                        <ComboBoxItem Content="Calibri"/>
+                                                    </ComboBox>
+                                                    <Button x:Name="BtnScanFonts" Grid.Column="1" Content="🔍 Quét font" Style="{StaticResource VsLightSecondaryBtn}" Height="34" Margin="8,0,0,0" Padding="14,0" Click="BtnScanFonts_Click" ToolTip="Quét &amp; Tải tất cả phông chữ Windows vào danh sách"/>
+                                                </Grid>
+
+                                                <!-- 2. CỠ CHỮ -->
+                                                <TextBlock Text="Cỡ chữ (PX)" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <ComboBox x:Name="CmbFontSize" Style="{StaticResource VsLightComboStyle}" SelectedIndex="2" Margin="0,0,0,14" SelectionChanged="OnSettingChanged">
+                                                    <ComboBoxItem Content="12"/>
+                                                    <ComboBoxItem Content="13"/>
+                                                    <ComboBoxItem Content="14 (Mặc định)"/>
+                                                    <ComboBoxItem Content="15"/>
+                                                    <ComboBoxItem Content="16"/>
+                                                    <ComboBoxItem Content="18"/>
+                                                    <ComboBoxItem Content="20"/>
+                                                    <ComboBoxItem Content="22"/>
+                                                </ComboBox>
+
+                                                <!-- 3. KHOẢNG CÁCH CHỮ / DÒNG -->
+                                                <TextBlock Text="Khoảng cách chữ / Dòng" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <ComboBox x:Name="CmbLineHeight" Style="{StaticResource VsLightComboStyle}" SelectedIndex="4" Margin="0,0,0,14" SelectionChanged="OnSettingChanged">
+                                                    <ComboBoxItem Content="1.2"/>
+                                                    <ComboBoxItem Content="1.3"/>
+                                                    <ComboBoxItem Content="1.4"/>
+                                                    <ComboBoxItem Content="1.5"/>
+                                                    <ComboBoxItem Content="1.6 (Mặc định)"/>
+                                                    <ComboBoxItem Content="1.8"/>
+                                                </ComboBox>
+                                            </StackPanel>
+
+                                            <Border Height="1" Background="#2b2d31" Margin="0,8,0,24"/>
+
+                                            <!-- SUB-SECTION 2: UPDATE -->
+                                            <StackPanel x:Name="PaneSettingUpdate" Margin="0,0,0,20">
+                                                <TextBlock Text="Cập nhật" Foreground="#ffffff" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                                                    <TextBlock Foreground="#cccccc" FontSize="13" TextWrapping="Wrap" LineHeight="20">
+                                                        ℹ️ Thiết lập chu kỳ tự động quét và cập nhật danh sách hoạt động gần đây (Recent Changes) từ Wiki Fandom.
+                                                    </TextBlock>
+                                                </Border>
+
+                                                <TextBlock Text="CHU KỲ TỰ ĐỘNG CẬP NHẬT HOẠT ĐỘNG" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                                <ComboBox x:Name="CmbUpdateInterval" Style="{StaticResource VsLightComboStyle}" SelectedIndex="1" Margin="0,0,0,14" SelectionChanged="OnSettingChanged">
+                                                    <ComboBoxItem Content="5 phút"/>
+                                                    <ComboBoxItem Content="10 phút (Mặc định)"/>
+                                                    <ComboBoxItem Content="15 phút"/>
+                                                    <ComboBoxItem Content="30 phút"/>
+                                                </ComboBox>
+
+                                                <Border Height="34" Margin="0,4,0,0" VerticalAlignment="Center">
+                                                    <CheckBox Content="Kích hoạt tự động quét Recent Changes" Style="{StaticResource VsToggleSwitchStyle}" Foreground="#d4d4d4" FontSize="12.5" IsChecked="True" Checked="OnSettingChanged" Unchecked="OnSettingChanged"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+
+                                <!-- CATEGORY 2: FANDOM WIKI -->
+                                <Grid x:Name="PaneSettingWiki" Visibility="Collapsed">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                        <StackPanel Margin="32,16,28,18">
+                                            <TextBlock Text="Agents' Settings (Wiki Account)" Foreground="#ffffff" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+
+                                            <!-- Info Banner -->
+                                            <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                                                <TextBlock Foreground="#cccccc" FontSize="13" TextWrapping="Wrap" LineHeight="20">
+                                                    ℹ️ Khuyên dùng tài khoản <Run FontWeight="Bold" Foreground="#4ec9b0">BotPassword</Run> được tạo trực tiếp từ trang cá nhân Fandom của bạn thay vì dùng mật khẩu chính để bảo mật tối đa.
+                                                </TextBlock>
+                                            </Border>
+
+                                            <TextBlock Text="TÊN TÀI KHOẢN BOT" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                            <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,14">
+                                                <TextBox x:Name="TxtSettingBotUser" Text="TenBot@MatKhauBot" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                            </Border>
+
+                                            <TextBlock Text="MẬT KHẨU BOT (BOTPASSWORD)" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                                            <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,14">
+                                                <PasswordBox x:Name="TxtSettingBotPass" Password="••••••••••••••••" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+
+                                <!-- CATEGORY 3: DỊCH MÁY (MERGES LLM & NMT) -->
+                                <Grid x:Name="PaneSettingGroupTranslate" Visibility="Collapsed">
+                                    <ScrollViewer x:Name="ScrollTranslateSettings" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                        <StackPanel Margin="32,16,28,18">
+                                            <!-- SUB-SECTION 1: LLM -->
+                                            <StackPanel x:Name="PaneSettingLlm" Margin="0,0,0,20">
+                                                <TextBlock Text="Cấu hình Dịch máy AI (LLM 3 Tầng)" Foreground="#ffffff" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+
+                                                <!-- Info Banner -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                                                    <TextBlock Foreground="#cccccc" FontSize="13" TextWrapping="Wrap" LineHeight="20">
+                                                        ℹ️ Hệ thống AI LLM 3 tầng thông minh: 🤖 <Run FontWeight="Bold" Foreground="#38bdf8">Tầng 1 (Gemini)</Run>, ⚡ <Run FontWeight="Bold" Foreground="#fbbf24">Tầng 2 (Groq)</Run>, 🚀 <Run FontWeight="Bold" Foreground="#4ade80">Tầng 3 (Cerebras)</Run> tự động chuyển đổi mô hình dự phòng khi gặp lỗi hoặc hết hạn ngạch API.
+                                                    </TextBlock>
+                                                </Border>
+
+                                                <!-- LLM Tier 1 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20" Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 1: GOOGLE GEMINI" Foreground="#38bdf8" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                        <TextBlock Text="KHÓA API" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,12">
+                                                            <PasswordBox x:Name="TxtLlmKeyT1" Password="AIzaSy...GeminiKey" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                        <TextBlock Text="MÔ HÌNH" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <ComboBox Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" SelectionChanged="OnSettingChanged">
+                                                            <ComboBoxItem Content="gemini-1.5-flash (Mặc định)" IsSelected="True"/>
+                                                            <ComboBoxItem Content="gemini-1.5-pro"/>
+                                                            <ComboBoxItem Content="gemini-2.0-flash"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- LLM Tier 2 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20" Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 2: GROQ" Foreground="#fbbf24" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                        <TextBlock Text="KHÓA API" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,12">
+                                                            <PasswordBox x:Name="TxtLlmKeyT2" Password="gsk_...GroqKey" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                        <TextBlock Text="MÔ HÌNH" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <ComboBox Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" SelectionChanged="OnSettingChanged">
+                                                            <ComboBoxItem Content="llama-3.3-70b-versatile" IsSelected="True"/>
+                                                            <ComboBoxItem Content="mixtral-8x7b-32768"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- LLM Tier 3 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 3: CEREBRAS" Foreground="#4ade80" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                        <TextBlock Text="KHÓA API" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,12">
+                                                            <PasswordBox x:Name="TxtLlmKeyT3" Password="csk_...CerebrasKey" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                        <TextBlock Text="MÔ HÌNH" Foreground="#aaaaaa" FontSize="11" FontWeight="Bold" Margin="0,0,0,4"/>
+                                                        <ComboBox Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" SelectionChanged="OnSettingChanged">
+                                                            <ComboBoxItem Content="llama3.1-70b" IsSelected="True"/>
+                                                            <ComboBoxItem Content="llama3.1-8b"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+
+                                            <Border Height="1" Background="#2b2d31" Margin="0,8,0,24"/>
+
+                                            <!-- SUB-SECTION 2: NMT -->
+                                            <StackPanel x:Name="PaneSettingNmt" Margin="0,0,0,20">
+                                                <TextBlock Text="Cấu hình Dịch máy NMT (Google, Deep-Translator, RapidAPI)" Foreground="#ffffff" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+
+                                                <!-- Info Banner -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                                                    <TextBlock Foreground="#cccccc" FontSize="13" TextWrapping="Wrap" LineHeight="20">
+                                                        ⚡ Hệ thống dịch máy NMT (Neural Machine Translation) truyền thống cho tốc độ dịch siêu tốc, đóng vai trò dự phòng và dịch hỗ trợ.
+                                                    </TextBlock>
+                                                </Border>
+
+                                                <!-- NMT Tier 1 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20" Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 1: GOOGLE APPS SCRIPT WEB APPS" Foreground="#38bdf8" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,8"/>
+                                                        <TextBlock Text="Dịch thuật thông qua các URL ứng dụng web trung gian Google Apps Script..." Foreground="#aaaaaa" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                                                        <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,10">
+                                                            <TextBox x:Name="TxtNmtGasA" Text="" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="13" Padding="12,10" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                        <Border Style="{StaticResource VsLightInputStyle}" Margin="0,0,0,10">
+                                                            <TextBox x:Name="TxtNmtGasB" Text="" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="13" Padding="12,10" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                        <Border Style="{StaticResource VsLightInputStyle}">
+                                                            <TextBox x:Name="TxtNmtGasC" Text="" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="13" Padding="12,10" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- NMT Tier 2 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20" Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 2: DEEP-TRANSLATOR" Foreground="#fbbf24" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                        <TextBlock Text="THỜI GIAN CHỜ GIỮA CÁC YÊU CẦU (DELAY)" Foreground="#aaaaaa" FontSize="11.5" FontWeight="Bold" Margin="0,0,0,6"/>
+                                                        <ComboBox x:Name="CmbNmtDelay" Style="{StaticResource VsLightComboStyle}" SelectedIndex="1" SelectionChanged="OnSettingChanged">
+                                                            <ComboBoxItem Content="0.5 giây"/>
+                                                            <ComboBoxItem Content="1.0 giây (Mặc định)" IsSelected="True"/>
+                                                            <ComboBoxItem Content="1.5 giây"/>
+                                                            <ComboBoxItem Content="2.0 giây"/>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </Border>
+
+                                                <!-- NMT Tier 3 -->
+                                                <Border Background="#252526" BorderBrush="#3c3c3c" BorderThickness="1" CornerRadius="8" Padding="20">
+                                                    <StackPanel>
+                                                        <TextBlock Text="TẦNG 3: RAPIDAPI WRAPPER" Foreground="#4ade80" FontSize="13.5" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                        <Border Style="{StaticResource VsLightInputStyle}">
+                                                            <PasswordBox x:Name="TxtNmtRapidKey" Password="" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="13.5" Padding="12,10" VerticalAlignment="Center" LostFocus="OnSettingChanged"/>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
-
-                    <!-- BODY -->
-                    <StackPanel Grid.Row="1" Margin="0,0,0,20">
-                        <TextBlock Text="1. URL Endpoint Fandom MediaWiki API:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
-                            <TextBox x:Name="TxtSettingWikiApiUrl" Text="https://honkai-star-rail.fandom.com/vi/api.php" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
-                        </Border>
-
-                        <TextBlock Text="2. Fandom Botpass Username / Email:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
-                            <TextBox x:Name="TxtSettingBotUser" Text="EtherEditorBot@fandom" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
-                        </Border>
-
-                        <TextBlock Text="3. API Token / User Password:" Foreground="#cccccc" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,6"/>
-                        <Border Style="{StaticResource VsInputContainerBorder}" Margin="0,0,0,14">
-                            <PasswordBox x:Name="TxtSettingBotPass" Password="••••••••••••••••" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6"/>
-                        </Border>
-
-                        <CheckBox x:Name="ChkSettingAutoTranslate" Content="Tự động chuẩn hóa Thuật ngữ khi mở bài viết" Foreground="#cccccc" FontSize="12.5" IsChecked="True" Margin="0,4,0,0"/>
-                    </StackPanel>
-
-                    <!-- FOOTER -->
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="BtnCloseModal_Click" Content="Hủy" Style="{StaticResource VsMenuBtn}" Width="80" Margin="0,0,10,0"/>
-                        <Button Click="BtnSaveSettings_Click" Content="Lưu Cài Đặt" Style="{StaticResource VsInputIntegratedBtn}" Width="110" Height="32"/>
-                    </StackPanel>
                 </Grid>
             </Border>
 
             <!-- 2. MODAL TỪ ĐIỂN ƯU TIÊN (PRIORITY GLOSSARY MODAL) -->
             <Border x:Name="BorderModalGlossary" Visibility="Collapsed" 
-                    Width="680" Height="480" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                    Width="1180" Height="744" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e24" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="8" Padding="0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -1112,59 +1797,96 @@
                     </Grid.RowDefinitions>
 
                     <!-- HEADER -->
-                    <Grid Grid.Row="0" Margin="0,0,0,16">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="📚 " FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Text="QUẢN LÝ TỪ ĐIỂN THUẬT NGỮ ƯU TIÊN (PRIORITY GLOSSARY)" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
-                    </Grid>
+                    <Border Grid.Row="0" Background="#18181c" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="20,12,12,12">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="📖 " FontSize="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Quản lý Từ điển ưu tiên (Priority Glossary)" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Button Click="BtnCloseModal_Click" Style="{StaticResource VsSquareCloseBtn}" ToolTip="Đóng từ điển" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
 
-                    <!-- ADD TERM BAR -->
-                    <Grid Grid.Row="1" Margin="0,0,0,14">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="100"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,6,0">
-                            <TextBox x:Name="TxtNewTermEn" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="8,6" ToolTip="Thuật ngữ tiếng Anh"/>
-                        </Border>
-                        <Border Grid.Column="1" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,6,0">
-                            <TextBox x:Name="TxtNewTermVi" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="8,6" ToolTip="Thuật ngữ tiếng Việt"/>
-                        </Border>
-                        <Button Grid.Column="2" Click="BtnAddGlossaryTerm_Click" Content="+ Thêm" Style="{StaticResource VsInputIntegratedBtn}" Height="32"/>
-                    </Grid>
+                    <!-- PANEL THÊM THUẬT NGỮ MỚI & CHỌN DANH MỤC -->
+                    <Border Grid.Row="1" Background="#202225" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="20,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                    <!-- GLOSSARY LIST -->
-                    <DataGrid x:Name="DgGlossaryList" Grid.Row="2" AutoGenerateColumns="False" 
-                              Background="#252526" RowBackground="#1e1e1e" 
-                              BorderThickness="1" BorderBrush="#3c3c3c" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
-                              HorizontalGridLinesBrush="#2d2d2d" Foreground="#cccccc" FontSize="13" RowHeight="32">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="THUẬT NGỮ ANH (SOURCE)" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="BẢN DỊCH VIỆT (TARGET)" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
-                            <DataGridTemplateColumn Header="THAO TÁC" Width="90">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Xóa" Click="BtnDeleteGlossaryTerm_Click" Foreground="#f14c4c" Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <!-- 1. Thuật ngữ gốc -->
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Thuật ngữ gốc (Source Text):" Foreground="#4fc1ff" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <Border Style="{StaticResource VsLightInputStyle}" Height="34">
+                                    <TextBox x:Name="TxtNewTermEn" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="8,6" VerticalAlignment="Center" ToolTip="Ví dụ: March 7th"/>
+                                </Border>
+                            </StackPanel>
 
-                    <!-- FOOTER -->
-                    <StackPanel Grid.Row="3" Margin="0,14,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="BtnCloseModal_Click" Content="Đóng" Style="{StaticResource VsMenuBtn}" Width="80"/>
-                    </StackPanel>
+                            <!-- 2. Bản dịch ưu tiên -->
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="Bản dịch ưu tiên (Target Text):" Foreground="#ce9178" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <Border Style="{StaticResource VsLightInputStyle}" Height="34">
+                                    <TextBox x:Name="TxtNewTermVi" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="8,6" VerticalAlignment="Center" ToolTip="Ví dụ: March 7th"/>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- 3. Danh mục -->
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Lưu vào danh mục:" Foreground="#cccccc" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="CmbGlossaryCategory" Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" Height="34">
+                                    <ComboBoxItem Content="Chung (Toàn cục)" IsSelected="True"/>
+                                    <ComboBoxItem Content="Genshin Impact (GI)"/>
+                                    <ComboBoxItem Content="Honkai: Star Rail (HSR)"/>
+                                    <ComboBoxItem Content="Zenless Zone Zero (ZZZ)"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- 4. Nút Thêm -->
+                            <Button Grid.Column="3" Click="BtnAddGlossaryTerm_Click" Content="+ Thêm từ mới" Style="{StaticResource VsLightPrimaryBtn}" Height="34" Padding="16,0" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- GLOSSARY LIST TABLE -->
+                    <Border Grid.Row="2" Padding="0" Background="#1e1e24">
+                        <DataGrid x:Name="DgGlossaryList" AutoGenerateColumns="False" 
+                                  Background="#1e1e24" RowBackground="#252526" AlternatingRowBackground="#1e1e24"
+                                  BorderThickness="0" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#2d2d2d" Foreground="#d4d4d4" FontSize="12.5" RowHeight="36">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="THUẬT NGỮ GỐC (SOURCE)" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="BẢN DỊCH ƯU TIÊN (TARGET)" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="DANH MỤC" Binding="{Binding GameId}" Width="130" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Header="THAO TÁC" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="🗑️ Xóa" Click="BtnDeleteGlossaryTerm_Click" Foreground="#f14c4c" Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- FOOTER BAR -->
+                    <Border Grid.Row="3" Background="#18181c" BorderBrush="#2d2d2d" BorderThickness="0,1,0,0" Padding="16,10">
+                        <Grid>
+                            <TextBlock x:Name="TxtGlossarySummary" Text="Hiển thị từ điển ưu tiên" Foreground="#858585" FontSize="12" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Click="BtnSaveGlossary_Click" Content="💾 Lưu thay đổi từ điển" Style="{StaticResource VsLightPrimaryBtn}" Height="34" Margin="0,0,8,0" Padding="16,0"/>
+                                <Button Click="BtnCloseModal_Click" Content="Đóng" Style="{StaticResource VsLightSecondaryBtn}" Height="34" Padding="16,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
 
             <!-- 3. MODAL TRA CỨU THUẬT NGỮ & WIKI (LOOKUP MODAL) -->
             <Border x:Name="BorderModalLookup" Visibility="Collapsed" 
-                    Width="720" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                    Background="#1e1e1e" BorderBrush="#007acc" BorderThickness="1" CornerRadius="8" Padding="20">
+                    Width="1180" Height="744" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    Background="#1e1e24" BorderBrush="#2d2d2d" BorderThickness="1" CornerRadius="8" Padding="0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -1174,49 +1896,93 @@
                     </Grid.RowDefinitions>
 
                     <!-- HEADER -->
-                    <Grid Grid.Row="0" Margin="0,0,0,16">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="🔍 " FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Text="TRA CỨU THUẬT NGỮ &amp; BÀI VIẾT FANDOM WIKI" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Button Click="BtnCloseModal_Click" HorizontalAlignment="Right" Background="Transparent" Foreground="#888888" BorderThickness="0" FontSize="14" Cursor="Hand" Content="✕"/>
-                    </Grid>
+                    <Border Grid.Row="0" Background="#18181c" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="20,12,12,12">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="🔍 " FontSize="16" VerticalAlignment="Center"/>
+                                <TextBlock Text="Tra cứu cơ sở dữ liệu TextMap trực quan" Foreground="#ffffff" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <Button Click="BtnCloseModal_Click" Style="{StaticResource VsSquareCloseBtn}" ToolTip="Đóng bảng tra cứu" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
 
-                    <!-- SEARCH BAR -->
-                    <Grid Grid.Row="1" Margin="0,0,0,14">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="110"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Style="{StaticResource VsInputContainerBorder}" Margin="0,0,8,0">
-                            <TextBox x:Name="TxtLookupQuery" KeyDown="TxtLookupQuery_KeyDown" Background="Transparent" Foreground="#ffffff" CaretBrush="#ffffff" BorderThickness="0" FontSize="13" Padding="10,6" ToolTip="Nhập từ khóa tra cứu..."/>
-                        </Border>
-                        <Button Grid.Column="1" Click="BtnPerformLookup_Click" Content="🔍 Tra Cứu" Style="{StaticResource VsInputIntegratedBtn}" Height="32"/>
-                    </Grid>
+                    <!-- FILTER & SEARCH BAR -->
+                    <Border Grid.Row="1" Background="#202225" BorderBrush="#2d2d2d" BorderThickness="0,0,0,1" Padding="20,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                    <!-- LOOKUP RESULTS -->
-                    <DataGrid x:Name="DgLookupResults" Grid.Row="2" AutoGenerateColumns="False" 
-                              Background="#252526" RowBackground="#1e1e1e" 
-                              BorderThickness="1" BorderBrush="#3c3c3c" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
-                              HorizontalGridLinesBrush="#2d2d2d" Foreground="#cccccc" FontSize="13" RowHeight="34">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="GAME" Binding="{Binding GameId}" Width="70" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="TÊN TIẾNG ANH" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="TÊN TIẾNG VIỆT" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
-                            <DataGridTemplateColumn Header="CHÈN" Width="100">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Chèn [[...]]" Click="BtnInsertLookupResult_Click" Foreground="#4ec9b0" Background="#2d2d2d" BorderThickness="0" Padding="6,2" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <!-- 1. Chọn Game -->
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Chọn game:" Foreground="#cccccc" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="CmbLookupGame" Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" Height="34" SelectionChanged="OnLookupFilterChanged">
+                                    <ComboBoxItem Content="Tất cả Game" IsSelected="True"/>
+                                    <ComboBoxItem Content="Genshin Impact (GI)"/>
+                                    <ComboBoxItem Content="Honkai: Star Rail (HSR)"/>
+                                    <ComboBoxItem Content="Zenless Zone Zero (ZZZ)"/>
+                                </ComboBox>
+                            </StackPanel>
 
-                    <!-- FOOTER -->
-                    <StackPanel Grid.Row="3" Margin="0,14,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="BtnCloseModal_Click" Content="Đóng" Style="{StaticResource VsMenuBtn}" Width="80"/>
-                    </StackPanel>
+                            <!-- 2. Tìm trong cột -->
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="Tìm trong cột:" Foreground="#cccccc" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="CmbLookupColumn" Style="{StaticResource VsLightComboStyle}" SelectedIndex="0" Height="34" SelectionChanged="OnLookupFilterChanged">
+                                    <ComboBoxItem Content="Tất cả" IsSelected="True"/>
+                                    <ComboBoxItem Content="Mã ID"/>
+                                    <ComboBoxItem Content="Tiếng Anh"/>
+                                    <ComboBoxItem Content="Tiếng Việt"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <!-- 3. Chuỗi tra cứu -->
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Chuỗi cần tra cứu:" Foreground="#cccccc" FontSize="11.5" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                <Border Style="{StaticResource VsLightInputStyle}" Height="34">
+                                    <TextBox x:Name="TxtLookupQuery" KeyDown="TxtLookupQuery_KeyDown" Background="Transparent" Foreground="#ffffff" CaretBrush="#007acc" BorderThickness="0" FontSize="12.5" Padding="10,6" VerticalAlignment="Center" ToolTip="Nhập chuỗi văn bản cần tra cứu (ví dụ: March 7th)..."/>
+                                </Border>
+                            </StackPanel>
+
+                            <!-- 4. Nút Tìm kiếm -->
+                            <Button Grid.Column="3" Click="BtnPerformLookup_Click" Content="🔍 Tìm kiếm" Style="{StaticResource VsLightPrimaryBtn}" Height="34" Padding="18,0" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- LOOKUP RESULTS TABLE -->
+                    <Border Grid.Row="2" Padding="0" Background="#1e1e24">
+                        <DataGrid x:Name="DgLookupResults" AutoGenerateColumns="False" 
+                                  Background="#1e1e24" RowBackground="#252526" AlternatingRowBackground="#1e1e24"
+                                  BorderThickness="0" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#2d2d2d" Foreground="#d4d4d4" FontSize="12.5" RowHeight="36">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="MÃ ID" Binding="{Binding Id}" Width="140" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="TIẾNG ANH (EN)" Binding="{Binding SourceText}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="TIẾNG VIỆT (VI)" Binding="{Binding TargetText}" Width="*" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Header="THAO TÁC" Width="120">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="📋 Chèn [[...]]" Click="BtnInsertLookupResult_Click" Foreground="#4ec9b0" Background="#2d2d2d" BorderThickness="0" Padding="8,4" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- PAGINATION FOOTER BAR -->
+                    <Border Grid.Row="3" Background="#18181c" BorderBrush="#2d2d2d" BorderThickness="0,1,0,0" Padding="16,10">
+                        <Grid>
+                            <TextBlock x:Name="TxtLookupSummary" Text="Hiển thị 0 kết quả tra cứu" Foreground="#858585" FontSize="12" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <Button x:Name="BtnLookupPrev" Click="BtnLookupPrev_Click" Content="◀ Trang trước" Style="{StaticResource VsLightSecondaryBtn}" Height="30" Padding="10,0" Margin="0,0,6,0"/>
+                                <TextBlock x:Name="TxtLookupPage" Text="Trang 1 / 1" Foreground="#cccccc" FontSize="12" VerticalAlignment="Center" Margin="6,0"/>
+                                <Button x:Name="BtnLookupNext" Click="BtnLookupNext_Click" Content="Trang sau ▶" Style="{StaticResource VsLightSecondaryBtn}" Height="30" Padding="6,0" Margin="6,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>
