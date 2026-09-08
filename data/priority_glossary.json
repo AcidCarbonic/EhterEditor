@@ -1,0 +1,32 @@
+{
+  "hsr": {
+    "en_to_vi": {
+      "Steps": "Các Bước Thực Hiện",
+      "Trial Character": "Nhân Vật Dùng Thử",
+      "Dialogue": "Lời Thoại",
+      "Other Languages": "Ngôn Ngữ Khác",
+      "Change History": "Lịch Sử Cập Nhật",
+      "Navigation": "Điều Hướng",
+      "Gallery": "Thư Viện",
+      "Wave 1": "Lượt 1",
+      "Wave 2": "Lượt 2",
+      "Wave 3": "Lượt 3",
+      "Battle 1": "Trận 1",
+      "Battle 2": "Trận 2",
+      "Battle 3": "Trận 3"
+    },
+    "vi_to_en": {
+      "...": "..."
+    }
+  },
+  "genshin": {
+    "en_to_vi": {
+      "Dialogue": "Lời Thoại",
+      "Change History": "Lịch Sử Cập Nhật",
+      "Gallery": "Thư Viện",
+      "Navigation": "Điều Hướng",
+      "Other Languages": "Ngôn Ngữ Khác",
+      "Steps": "Các Bước Thực Hiện"
+    }
+  }
+}

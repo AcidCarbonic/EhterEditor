@@ -199,16 +199,12 @@ namespace EtherEditorNative.Backend
 
             try
             {
-                using (var conn = new System.Data.Odbc.OdbcConnection(string.Format("Driver={{SQLite3 ODBC Driver}};Database={0};", Path.Combine(_projectRoot, "bot_data.db"))))
+                _databaseService.CreateTables();
+                _databaseService.PopulateGamesTable();
+                _databaseService.PopulateGameDataFromJson((msg, pct) =>
                 {
-                    conn.Open();
-                    _databaseService.CreateTables(conn);
-                    _databaseService.PopulateGamesTable(conn);
-                    _databaseService.PopulateGameDataFromJson(conn, (msg, pct) =>
-                    {
-                        if (progressCallback != null) progressCallback(90 + (pct * 0.08), string.Format("{0}%", (int)(90 + (pct * 0.08))), msg);
-                    }, gameId);
-                }
+                    if (progressCallback != null) progressCallback(90 + (pct * 0.08), string.Format("{0}%", (int)(90 + (pct * 0.08))), msg);
+                }, gameId);
             }
             catch (Exception ex)
             {

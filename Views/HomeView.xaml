@@ -487,8 +487,8 @@
                                                 </Border>
 
                                                 <!-- TOP-LEFT VERSION BADGE -->
-                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c01e3a29" BorderBrush="#4ade80" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                                    <TextBlock Text="v4.4" Foreground="#4ade80" FontSize="10" FontWeight="Bold"/>
+                                                <Border x:Name="BadgeHsrVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c01e3a29" BorderBrush="#4ade80" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock x:Name="TxtHsrVersion" Text="v4.4" Foreground="#4ade80" FontSize="10" FontWeight="Bold"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
@@ -503,12 +503,16 @@
 
                                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                                     <TextBlock Text="Honkai: Star Rail" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
-                                                    <TextBlock Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="10" Margin="0,1,0,0"/>
+                                                    <TextBlock x:Name="TxtHsrStatus" Text="169.6 MB • Sẵn sàng" Foreground="#38bdf8" FontSize="10" Margin="0,1,0,0"/>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
-                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="🔄" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="hsr"/>
-                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa CSDL" Click="BtnDeleteAsset_Click" Tag="hsr"/>
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" ToolTip="Cập nhật CSDL" Click="BtnOpenAddProject_Click" Tag="hsr">
+                                                        <Path Data="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z" Fill="#f1f5f9" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" ToolTip="Xóa CSDL" Click="BtnDeleteAsset_Click" Tag="hsr">
+                                                        <Path Data="M9 3h6v2h5v2H4V5h5V3zm-3 6h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9zm3 2v8h2v-8H9zm4 0v8h2v-8h-2z" Fill="#f87171" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
@@ -551,8 +555,8 @@
                                                 </Border>
 
                                                 <!-- TOP-LEFT VERSION BADGE -->
-                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                                    <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
+                                                <Border x:Name="BadgeGenshinVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock x:Name="TxtGenshinVersion" Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
@@ -567,12 +571,16 @@
 
                                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                                     <TextBlock Text="Genshin Impact" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
-                                                    <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
+                                                    <TextBlock x:Name="TxtGenshinStatus" Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
-                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL Genshin" Click="BtnOpenAddProject_Click" Tag="genshin"/>
-                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="genshin"/>
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" ToolTip="Tải CSDL Genshin" Click="BtnOpenAddProject_Click" Tag="genshin">
+                                                        <Path Data="M11 2h2v10h3l-4 5-4-5h3V2zm-7 14h2v4h12v-4h2v6H4v-6z" Fill="#f1f5f9" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="genshin">
+                                                        <Path Data="M9 3h6v2h5v2H4V5h5V3zm-3 6h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9zm3 2v8h2v-8H9zm4 0v8h2v-8h-2z" Fill="#f87171" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
@@ -615,8 +623,8 @@
                                                 </Border>
 
                                                 <!-- TOP-LEFT VERSION BADGE -->
-                                                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
-                                                    <TextBlock Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
+                                                <Border x:Name="BadgeZzzVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" Background="#c03a2e1a" BorderBrush="#d97706" BorderThickness="1" CornerRadius="4" Padding="6,2">
+                                                    <TextBlock x:Name="TxtZzzVersion" Text="v---" Foreground="#eab308" FontSize="10" FontWeight="Bold"/>
                                                 </Border>
                                             </Grid>
                                         </Border>
@@ -631,12 +639,16 @@
 
                                                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                                     <TextBlock Text="Zenless Zone Zero" Foreground="#f1f5f9" FontWeight="Bold" FontSize="12" TextTrimming="CharacterEllipsis"/>
-                                                    <TextBlock Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
+                                                    <TextBlock x:Name="TxtZzzStatus" Text="Chưa tải CSDL" Foreground="#eab308" FontSize="10" Margin="0,1,0,0"/>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
-                                                    <Button Style="{StaticResource FloatingGlassBtn}" Content="📥" ToolTip="Tải CSDL ZZZ" Click="BtnOpenAddProject_Click" Tag="zzz"/>
-                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" Content="🗑️" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="zzz"/>
+                                                    <Button Style="{StaticResource FloatingGlassBtn}" ToolTip="Tải CSDL ZZZ" Click="BtnOpenAddProject_Click" Tag="zzz">
+                                                        <Path Data="M11 2h2v10h3l-4 5-4-5h3V2zm-7 14h2v4h12v-4h2v6H4v-6z" Fill="#f1f5f9" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
+                                                    <Button Style="{StaticResource FloatingGlassDangerBtn}" ToolTip="Xóa tệp CSDL" Click="BtnDeleteAsset_Click" Tag="zzz">
+                                                        <Path Data="M9 3h6v2h5v2H4V5h5V3zm-3 6h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9zm3 2v8h2v-8H9zm4 0v8h2v-8h-2z" Fill="#f87171" Width="11" Height="11" Stretch="Uniform"/>
+                                                    </Button>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
@@ -807,21 +819,21 @@
                                     <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#c084fc" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="Tệp Văn Bản " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
-                                        <TextBlock Text="118.5 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                        <TextBlock x:Name="TxtTextMapSize" Text="118.5 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
 
                                     <!-- ITEM 2 -->
                                     <StackPanel Orientation="Horizontal" Margin="0,0,14,0">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#10b981" VerticalAlignment="Center" Margin="0,0,6,0"/>
                                         <TextBlock Text="Chỉ Mục CSDL " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
-                                        <TextBlock Text="38.2 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                        <TextBlock x:Name="TxtDbIndexSize" Text="38.2 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
 
                                     <!-- ITEM 3 -->
                                     <StackPanel Orientation="Horizontal">
                                         <Border Width="7.5" Height="7.5" CornerRadius="3.75" Background="#eab308" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                        <TextBlock Text="Bộ Nhớ Wiki " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
-                                        <TextBlock Text="12.9 MB" Foreground="#94a3b8" FontSize="11.5"/>
+                                        <TextBlock Text="Bộ Nhớ Đệm " Foreground="#cbd5e1" FontSize="11.5" FontWeight="SemiBold"/>
+                                        <TextBlock x:Name="TxtCacheSize" Text="12.9 MB" Foreground="#94a3b8" FontSize="11.5"/>
                                     </StackPanel>
                                 </WrapPanel>
                             </Grid>
@@ -905,8 +917,12 @@
 
                                         <!-- HÀNH ĐỘNG -->
                                         <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Style="{StaticResource IconBtn}" Content="📝" Click="BtnRenameRecent_Click" Tag="{Binding Path}"/>
-                                            <Button Style="{StaticResource IconBtn}" Content="🗑️" Click="BtnDeleteRecent_Click" Tag="{Binding Path}"/>
+                                            <Button Style="{StaticResource IconBtn}" ToolTip="Đổi tên" Click="BtnRenameRecent_Click" Tag="{Binding Path}">
+                                                <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" Fill="#9ca3af" Width="12" Height="12" Stretch="Uniform"/>
+                                            </Button>
+                                            <Button Style="{StaticResource IconBtn}" ToolTip="Xóa khỏi danh sách" Click="BtnDeleteRecent_Click" Tag="{Binding Path}">
+                                                <Path Data="M9 3h6v2h5v2H4V5h5V3zm-3 6h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9zm3 2v8h2v-8H9zm4 0v8h2v-8h-2z" Fill="#9ca3af" Width="12" Height="12" Stretch="Uniform"/>
+                                            </Button>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -1269,7 +1285,9 @@
                     <!-- TITLE HEADER WITH CLOSE X BUTTON -->
                     <Grid>
                         <TextBlock x:Name="TxtModalGameTitle" Text="Chọn nguồn tải xuống" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
-                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseAddProjectModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Click="CloseAddProjectModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng">
+                            <Path Data="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z" Fill="#64748b" Width="10" Height="10" Stretch="Uniform"/>
+                        </Button>
                     </Grid>
                     
                     <!-- FIELD LABEL & COMBOBOX -->
@@ -1312,7 +1330,9 @@
                     <!-- TITLE HEADER WITH CLOSE X BUTTON -->
                     <Grid>
                         <TextBlock Text="Đổi tên tệp bản thảo" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
-                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseRenameModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Click="CloseRenameModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng">
+                            <Path Data="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z" Fill="#64748b" Width="10" Height="10" Stretch="Uniform"/>
+                        </Button>
                     </Grid>
                     
                     <!-- FIELD LABEL & INPUT -->
@@ -1344,7 +1364,9 @@
                     <!-- TITLE HEADER WITH CLOSE X BUTTON -->
                     <Grid>
                         <TextBlock x:Name="TxtDeleteModalTitle" Text="Xóa tệp bản thảo?" Foreground="#f1f5f9" FontSize="18" FontWeight="Bold" FontFamily="Google Sans, Inter, Segoe UI" VerticalAlignment="Center"/>
-                        <Button Style="{StaticResource ModalCloseBtn}" Content="✕" Click="CloseDeleteModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng"/>
+                        <Button Style="{StaticResource ModalCloseBtn}" Click="CloseDeleteModal_Click" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Đóng">
+                            <Path Data="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z" Fill="#64748b" Width="10" Height="10" Stretch="Uniform"/>
+                        </Button>
                     </Grid>
                     
                     <!-- MESSAGE SUBTITLE -->

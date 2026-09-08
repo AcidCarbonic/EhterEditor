@@ -13,6 +13,16 @@ namespace EtherEditorNative.Backend
         public string ModifiedTime { get; set; }
     }
 
+    public class SaveFileInfo
+    {
+        public string FileName { get; set; }
+        public string FullPath { get; set; }
+        public string Extension { get; set; }
+        public string SizeFormatted { get; set; }
+        public string ModifiedTime { get; set; }
+        public string IconColor { get; set; }
+    }
+
     public class ProjectFileResult
     {
         public string Status { get; set; }
@@ -30,10 +40,18 @@ namespace EtherEditorNative.Backend
 
         public ProjectService(string projectRoot)
         {
-            _savesDir = System.IO.Path.Combine(projectRoot, "saves");
-            if (!Directory.Exists(_savesDir))
+            string parentSaves = System.IO.Path.Combine(projectRoot, "..", "saves");
+            if (Directory.Exists(parentSaves))
             {
-                Directory.CreateDirectory(_savesDir);
+                _savesDir = System.IO.Path.GetFullPath(parentSaves);
+            }
+            else
+            {
+                _savesDir = System.IO.Path.Combine(projectRoot, "saves");
+                if (!Directory.Exists(_savesDir))
+                {
+                    Directory.CreateDirectory(_savesDir);
+                }
             }
         }
 
@@ -163,6 +181,48 @@ namespace EtherEditorNative.Backend
             catch (Exception ex)
             {
                 Console.WriteLine("ProjectService List Error: " + ex.Message);
+            }
+            return list;
+        }
+
+        public List<SaveFileInfo> ListAllSaveFiles()
+        {
+            var list = new List<SaveFileInfo>();
+            try
+            {
+                if (Directory.Exists(_savesDir))
+                {
+                    var dirInfo = new DirectoryInfo(_savesDir);
+                    FileInfo[] files = dirInfo.GetFiles("*.*", SearchOption.TopDirectoryOnly);
+                    Array.Sort(files, (a, b) => b.LastWriteTime.CompareTo(a.LastWriteTime));
+                    foreach (var f in files)
+                    {
+                        string ext = f.Extension.ToLower();
+                        string iconColor = "#38bdf8";
+                        if (ext == ".json") iconColor = "#f59e0b";
+                        else if (ext == ".mediawiki" || ext == ".wiki") iconColor = "#38bdf8";
+                        else if (ext == ".txt") iconColor = "#94a3b8";
+                        else if (ext == ".md") iconColor = "#a855f7";
+
+                        string sizeStr = f.Length > 1024 * 1024 
+                            ? string.Format("{0:0.0} MB", f.Length / 1048576.0) 
+                            : (f.Length > 1024 ? string.Format("{0:0.0} KB", f.Length / 1024.0) : string.Format("{0} B", f.Length));
+
+                        list.Add(new SaveFileInfo
+                        {
+                            FileName = f.Name,
+                            FullPath = f.FullName,
+                            Extension = ext,
+                            SizeFormatted = sizeStr,
+                            ModifiedTime = f.LastWriteTime.ToString("dd/MM/yyyy HH:mm"),
+                            IconColor = iconColor
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ProjectService ListAllSaveFiles Error: " + ex.Message);
             }
             return list;
         }
